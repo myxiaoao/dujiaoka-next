@@ -1,5 +1,10 @@
 <?php
 
+declare(strict_types=1);
+/**
+ * This file is part of dujiaoka next server projects.
+ */
+
 namespace App\Filament\Resources\Coupons\Tables;
 
 use App\Models\Coupon;
@@ -54,7 +59,7 @@ class CouponsTable
                     ->sortable()
                     ->badge()
                     ->color(fn (int $state): string => $state > 0 ? 'success' : 'danger')
-                    ->formatStateUsing(fn (int $state): string => $state == 0 ? '无限' : (string)$state),
+                    ->formatStateUsing(fn (int $state): string => $state == 0 ? '无限' : (string) $state),
 
                 TextColumn::make('created_at')
                     ->label('创建时间')

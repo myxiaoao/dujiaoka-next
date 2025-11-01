@@ -1,5 +1,10 @@
 <?php
 
+declare(strict_types=1);
+/**
+ * This file is part of dujiaoka next server projects.
+ */
+
 namespace App\Filament\Resources\Goods\Tables;
 
 use App\Models\Carmis;
@@ -80,6 +85,7 @@ class GoodsTable
                                 ->where('status', Carmis::STATUS_UNSOLD)
                                 ->count();
                         }
+
                         return $record->in_stock;
                     })
                     ->badge()

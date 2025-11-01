@@ -1,5 +1,10 @@
 <?php
 
+declare(strict_types=1);
+/**
+ * This file is part of dujiaoka next server projects.
+ */
+
 namespace App\Jobs;
 
 use App\Models\Order;
@@ -50,23 +55,23 @@ class ServerJiang implements ShouldQueue
     public function handle()
     {
         $postdata = http_build_query([
-            'text' => __('dujiaoka.prompt.new_order_push') . ":{$this->order['ord_title']}",
-            'desp' => "
-- ". __('order.fields.title') ."：{$this->order->title}
-- ". __('order.fields.order_sn') ."：{$this->order->order_sn}
-- ". __('order.fields.email') ."：{$this->order->email}
-- ". __('order.fields.actual_price') ."：{$this->order->actual_price}
-            "
+            'text' => __('dujiaoka.prompt.new_order_push').":{$this->order['ord_title']}",
+            'desp' => '
+- '.__('order.fields.title')."：{$this->order->title}
+- ".__('order.fields.order_sn')."：{$this->order->order_sn}
+- ".__('order.fields.email')."：{$this->order->email}
+- ".__('order.fields.actual_price')."：{$this->order->actual_price}
+            ",
         ]);
         $opts = [
             'http' => [
-                'method'  => 'POST',
-                'header'  => 'Content-type: application/x-www-form-urlencoded',
-                'content' => $postdata
-            ]
+                'method' => 'POST',
+                'header' => 'Content-type: application/x-www-form-urlencoded',
+                'content' => $postdata,
+            ],
         ];
-        $context  = stream_context_create($opts);
+        $context = stream_context_create($opts);
         $apiToken = dujiaoka_config_get('server_jiang_token');
-        file_get_contents('https://sctapi.ftqq.com/' . $apiToken . '.send', false, $context);
+        file_get_contents('https://sctapi.ftqq.com/'.$apiToken.'.send', false, $context);
     }
 }

@@ -1,12 +1,16 @@
 <?php
 
+declare(strict_types=1);
+/**
+ * This file is part of dujiaoka next server projects.
+ */
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Carmis extends BaseModel
 {
-
     use SoftDeletes;
 
     protected $table = 'carmis';
@@ -35,13 +39,14 @@ class Carmis extends BaseModel
      *
      * @author    assimon<ashang@utf8.hk>
      * @copyright assimon<ashang@utf8.hk>
+     *
      * @link      http://utf8.hk/
      */
     public static function getStatusMap()
     {
         return [
             self::STATUS_UNSOLD => admin_trans('carmis.fields.status_unsold'),
-            self::STATUS_SOLD => admin_trans('carmis.fields.status_sold')
+            self::STATUS_SOLD => admin_trans('carmis.fields.status_sold'),
         ];
     }
 
@@ -52,11 +57,11 @@ class Carmis extends BaseModel
      *
      * @author    assimon<ashang@utf8.hk>
      * @copyright assimon<ashang@utf8.hk>
+     *
      * @link      http://utf8.hk/
      */
     public function goods()
     {
         return $this->belongsTo(Goods::class, 'goods_id');
     }
-
 }

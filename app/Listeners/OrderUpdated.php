@@ -1,13 +1,16 @@
 <?php
 
+declare(strict_types=1);
+/**
+ * This file is part of dujiaoka next server projects.
+ */
+
 namespace App\Listeners;
 
+use App\Events\OrderUpdated as OrderUpdatedEvent;
 use App\Jobs\MailSend;
 use App\Models\Emailtpl;
 use App\Models\Order;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
-use App\Events\OrderUpdated as OrderUpdatedEvent;
 
 class OrderUpdated
 {
@@ -38,7 +41,7 @@ class OrderUpdated
             'weburl' => config('app.url'),
             'order_id' => $event->order->order_sn,
             'ord_price' => $event->order->actual_price,
-            'ord_info' => str_replace(PHP_EOL, '<br/>', $event->order->info)
+            'ord_info' => str_replace(PHP_EOL, '<br/>', $event->order->info),
         ];
         $to = $event->order->email;
         // 邮件
@@ -60,19 +63,19 @@ class OrderUpdated
         }
     }
 
-
     /**
      * 邮件发送
      *
-     * @param array $mailtpl 模板
-     * @param array $order 内容
-     * @param string $to 接受者
+     * @param  array  $mailtpl  模板
+     * @param  array  $order  内容
+     * @param  string  $to  接受者
      *
      * @author    assimon<ashang@utf8.hk>
      * @copyright assimon<ashang@utf8.hk>
+     *
      * @link      http://utf8.hk/
      */
-    private static function sendMailToOrderStatus(array $mailtpl, array $order, string $to) :void
+    private static function sendMailToOrderStatus(array $mailtpl, array $order, string $to): void
     {
         $info = replace_mail_tpl($mailtpl, $order);
         MailSend::dispatch($to, $info['tpl_name'], $info['tpl_content']);

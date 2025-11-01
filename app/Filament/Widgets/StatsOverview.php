@@ -1,5 +1,10 @@
 <?php
 
+declare(strict_types=1);
+/**
+ * This file is part of dujiaoka next server projects.
+ */
+
 namespace App\Filament\Widgets;
 
 use App\Models\Goods;
@@ -7,7 +12,6 @@ use App\Models\Order;
 use Carbon\Carbon;
 use Filament\Widgets\StatsOverviewWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
-use Illuminate\Support\Facades\DB;
 
 class StatsOverview extends StatsOverviewWidget
 {
@@ -52,12 +56,12 @@ class StatsOverview extends StatsOverviewWidget
                 ->color('success')
                 ->chart([5, 10, 15, 12, 18, 20, $todayCompletedOrders]),
 
-            Stat::make('今日销售额', '¥' . number_format($todaySales, 2))
+            Stat::make('今日销售额', '¥'.number_format($todaySales, 2))
                 ->description('今日完成订单总金额')
                 ->descriptionIcon('heroicon-o-currency-dollar')
                 ->color('success'),
 
-            Stat::make('总销售额', '¥' . number_format($totalSales, 2))
+            Stat::make('总销售额', '¥'.number_format($totalSales, 2))
                 ->description('累计销售总额')
                 ->descriptionIcon('heroicon-o-banknotes')
                 ->color('info'),
@@ -67,7 +71,7 @@ class StatsOverview extends StatsOverviewWidget
                 ->descriptionIcon('heroicon-o-clipboard-document-list')
                 ->color('warning'),
 
-            Stat::make('今日成功率', $successRate . '%')
+            Stat::make('今日成功率', $successRate.'%')
                 ->description('今日订单完成率')
                 ->descriptionIcon('heroicon-o-chart-bar')
                 ->color($successRate > 80 ? 'success' : ($successRate > 50 ? 'warning' : 'danger')),

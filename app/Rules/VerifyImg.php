@@ -1,5 +1,10 @@
 <?php
 
+declare(strict_types=1);
+/**
+ * This file is part of dujiaoka next server projects.
+ */
+
 namespace App\Rules;
 
 use App\Models\BaseModel;
@@ -19,13 +24,11 @@ class VerifyImg implements ValidationRule
     /**
      * Run the validation rule.
      *
-     * @param  string  $attribute
-     * @param  mixed  $value
      * @param  \Closure(string): \Illuminate\Translation\PotentiallyTranslatedString  $fail
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
-        if (dujiaoka_config_get('is_open_img_code') == BaseModel::STATUS_OPEN && !captcha_check($value)) {
+        if (dujiaoka_config_get('is_open_img_code') == BaseModel::STATUS_OPEN && ! captcha_check($value)) {
             $fail(__('dujiaoka.prompt.image_verify_code_error'));
         }
     }

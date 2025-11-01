@@ -1,12 +1,9 @@
 <?php
-/**
- * The file was created by Assimon.
- *
- * @author    assimon<ashang@utf8.hk>
- * @copyright assimon<ashang@utf8.hk>
- * @link      http://utf8.hk/
- */
 
+declare(strict_types=1);
+/**
+ * This file is part of dujiaoka next server projects.
+ */
 return [
     'official_website' => '官网',
     'dashboard' => '仪表盘',
@@ -57,7 +54,7 @@ return [
     'not' => '无',
     'close' => '关闭',
     'discount' => '折',
-    'home_discount'  => '折扣',
+    'home_discount' => '折扣',
     'share_qr' => '分享此商品',
     'by_amount' => '购买',
     'or_the_above' => '件或以上',
@@ -91,19 +88,18 @@ return [
     'money_symbol' => '￥',
     'purchase_limit' => '每单限',
 
-
     'prompt' => [
         'server_illegal_request' => '非法请求！',
         'the_goods_is_not_on_the_shelves' => '该商品未上架！',
         'wholesale_price_format_error' => '批发价设置有误',
-        'by_amount_not_null' =>  '购买数量不能为0',
+        'by_amount_not_null' => '购买数量不能为0',
         'inventory_shortage' => '库存不足',
         'please_select_mode_of_payment' => '请选择支付方式',
         'goods_does_not_exist' => '商品不存在',
-        'search_password_can_not_be_empty' =>  '请填写订单查询密码',
-        'image_verify_code_error' =>  '图形验证码错误',
-        'buy_amount_format_error' =>  '请正确填写购买数量',
-        'email_format_error' =>  '请正确填写邮箱',
+        'search_password_can_not_be_empty' => '请填写订单查询密码',
+        'image_verify_code_error' => '图形验证码错误',
+        'buy_amount_format_error' => '请正确填写购买数量',
+        'email_format_error' => '请正确填写邮箱',
         'geetest_validate_fail' => '行为验证未通过',
         'purchase_limit_exceeded' => '单笔购买数量超过限制',
         'coupon_does_not_exist' => '优惠码不存在',
@@ -124,7 +120,7 @@ return [
         'no_related_order_found_for_cache' => '未找到相关订单缓存！',
         'no_related_order_found' => '未找到相关订单！',
         'new_order_push' => '新订单通知',
-        'loop_carmis_limit' => '此商品最多购买一件！'
+        'loop_carmis_limit' => '此商品最多购买一件！',
     ],
 
     'equipment' => [
@@ -144,6 +140,6 @@ return [
         'home' => '首页',
         'bill' => '订单确认',
         'order-detail' => '订单详情',
-        'order-search' => '订单查询'
-    ]
+        'order-search' => '订单查询',
+    ],
 ];

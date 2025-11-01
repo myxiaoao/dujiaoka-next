@@ -1,13 +1,16 @@
 <?php
 
+declare(strict_types=1);
+/**
+ * This file is part of dujiaoka next server projects.
+ */
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Illuminate\Database\Eloquent\Model;
 
 class Pay extends BaseModel
 {
-
     use SoftDeletes;
 
     protected $table = 'pays';
@@ -64,5 +67,4 @@ class Pay extends BaseModel
             self::PAY_CLIENT_ALL => admin_trans('pay.fields.pay_client_all'),
         ];
     }
-
 }

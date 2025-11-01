@@ -1,12 +1,17 @@
 <?php
 
+declare(strict_types=1);
+/**
+ * This file is part of dujiaoka next server projects.
+ */
+
 namespace App\Console\Commands;
 
+use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
-use Exception;
 
 class UpgradeFromOldSystem extends Command
 {
@@ -67,12 +72,12 @@ class UpgradeFromOldSystem extends Command
         $this->info('');
 
         // 步骤 1: 获取老数据库配置
-        if (!$this->getOldDatabaseConfig()) {
+        if (! $this->getOldDatabaseConfig()) {
             return Command::FAILURE;
         }
 
         // 步骤 2: 验证连接
-        if (!$this->validateConnections()) {
+        if (! $this->validateConnections()) {
             return Command::FAILURE;
         }
 
@@ -80,31 +85,32 @@ class UpgradeFromOldSystem extends Command
         if ($this->option('dry-run')) {
             $this->info('');
             $this->info('✓ Dry-run 模式：所有连接验证通过！');
+
             return Command::SUCCESS;
         }
 
         // 步骤 3: 显示数据统计并确认
-        if (!$this->showDataStatistics()) {
+        if (! $this->showDataStatistics()) {
             return Command::FAILURE;
         }
 
         // 步骤 4: 备份当前新数据库
-        if (!$this->backupNewDatabase()) {
+        if (! $this->backupNewDatabase()) {
             return Command::FAILURE;
         }
 
         // 步骤 5: 迁移数据
-        if (!$this->migrateData()) {
+        if (! $this->migrateData()) {
             return Command::FAILURE;
         }
 
         // 步骤 6: 复制文件资产
-        if (!$this->option('skip-files')) {
+        if (! $this->option('skip-files')) {
             $this->copyFileAssets();
         }
 
         // 步骤 7: 验证数据
-        if (!$this->validateData()) {
+        if (! $this->validateData()) {
             return Command::FAILURE;
         }
 
@@ -168,7 +174,8 @@ class UpgradeFromOldSystem extends Command
             $oldConnection->getPdo();
             $this->info('✓ 老数据库连接成功');
         } catch (Exception $e) {
-            $this->error('✗ 老数据库连接失败: ' . $e->getMessage());
+            $this->error('✗ 老数据库连接失败: '.$e->getMessage());
+
             return false;
         }
 
@@ -178,7 +185,8 @@ class UpgradeFromOldSystem extends Command
             DB::connection()->getPdo();
             $this->info('✓ 新数据库连接成功');
         } catch (Exception $e) {
-            $this->error('✗ 新数据库连接失败: ' . $e->getMessage());
+            $this->error('✗ 新数据库连接失败: '.$e->getMessage());
+
             return false;
         }
 
@@ -186,13 +194,14 @@ class UpgradeFromOldSystem extends Command
         $this->info('正在检查老数据库表结构...');
         $missingTables = [];
         foreach ($this->tables as $table) {
-            if (!$oldConnection->getSchemaBuilder()->hasTable($table)) {
+            if (! $oldConnection->getSchemaBuilder()->hasTable($table)) {
                 $missingTables[] = $table;
             }
         }
 
-        if (!empty($missingTables)) {
-            $this->error('✗ 老数据库中缺少以下表: ' . implode(', ', $missingTables));
+        if (! empty($missingTables)) {
+            $this->error('✗ 老数据库中缺少以下表: '.implode(', ', $missingTables));
+
             return false;
         }
 
@@ -241,14 +250,14 @@ class UpgradeFromOldSystem extends Command
         $this->info('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━');
 
         $backupPath = storage_path('app/backups');
-        if (!File::exists($backupPath)) {
+        if (! File::exists($backupPath)) {
             File::makeDirectory($backupPath, 0755, true);
         }
 
-        $filename = 'backup_' . date('Y-m-d_His') . '.sql';
-        $filepath = $backupPath . '/' . $filename;
+        $filename = 'backup_'.date('Y-m-d_His').'.sql';
+        $filepath = $backupPath.'/'.$filename;
 
-        $dbConfig = config('database.connections.' . config('database.default'));
+        $dbConfig = config('database.connections.'.config('database.default'));
 
         $command = sprintf(
             'mysqldump -h%s -P%s -u%s -p%s %s > %s',
@@ -264,10 +273,12 @@ class UpgradeFromOldSystem extends Command
 
         if ($returnCode === 0 && File::exists($filepath)) {
             $size = File::size($filepath);
-            $this->info('✓ 备份完成: ' . $filename . ' (' . $this->formatBytes($size) . ')');
+            $this->info('✓ 备份完成: '.$filename.' ('.$this->formatBytes($size).')');
+
             return true;
         } else {
             $this->warn('⚠️  备份失败，但仍可继续（不推荐）');
+
             return $this->confirm('是否继续？', false);
         }
     }
@@ -311,7 +322,8 @@ class UpgradeFromOldSystem extends Command
             } catch (Exception $e) {
                 $newConnection->rollBack();
                 $this->error('');
-                $this->error('✗ 迁移表 ' . $table . ' 失败: ' . $e->getMessage());
+                $this->error('✗ 迁移表 '.$table.' 失败: '.$e->getMessage());
+
                 return false;
             }
         }
@@ -334,17 +346,18 @@ class UpgradeFromOldSystem extends Command
 
         $oldPath = $this->option('old-path');
 
-        if (!$oldPath) {
+        if (! $oldPath) {
             $oldPath = $this->ask('请输入老系统的完整路径（如 /var/www/dujiaoka）');
         }
 
-        if (!$oldPath || !File::exists($oldPath)) {
+        if (! $oldPath || ! File::exists($oldPath)) {
             $this->warn('⚠️  老系统路径不存在，跳过文件复制');
+
             return;
         }
 
         // 复制 storage/app 目录
-        $oldStoragePath = $oldPath . '/storage/app';
+        $oldStoragePath = $oldPath.'/storage/app';
         $newStoragePath = storage_path('app');
 
         if (File::exists($oldStoragePath)) {
@@ -354,7 +367,7 @@ class UpgradeFromOldSystem extends Command
         }
 
         // 复制 public/uploads 目录（如果存在）
-        $oldUploadsPath = $oldPath . '/public/uploads';
+        $oldUploadsPath = $oldPath.'/public/uploads';
         $newUploadsPath = public_path('uploads');
 
         if (File::exists($oldUploadsPath)) {
@@ -393,7 +406,7 @@ class UpgradeFromOldSystem extends Command
                 $match ? '✓' : '✗',
             ];
 
-            if (!$match) {
+            if (! $match) {
                 $hasError = true;
             }
         }
@@ -403,6 +416,7 @@ class UpgradeFromOldSystem extends Command
         if ($hasError) {
             $this->error('');
             $this->error('✗ 数据验证失败：数量不匹配');
+
             return false;
         }
 
@@ -458,6 +472,6 @@ class UpgradeFromOldSystem extends Command
             $bytes /= 1024;
         }
 
-        return round($bytes, $precision) . ' ' . $units[$i];
+        return round($bytes, $precision).' '.$units[$i];
     }
 }

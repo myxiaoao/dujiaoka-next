@@ -1,5 +1,9 @@
 <?php
 
+declare(strict_types=1);
+/**
+ * This file is part of dujiaoka next server projects.
+ */
 return [
     'labels' => [
         'Coupon' => '优惠码',
@@ -16,7 +20,7 @@ return [
         'type_repeat' => '重复使用',
         'status_use' => '已使用',
         'status_unused' => '未使用',
-        'goods_id' => '可用商品'
+        'goods_id' => '可用商品',
     ],
     'options' => [
     ],

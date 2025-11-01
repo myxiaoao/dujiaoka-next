@@ -1,12 +1,16 @@
 <?php
 
+declare(strict_types=1);
+/**
+ * This file is part of dujiaoka next server projects.
+ */
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Coupon extends BaseModel
 {
-
     use SoftDeletes;
 
     protected $table = 'coupons';
@@ -47,13 +51,13 @@ class Coupon extends BaseModel
      *
      * @author    assimon<ashang@utf8.hk>
      * @copyright assimon<ashang@utf8.hk>
+     *
      * @link      http://utf8.hk/
      */
     public function goods()
     {
         return $this->belongsToMany(Goods::class, 'coupons_goods', 'coupons_id', 'goods_id');
     }
-
 
     public static function getStatusUseMap()
     {
@@ -62,6 +66,4 @@ class Coupon extends BaseModel
             self::STATUS_UNUSED => admin_trans('coupon.fields.status_unused'),
         ];
     }
-
-
 }

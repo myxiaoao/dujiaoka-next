@@ -1,12 +1,9 @@
 <?php
-/**
- * The file was created by Assimon.
- *
- * @author    assimon<ashang@utf8.hk>
- * @copyright assimon<ashang@utf8.hk>
- * @link      http://utf8.hk/
- */
 
+declare(strict_types=1);
+/**
+ * This file is part of dujiaoka next server projects.
+ */
 return [
     'labels' => [
         'SystemSetting' => '系统设置',
@@ -36,12 +33,12 @@ return [
         'is_open_telegram_push' => '是否开启Telegram推送',
         'telegram_userid' => 'Telegram用户id',
         'telegram_bot_token' => 'Telegram通讯token',
-		'is_open_bark_push' => '是否开启Bark推送',
-		'is_open_bark_push_url' => '是否推送订单URL',
-		'bark_server' => 'Bark服务器',
-		'bark_token' => 'Bark通讯Token',
-		'is_open_qywxbot_push' => '是否开启企业微信Bot推送',
-		'qywxbot_key' => '企业微信Bot通讯Key',
+        'is_open_bark_push' => '是否开启Bark推送',
+        'is_open_bark_push_url' => '是否推送订单URL',
+        'bark_server' => 'Bark服务器',
+        'bark_token' => 'Bark通讯Token',
+        'is_open_qywxbot_push' => '是否开启企业微信Bot推送',
+        'qywxbot_key' => '企业微信Bot通讯Key',
 
         'template' => '站点模板',
         'language' => '站点语言',
@@ -64,6 +61,6 @@ return [
     ],
     'rule_messages' => [
         'save_system_setting_success' => '系统配置保存成功！',
-        'change_reboot_php_worker' => '修改部分配置需要重启[supervisor]或php进程管理工具才会生效，例如邮件服务，server酱等。'
-    ]
+        'change_reboot_php_worker' => '修改部分配置需要重启[supervisor]或php进程管理工具才会生效，例如邮件服务，server酱等。',
+    ],
 ];

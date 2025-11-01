@@ -1,18 +1,22 @@
 <?php
 
+declare(strict_types=1);
+/**
+ * This file is part of dujiaoka next server projects.
+ */
+
 namespace App\Http\Controllers\Pay;
 
 use App\Exceptions\RuleValidationException;
 use App\Http\Controllers\PayController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use PaypalServerSdkLib\PaypalServerSdkClientBuilder;
+use PaypalServerSdkLib\Exceptions\ApiException;
 use PaypalServerSdkLib\Models\AmountWithBreakdown;
 use PaypalServerSdkLib\Models\CheckoutPaymentIntent;
 use PaypalServerSdkLib\Models\OrderRequest;
 use PaypalServerSdkLib\Models\PurchaseUnitRequest;
-use PaypalServerSdkLib\Controllers\OrdersController;
-use PaypalServerSdkLib\Exceptions\ApiException;
+use PaypalServerSdkLib\PaypalServerSdkClientBuilder;
 
 class PaypalPayController extends PayController
 {
@@ -57,14 +61,14 @@ class PaypalPayController extends PayController
                             number_format($total, 2, '.', '')
                         )
                     )
-                    ->referenceId($this->order->order_sn)
-                    ->description($this->order->title)
+                        ->referenceId($this->order->order_sn)
+                        ->description($this->order->title),
                 ]
             )
-            ->applicationContext([
-                'return_url' => route('paypal-return', ['success' => 'ok', 'orderSN' => $this->order->order_sn]),
-                'cancel_url' => route('paypal-return', ['success' => 'no', 'orderSN' => $this->order->order_sn])
-            ]);
+                ->applicationContext([
+                    'return_url' => route('paypal-return', ['success' => 'ok', 'orderSN' => $this->order->order_sn]),
+                    'cancel_url' => route('paypal-return', ['success' => 'no', 'orderSN' => $this->order->order_sn]),
+                ]);
 
             // 创建订单
             $response = $ordersController->ordersCreate([], $orderRequest);
@@ -89,12 +93,14 @@ class PaypalPayController extends PayController
             return $this->err('创建 PayPal 订单失败');
 
         } catch (ApiException $e) {
-            Log::error('PayPal API Error: ' . $e->getMessage());
-            return $this->err('PayPal 支付错误: ' . $e->getMessage());
+            Log::error('PayPal API Error: '.$e->getMessage());
+
+            return $this->err('PayPal 支付错误: '.$e->getMessage());
         } catch (RuleValidationException $exception) {
             return $this->err($exception->getMessage());
         } catch (\Exception $e) {
-            Log::error('PayPal General Error: ' . $e->getMessage());
+            Log::error('PayPal General Error: '.$e->getMessage());
+
             return $this->err('支付处理错误');
         }
     }
@@ -114,12 +120,12 @@ class PaypalPayController extends PayController
         }
 
         $order = $this->orderService->detailOrderSN($orderSN);
-        if (!$order) {
+        if (! $order) {
             return 'error';
         }
 
         $payGateway = $this->payService->detail($order->pay_id);
-        if (!$payGateway) {
+        if (! $payGateway) {
             return 'error';
         }
 
@@ -151,23 +157,23 @@ class PaypalPayController extends PayController
                         $order->actual_price,
                         $token
                     );
-                    Log::info("PayPal 支付成功", [
+                    Log::info('PayPal 支付成功', [
                         '订单号' => $orderSN,
-                        'PayPal订单ID' => $token
+                        'PayPal订单ID' => $token,
                     ]);
                 }
             }
 
         } catch (ApiException $e) {
-            Log::error("PayPal 支付失败", [
+            Log::error('PayPal 支付失败', [
                 '订单号' => $orderSN,
                 'PayPal订单ID' => $token,
-                '错误' => $e->getMessage()
+                '错误' => $e->getMessage(),
             ]);
         } catch (\Exception $e) {
-            Log::error("PayPal 处理错误", [
+            Log::error('PayPal 处理错误', [
                 '订单号' => $orderSN,
-                '错误' => $e->getMessage()
+                '错误' => $e->getMessage(),
             ]);
         }
 
@@ -183,8 +189,8 @@ class PaypalPayController extends PayController
         // 获取回调结果
         $json_data = $this->get_JsonData();
 
-        if (!empty($json_data)) {
-            Log::debug("PayPal notify info:\r\n" . json_encode($json_data));
+        if (! empty($json_data)) {
+            Log::debug("PayPal notify info:\r\n".json_encode($json_data));
 
             // 处理 webhook 事件
             $eventType = $json_data['event_type'] ?? '';
@@ -195,11 +201,11 @@ class PaypalPayController extends PayController
                 $orderId = $resource['supplementary_data']['related_ids']['order_id'] ?? '';
 
                 if ($orderId) {
-                    Log::info("PayPal Webhook: 支付完成", ['订单ID' => $orderId]);
+                    Log::info('PayPal Webhook: 支付完成', ['订单ID' => $orderId]);
                 }
             }
         } else {
-            Log::debug("PayPal notify fail: 参数为空");
+            Log::debug('PayPal notify fail: 参数为空');
         }
 
         // PayPal webhooks 需要返回 200 状态码
@@ -216,6 +222,7 @@ class PaypalPayController extends PayController
             $json = str_replace("'", '', $json);
             $json = json_decode($json, true);
         }
+
         return $json;
     }
 }

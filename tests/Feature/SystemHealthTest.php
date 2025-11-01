@@ -1,12 +1,16 @@
 <?php
 
+declare(strict_types=1);
+/**
+ * This file is part of dujiaoka next server projects.
+ */
+
 namespace Tests\Feature;
 
 use App\Models\Goods;
 use App\Models\GoodsGroup;
 use App\Models\Order;
 use App\Models\Pay;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
 
 class SystemHealthTest extends TestCase
@@ -17,7 +21,7 @@ class SystemHealthTest extends TestCase
     public function test_database_connection(): void
     {
         $this->assertTrue(true);
-        
+
         // 测试是否能连接数据库
         $result = \DB::select('SELECT 1');
         $this->assertNotEmpty($result);
@@ -30,13 +34,13 @@ class SystemHealthTest extends TestCase
     {
         // 测试 GoodsGroup 模型是否存在
         $this->assertTrue(class_exists(GoodsGroup::class));
-        
+
         // 测试 Goods 模型是否存在
         $this->assertTrue(class_exists(Goods::class));
-        
+
         // 测试 Order 模型是否存在
         $this->assertTrue(class_exists(Order::class));
-        
+
         // 测试 Pay 模型是否存在
         $this->assertTrue(class_exists(Pay::class));
     }
@@ -58,10 +62,10 @@ class SystemHealthTest extends TestCase
     {
         // 测试 GoodsService 是否注册
         $this->assertTrue(app()->bound('Service\GoodsService'));
-        
+
         // 测试 OrderService 是否注册
         $this->assertTrue(app()->bound('Service\OrderService'));
-        
+
         // 测试 PayService 是否注册
         $this->assertTrue(app()->bound('Service\PayService'));
     }

@@ -1,5 +1,10 @@
 <?php
 
+declare(strict_types=1);
+/**
+ * This file is part of dujiaoka next server projects.
+ */
+
 namespace App\Jobs;
 
 use App\Models\Order;
@@ -9,7 +14,6 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
-
 
 class TelegramPush implements ShouldQueue
 {
@@ -36,10 +40,10 @@ class TelegramPush implements ShouldQueue
 
     /**
      * 商品服务层.
+     *
      * @var \App\Service\PayService
      */
     private $goodsService;
-
 
     /**
      * Create a new job instance.
@@ -60,22 +64,22 @@ class TelegramPush implements ShouldQueue
     public function handle()
     {
         $goodInfo = $this->goodsService->detail($this->order->goods_id);
-        $formatText = '*'. __('dujiaoka.prompt.new_order_push').'('.$this->order->actual_price.'元)*%0A'
-        . __('order.fields.order_id') .': `'.$this->order->id.'`%0A'
-        . __('order.fields.order_sn') .': `'.$this->order->order_sn.'`%0A'
-        . __('order.fields.pay_id') .': `'.$this->order->pay->pay_name.'`%0A'
-        . __('order.fields.title') .': '.$this->order->title.'%0A'
-        . __('order.fields.actual_price') .': '.$this->order->actual_price.'%0A'
-        . __('order.fields.email') .': `'.$this->order->email.'`%0A'
-        . __('goods.fields.gd_name') .': `'.$goodInfo->gd_name.'`%0A'
-        . __('goods.fields.in_stock') .': `'.$goodInfo->in_stock.'`%0A'
-        . __('order.fields.order_created') .': '.$this->order->created_at;
+        $formatText = '*'.__('dujiaoka.prompt.new_order_push').'('.$this->order->actual_price.'元)*%0A'
+        .__('order.fields.order_id').': `'.$this->order->id.'`%0A'
+        .__('order.fields.order_sn').': `'.$this->order->order_sn.'`%0A'
+        .__('order.fields.pay_id').': `'.$this->order->pay->pay_name.'`%0A'
+        .__('order.fields.title').': '.$this->order->title.'%0A'
+        .__('order.fields.actual_price').': '.$this->order->actual_price.'%0A'
+        .__('order.fields.email').': `'.$this->order->email.'`%0A'
+        .__('goods.fields.gd_name').': `'.$goodInfo->gd_name.'`%0A'
+        .__('goods.fields.in_stock').': `'.$goodInfo->in_stock.'`%0A'
+        .__('order.fields.order_created').': '.$this->order->created_at;
         $client = new Client([
             'timeout' => 30,
-            'proxy'=> ''
+            'proxy' => '',
         ]);
-        $apiUrl = 'https://api.telegram.org/bot' . dujiaoka_config_get('telegram_bot_token') .
-            '/sendMessage?chat_id=' . dujiaoka_config_get('telegram_userid') . '&parse_mode=Markdown&text='.$formatText;
+        $apiUrl = 'https://api.telegram.org/bot'.dujiaoka_config_get('telegram_bot_token').
+            '/sendMessage?chat_id='.dujiaoka_config_get('telegram_userid').'&parse_mode=Markdown&text='.$formatText;
         $client->post($apiUrl);
     }
 }

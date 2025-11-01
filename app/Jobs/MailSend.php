@@ -1,5 +1,10 @@
 <?php
 
+declare(strict_types=1);
+/**
+ * This file is part of dujiaoka next server projects.
+ */
+
 namespace App\Jobs;
 
 use Illuminate\Bus\Queueable;
@@ -12,7 +17,6 @@ use Illuminate\Support\Facades\Mail;
 
 class MailSend implements ShouldQueue
 {
-
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
@@ -34,7 +38,6 @@ class MailSend implements ShouldQueue
     private $content;
 
     private $title;
-
 
     /**
      * Create a new job instance.
@@ -63,21 +66,21 @@ class MailSend implements ShouldQueue
             'host' => $sysConfig['host'] ?? '',
             'port' => $sysConfig['port'] ?? '465',
             'username' => $sysConfig['username'] ?? '',
-            'from'      =>  [
-                'address'   =>   $sysConfig['from_address'] ?? '',
-                'name'      =>  $sysConfig['from_name'] ?? '独角发卡'
+            'from' => [
+                'address' => $sysConfig['from_address'] ?? '',
+                'name' => $sysConfig['from_name'] ?? '独角发卡',
             ],
             'password' => $sysConfig['password'] ?? '',
-            'encryption' => $sysConfig['encryption'] ?? ''
+            'encryption' => $sysConfig['encryption'] ?? '',
         ];
         $to = $this->to;
         //  覆盖 mail 配置
         config([
-            'mail'  =>  array_merge(config('mail'), $mailConfig)
+            'mail' => array_merge(config('mail'), $mailConfig),
         ]);
         // 重新注册驱动
         (new MailServiceProvider(app()))->register();
-        Mail::send(['html' => 'email.mail'], ['body' => $body], function ($message) use ($to, $title){
+        Mail::send(['html' => 'email.mail'], ['body' => $body], function ($message) use ($to, $title) {
             $message->to($to)->subject($title);
         });
     }

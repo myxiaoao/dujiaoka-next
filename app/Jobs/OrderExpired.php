@@ -1,5 +1,10 @@
 <?php
 
+declare(strict_types=1);
+/**
+ * This file is part of dujiaoka next server projects.
+ */
+
 namespace App\Jobs;
 
 use App\Models\Order;
@@ -11,7 +16,6 @@ use Illuminate\Queue\SerializesModels;
 
 class OrderExpired implements ShouldQueue
 {
-
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
     /**
@@ -30,10 +34,10 @@ class OrderExpired implements ShouldQueue
 
     /**
      * 订单号
+     *
      * @var string
      */
     private $orderSN;
-
 
     /**
      * Create a new job instance.

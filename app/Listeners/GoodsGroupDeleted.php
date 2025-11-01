@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+/**
+ * This file is part of dujiaoka next server projects.
+ */
+
 namespace App\Listeners;
 
-use App\Models\Goods;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 use App\Events\GoodsGroupDeleted as GoodsGroupDeletedEvent;
+use App\Models\Goods;
 
 class GoodsGroupDeleted
 {
@@ -22,7 +25,6 @@ class GoodsGroupDeleted
     /**
      * Handle the event.
      *
-     * @param  GoodsGroupDeletedEvent  $event
      * @return void
      */
     public function handle(GoodsGroupDeletedEvent $event)

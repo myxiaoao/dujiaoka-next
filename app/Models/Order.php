@@ -1,5 +1,10 @@
 <?php
 
+declare(strict_types=1);
+/**
+ * This file is part of dujiaoka next server projects.
+ */
+
 namespace App\Models;
 
 use App\Events\OrderUpdated;
@@ -7,7 +12,6 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Order extends BaseModel
 {
-
     use SoftDeletes;
 
     protected $table = 'orders';
@@ -79,9 +83,8 @@ class Order extends BaseModel
     const COUPON_BACK_OK = 1;
 
     protected $dispatchesEvents = [
-        'updated' => OrderUpdated::class
+        'updated' => OrderUpdated::class,
     ];
-
 
     /**
      * 状态映射
@@ -90,6 +93,7 @@ class Order extends BaseModel
      *
      * @author    assimon<ashang@utf8.hk>
      * @copyright assimon<ashang@utf8.hk>
+     *
      * @link      http://utf8.hk/
      */
     public static function getStatusMap()
@@ -101,7 +105,7 @@ class Order extends BaseModel
             self::STATUS_COMPLETED => admin_trans('order.fields.status_completed'),
             self::STATUS_FAILURE => admin_trans('order.fields.status_failure'),
             self::STATUS_ABNORMAL => admin_trans('order.fields.status_abnormal'),
-            self::STATUS_EXPIRED => admin_trans('order.fields.status_expired')
+            self::STATUS_EXPIRED => admin_trans('order.fields.status_expired'),
         ];
     }
 
@@ -112,13 +116,14 @@ class Order extends BaseModel
      *
      * @author    assimon<ashang@utf8.hk>
      * @copyright assimon<ashang@utf8.hk>
+     *
      * @link      http://utf8.hk/
      */
     public static function getTypeMap()
     {
         return [
             self::AUTOMATIC_DELIVERY => admin_trans('goods.fields.automatic_delivery'),
-            self::MANUAL_PROCESSING => admin_trans('goods.fields.manual_processing')
+            self::MANUAL_PROCESSING => admin_trans('goods.fields.manual_processing'),
         ];
     }
 
@@ -129,6 +134,7 @@ class Order extends BaseModel
      *
      * @author    assimon<ashang@utf8.hk>
      * @copyright assimon<ashang@utf8.hk>
+     *
      * @link      http://utf8.hk/
      */
     public function goods()
@@ -143,6 +149,7 @@ class Order extends BaseModel
      *
      * @author    assimon<ashang@utf8.hk>
      * @copyright assimon<ashang@utf8.hk>
+     *
      * @link      http://utf8.hk/
      */
     public function coupon()
@@ -157,11 +164,11 @@ class Order extends BaseModel
      *
      * @author    assimon<ashang@utf8.hk>
      * @copyright assimon<ashang@utf8.hk>
+     *
      * @link      http://utf8.hk/
      */
     public function pay()
     {
         return $this->belongsTo(Pay::class, 'pay_id');
     }
-
 }

@@ -1,25 +1,23 @@
 <?php
+
+declare(strict_types=1);
 /**
- * The file was created by Assimon.
- *
- * @author    assimon<ashang@utf8.hk>
- * @copyright assimon<ashang@utf8.hk>
- * @link      http://utf8.hk/
+ * This file is part of dujiaoka next server projects.
  */
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\PayController;
 use App\Http\Controllers\Pay\AlipayController;
-use App\Http\Controllers\Pay\WepayController;
-use App\Http\Controllers\Pay\MapayController;
-use App\Http\Controllers\Pay\PaysapiController;
-use App\Http\Controllers\Pay\PayjsController;
-use App\Http\Controllers\Pay\YipayController;
-use App\Http\Controllers\Pay\PaypalPayController;
-use App\Http\Controllers\Pay\VpayController;
-use App\Http\Controllers\Pay\StripeController;
 use App\Http\Controllers\Pay\CoinbaseController;
 use App\Http\Controllers\Pay\EpusdtController;
+use App\Http\Controllers\Pay\MapayController;
+use App\Http\Controllers\Pay\PayjsController;
+use App\Http\Controllers\Pay\PaypalPayController;
+use App\Http\Controllers\Pay\PaysapiController;
+use App\Http\Controllers\Pay\StripeController;
 use App\Http\Controllers\Pay\TokenPayController;
+use App\Http\Controllers\Pay\VpayController;
+use App\Http\Controllers\Pay\WepayController;
+use App\Http\Controllers\Pay\YipayController;
+use App\Http\Controllers\PayController;
+use Illuminate\Support\Facades\Route;
 
 Route::get('pay-gateway/{handle}/{payway}/{orderSN}', [PayController::class, 'redirectGateway']);
 

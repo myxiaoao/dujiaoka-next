@@ -1,19 +1,16 @@
 <?php
-/**
- * The file was created by Assimon.
- *
- * @author    assimon<ashang@utf8.hk>
- * @copyright assimon<ashang@utf8.hk>
- * @link      http://utf8.hk/
- */
 
+declare(strict_types=1);
+/**
+ * This file is part of dujiaoka next server projects.
+ */
 return [
     'dujiaoka_version' => '2.0.6',
     // 模板集合
     'templates' => [
         'unicorn' => '官方[unicorn-独角兽]',
         'luna' => 'Luna[Julyssn]',
-        'hyper' => 'hyper[Bimoe]'
+        'hyper' => 'hyper[Bimoe]',
     ],
     // 语言
     'language' => [

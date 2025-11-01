@@ -1,12 +1,9 @@
 <?php
-/**
- * The file was created by Assimon.
- *
- * @author    ZhangYiQiu<me@zhangyiqiu.net>
- * @copyright ZhangYiQiu<me@zhangyiqiu.net>
- * @link      http://zhangyiqiu.net/
- */
 
+declare(strict_types=1);
+/**
+ * This file is part of dujiaoka next server projects.
+ */
 return [
     'labels' => [
         'success' => '发送成功',
@@ -16,10 +13,10 @@ return [
     ],
 
     'fields' => [
-        
+
     ],
     'options' => [
     ],
     'rule_messages' => [
-    ]
+    ],
 ];

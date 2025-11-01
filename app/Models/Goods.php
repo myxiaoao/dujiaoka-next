@@ -1,14 +1,17 @@
 <?php
 
-namespace App\Models;
+declare(strict_types=1);
+/**
+ * This file is part of dujiaoka next server projects.
+ */
 
+namespace App\Models;
 
 use App\Events\GoodsDeleted;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Goods extends BaseModel
 {
-
     use SoftDeletes;
 
     protected $table = 'goods';
@@ -33,7 +36,7 @@ class Goods extends BaseModel
     ];
 
     protected $dispatchesEvents = [
-        'deleted' => GoodsDeleted::class
+        'deleted' => GoodsDeleted::class,
     ];
 
     /**
@@ -43,6 +46,7 @@ class Goods extends BaseModel
      *
      * @author    assimon<ashang@utf8.hk>
      * @copyright assimon<ashang@utf8.hk>
+     *
      * @link      http://utf8.hk/
      */
     public function group()
@@ -57,6 +61,7 @@ class Goods extends BaseModel
      *
      * @author    assimon<ashang@utf8.hk>
      * @copyright assimon<ashang@utf8.hk>
+     *
      * @link      http://utf8.hk/
      */
     public function coupon()
@@ -71,6 +76,7 @@ class Goods extends BaseModel
      *
      * @author    assimon<ashang@utf8.hk>
      * @copyright assimon<ashang@utf8.hk>
+     *
      * @link      http://utf8.hk/
      */
     public function carmis()
@@ -83,6 +89,7 @@ class Goods extends BaseModel
      *
      * @author    assimon<ashang@utf8.hk>
      * @copyright assimon<ashang@utf8.hk>
+     *
      * @link      http://utf8.hk/
      */
     public function getInStockAttribute()
@@ -91,8 +98,9 @@ class Goods extends BaseModel
             &&
             $this->attributes['type'] == self::AUTOMATIC_DELIVERY
         ) {
-           $this->attributes['in_stock'] = $this->attributes['carmis_count'];
+            $this->attributes['in_stock'] = $this->attributes['carmis_count'];
         }
+
         return $this->attributes['in_stock'];
     }
 
@@ -103,14 +111,14 @@ class Goods extends BaseModel
      *
      * @author    assimon<ashang@utf8.hk>
      * @copyright assimon<ashang@utf8.hk>
+     *
      * @link      http://utf8.hk/
      */
     public static function getGoodsTypeMap()
     {
         return [
             self::AUTOMATIC_DELIVERY => admin_trans('goods.fields.automatic_delivery'),
-            self::MANUAL_PROCESSING => admin_trans('goods.fields.manual_processing')
+            self::MANUAL_PROCESSING => admin_trans('goods.fields.manual_processing'),
         ];
     }
-
 }

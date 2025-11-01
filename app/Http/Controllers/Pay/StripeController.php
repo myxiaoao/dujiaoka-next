@@ -1,24 +1,25 @@
 <?php
 
+declare(strict_types=1);
+/**
+ * This file is part of dujiaoka next server projects.
+ */
+
 namespace App\Http\Controllers\Pay;
 
 use App\Exceptions\RuleValidationException;
 use App\Http\Controllers\PayController;
-use Illuminate\Http\Request;
 use GuzzleHttp\Client;
-use Illuminate\Support\Facades\Redis;
-use URL;
+use Illuminate\Http\Request;
 
 class StripeController extends PayController
 {
-
     public function gateway(string $payway, string $orderSN)
     {
 
-
         // 加载网关
         $this->loadGateWay($orderSN, $payway);
-        //构造要请求的参数数组，无需改动
+        // 构造要请求的参数数组，无需改动
         switch ($payway) {
             case 'wx':
             case 'alipay':
@@ -30,7 +31,7 @@ class StripeController extends PayController
                     $usd = bcmul($this->getUsdCurrency($this->order->actual_price), 100, 2);
                     $orderid = $this->order->order_sn;
                     $pk = $this->payGateway->merchant_id;
-                    $return_url = site_url() . $this->payGateway->pay_handleroute . '/return_url/?orderid=' . $this->order->order_sn;
+                    $return_url = site_url().$this->payGateway->pay_handleroute.'/return_url/?orderid='.$this->order->order_sn;
                     $html = "<html class=\"js cssanimations\">
 <head lang=\"en\">
     <meta charset=\"UTF-8\">
@@ -424,7 +425,7 @@ class StripeController extends PayController
 
                     return $html;
                 } catch (\Exception $e) {
-                    throw new RuleValidationException(__('dujiaoka.prompt.abnormal_payment_channel') . $e->getMessage());
+                    throw new RuleValidationException(__('dujiaoka.prompt.abnormal_payment_channel').$e->getMessage());
                 }
                 break;
         }
@@ -435,13 +436,13 @@ class StripeController extends PayController
 
         $data = $request->all();
         $cacheord = $this->orderService->detailOrderSN($data['orderid']);
-        if (!$cacheord) {
+        if (! $cacheord) {
             return redirect(url('detail-order-sn', ['orderSN' => $data['orderid']]));
         }
         $payGateway = $this->payService->detail($cacheord->pay_id);
-        \Stripe\Stripe::setApiKey($payGateway -> merchant_pem);
+        \Stripe\Stripe::setApiKey($payGateway->merchant_pem);
         $source_object = \Stripe\Source::retrieve($data['source']);
-        //die($source_object);
+        // die($source_object);
         if ($source_object->status == 'chargeable') {
             \Stripe\Charge::create([
                 'amount' => $source_object->amount,
@@ -452,6 +453,7 @@ class StripeController extends PayController
                 $this->orderProcessService->completedOrder($data['orderid'], $source_object->amount / 100, $source_object->id);
             }
         }
+
         return redirect(url('detail-order-sn', ['orderSN' => $data['orderid']]));
     }
 
@@ -460,12 +462,12 @@ class StripeController extends PayController
 
         $data = $request->all();
         $cacheord = $this->orderService->detailOrderSN($data['orderid']);
-        if (!$cacheord) {
-            //可能已异步回调成功，跳转
+        if (! $cacheord) {
+            // 可能已异步回调成功，跳转
             return 'fail';
         } else {
             $payGateway = $this->payService->detail($cacheord->pay_id);
-            \Stripe\Stripe::setApiKey($payGateway -> merchant_pem);
+            \Stripe\Stripe::setApiKey($payGateway->merchant_pem);
             $source_object = \Stripe\Source::retrieve($data['source']);
             if ($source_object->status == 'chargeable') {
                 \Stripe\Charge::create([
@@ -476,6 +478,7 @@ class StripeController extends PayController
             }
             if ($source_object->status == 'consumed' && $source_object->owner->name == $data['orderid']) {
                 $this->orderProcessService->completedOrder($data['orderid'], $cacheord->actual_price, $source_object->id);
+
                 return 'success';
             } else {
                 return 'fail';
@@ -488,22 +491,24 @@ class StripeController extends PayController
     {
         $data = $request->all();
         $cacheord = $this->orderService->detailOrderSN($data['orderid']);
-        if (!$cacheord) {
-            //可能已异步回调成功，跳转
+        if (! $cacheord) {
+            // 可能已异步回调成功，跳转
             return 'fail';
         } else {
             try {
                 $payGateway = $this->payService->detail($cacheord->pay_id);
-                \Stripe\Stripe::setApiKey($payGateway -> merchant_pem);
+                \Stripe\Stripe::setApiKey($payGateway->merchant_pem);
                 $result = \Stripe\Charge::create([
-                    'amount' => bcmul($this->getUsdCurrency($cacheord->actual_price), 100,0),
+                    'amount' => bcmul($this->getUsdCurrency($cacheord->actual_price), 100, 0),
                     'currency' => 'usd',
                     'source' => $data['stripeToken'],
                 ]);
                 if ($result->status == 'succeeded') {
                     $this->orderProcessService->completedOrder($data['orderid'], $cacheord->actual_price, $data['stripeToken']);
+
                     return 'success';
                 }
+
                 return $result;
             } catch (\Exception $e) {
                 return $e->getMessage();
@@ -513,28 +518,28 @@ class StripeController extends PayController
 
     /**
      * 根据RMB获取美元
-     * @param $cny
+     *
      * @return float|int
+     *
      * @throws \Exception
      */
     public function getUsdCurrency($cny)
     {
-        $client = new Client();
+        $client = new Client;
         $res = $client->get('https://m.cmbchina.com/api/rate/fx-rate');
         $fxrate = json_decode($res->getBody(), true);
         $data = $fxrate['body']['data'];
-        if (!isset($data)) {
+        if (! isset($data)) {
             throw new \Exception('汇率接口异常');
         }
         $dfFxrate = 0.13;
         foreach ($data as $item) {
-            if ($item['ccyNbr'] == "美元") {
+            if ($item['ccyNbr'] == '美元') {
                 $dfFxrate = bcdiv(100, $item['rtcOfr'], 2);
                 break;
             }
         }
-        return bcmul($cny , $dfFxrate , 2);
+
+        return bcmul($cny, $dfFxrate, 2);
     }
-
-
 }

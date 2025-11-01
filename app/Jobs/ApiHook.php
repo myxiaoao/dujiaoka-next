@@ -1,5 +1,10 @@
 <?php
 
+declare(strict_types=1);
+/**
+ * This file is part of dujiaoka next server projects.
+ */
+
 namespace App\Jobs;
 
 use App\Models\Order;
@@ -34,10 +39,10 @@ class ApiHook implements ShouldQueue
 
     /**
      * 商品服务层.
+     *
      * @var \App\Service\PayService
      */
     private $goodsService;
-
 
     /**
      * Create a new job instance.
@@ -59,7 +64,7 @@ class ApiHook implements ShouldQueue
     {
         $goodInfo = $this->goodsService->detail($this->order->goods_id);
         // 判断是否有配置支付回调
-        if(empty($goodInfo->api_hook)){
+        if (empty($goodInfo->api_hook)) {
             return;
         }
         $postdata = [
@@ -69,19 +74,18 @@ class ApiHook implements ShouldQueue
             'actual_price' => $this->order->actual_price,
             'order_info' => $this->order->info,
             'good_id' => $goodInfo->id,
-            'gd_name' => $goodInfo->gd_name
+            'gd_name' => $goodInfo->gd_name,
 
         ];
 
-        
         $opts = [
             'http' => [
-                'method'  => 'POST',
-                'header'  => 'Content-type: application/json',
-                'content' => json_encode($postdata,JSON_UNESCAPED_UNICODE)
-            ]
+                'method' => 'POST',
+                'header' => 'Content-type: application/json',
+                'content' => json_encode($postdata, JSON_UNESCAPED_UNICODE),
+            ],
         ];
-        $context  = stream_context_create($opts);
+        $context = stream_context_create($opts);
         file_get_contents($goodInfo->api_hook, false, $context);
     }
 }

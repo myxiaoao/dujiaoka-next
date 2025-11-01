@@ -1,14 +1,12 @@
 <?php
+
+declare(strict_types=1);
 /**
- * The file was created by Assimon.
- *
- * @author    assimon<ashang@utf8.hk>
- * @copyright assimon<ashang@utf8.hk>
- * @link      http://utf8.hk/
+ * This file is part of dujiaoka next server projects.
  */
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Home\HomeController;
 use App\Http\Controllers\Home\OrderController;
+use Illuminate\Support\Facades\Route;
 
 Route::group(['middleware' => ['dujiaoka.boot']], function () {
     // 首页
@@ -41,4 +39,3 @@ Route::group(['middleware' => ['install.check']], function () {
     // 执行安装
     Route::post('do-install', [HomeController::class, 'doInstall']);
 });
-

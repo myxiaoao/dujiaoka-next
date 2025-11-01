@@ -1,11 +1,14 @@
 <?php
 
+declare(strict_types=1);
+/**
+ * This file is part of dujiaoka next server projects.
+ */
+
 namespace App\Listeners;
 
-use App\Models\Carmis;
-use Illuminate\Contracts\Queue\ShouldQueue;
-use Illuminate\Queue\InteractsWithQueue;
 use App\Events\GoodsDeleted as GoodsDeletedEvent;
+use App\Models\Carmis;
 
 class GoodsDeleted
 {
