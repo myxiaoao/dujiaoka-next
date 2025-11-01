@@ -1,0 +1,13 @@
+{
+    "preset": "laravel",
+    "rules": {
+        "header_comment": {
+            "comment_type": "PHPDoc",
+            "header": "This file is part of dujiaoka next server projects.",
+            "separate": "none",
+            "location": "after_declare_strict"
+        },
+        "declare_strict_types": true
+    },
+    "exclude": ["public", "storage", "grpc", "bootstrap/cache", "node_modules"]
+}
