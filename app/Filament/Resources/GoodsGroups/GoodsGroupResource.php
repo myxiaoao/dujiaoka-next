@@ -1,0 +1,58 @@
+<?php
+
+namespace App\Filament\Resources\GoodsGroups;
+
+use App\Filament\Resources\GoodsGroups\Pages\CreateGoodsGroup;
+use App\Filament\Resources\GoodsGroups\Pages\EditGoodsGroup;
+use App\Filament\Resources\GoodsGroups\Pages\ListGoodsGroups;
+use App\Filament\Resources\GoodsGroups\Schemas\GoodsGroupForm;
+use App\Filament\Resources\GoodsGroups\Tables\GoodsGroupsTable;
+use App\Models\GoodsGroup;
+use BackedEnum;
+use Filament\Resources\Resource;
+use Filament\Schemas\Schema;
+use Filament\Support\Icons\Heroicon;
+use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
+use Illuminate\Database\Eloquent\SoftDeletingScope;
+
+class GoodsGroupResource extends Resource
+{
+    protected static ?string $model = GoodsGroup::class;
+
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+
+    public static function form(Schema $schema): Schema
+    {
+        return GoodsGroupForm::configure($schema);
+    }
+
+    public static function table(Table $table): Table
+    {
+        return GoodsGroupsTable::configure($table);
+    }
+
+    public static function getRelations(): array
+    {
+        return [
+            //
+        ];
+    }
+
+    public static function getPages(): array
+    {
+        return [
+            'index' => ListGoodsGroups::route('/'),
+            'create' => CreateGoodsGroup::route('/create'),
+            'edit' => EditGoodsGroup::route('/{record}/edit'),
+        ];
+    }
+
+    public static function getRecordRouteBindingEloquentQuery(): Builder
+    {
+        return parent::getRecordRouteBindingEloquentQuery()
+            ->withoutGlobalScopes([
+                SoftDeletingScope::class,
+            ]);
+    }
+}

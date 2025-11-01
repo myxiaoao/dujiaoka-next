@@ -1,0 +1,19 @@
+<?php
+
+namespace App\Filament\Resources\Carmis\Pages;
+
+use App\Filament\Resources\Carmis\CarmisResource;
+use Filament\Actions\CreateAction;
+use Filament\Resources\Pages\ListRecords;
+
+class ListCarmis extends ListRecords
+{
+    protected static string $resource = CarmisResource::class;
+
+    protected function getHeaderActions(): array
+    {
+        return [
+            CreateAction::make(),
+        ];
+    }
+}
