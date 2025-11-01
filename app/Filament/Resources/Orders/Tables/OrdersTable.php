@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\Orders\Tables;
 
+use App\Models\Coupon;
 use App\Models\Goods;
 use App\Models\Order;
 use App\Models\Pay;
@@ -17,9 +18,11 @@ use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
+use Illuminate\Database\Eloquent\Builder;
 
 class OrdersTable
 {
@@ -64,11 +67,37 @@ class OrdersTable
                 TextColumn::make('goods.gd_name')
                     ->label('商品')
                     ->limit(20)
+                    ->sortable()
                     ->toggleable(),
+
+                TextColumn::make('goods_price')
+                    ->label('商品单价')
+                    ->money('CNY')
+                    ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('buy_amount')
                     ->label('数量')
                     ->alignCenter(),
+
+                TextColumn::make('total_price')
+                    ->label('商品总价')
+                    ->money('CNY')
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                TextColumn::make('coupon.coupon')
+                    ->label('优惠券')
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->placeholder('-'),
+
+                TextColumn::make('coupon_discount_price')
+                    ->label('优惠券折扣')
+                    ->money('CNY')
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                TextColumn::make('wholesale_discount_price')
+                    ->label('批发折扣')
+                    ->money('CNY')
+                    ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('actual_price')
                     ->label('实付金额')
@@ -154,6 +183,31 @@ class OrdersTable
                 SelectFilter::make('pay_id')
                     ->label('支付方式')
                     ->options(Pay::query()->pluck('pay_name', 'id')),
+
+                SelectFilter::make('coupon_id')
+                    ->label('优惠券')
+                    ->options(Coupon::query()->pluck('coupon', 'id'))
+                    ->searchable(),
+
+                Filter::make('created_at')
+                    ->label('创建日期范围')
+                    ->form([
+                        \Filament\Forms\Components\DatePicker::make('created_from')
+                            ->label('开始日期'),
+                        \Filament\Forms\Components\DatePicker::make('created_until')
+                            ->label('结束日期'),
+                    ])
+                    ->query(function (Builder $query, array $data): Builder {
+                        return $query
+                            ->when(
+                                $data['created_from'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '>=', $date),
+                            )
+                            ->when(
+                                $data['created_until'],
+                                fn (Builder $query, $date): Builder => $query->whereDate('created_at', '<=', $date),
+                            );
+                    }),
             ])
             ->recordActions([
                 ViewAction::make(),

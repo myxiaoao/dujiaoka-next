@@ -21,11 +21,6 @@ class DujiaoBoot
      */
     public function handle($request, Closure $next)
     {
-        // 安装检查
-        $installLock = base_path().DIRECTORY_SEPARATOR.'install.lock';
-        if (! file_exists($installLock)) {
-            return redirect(url('install'));
-        }
         // 浏览器检测
         $userAgent = $request->header('user-agent');
         $nowUri = site_url().$request->path();

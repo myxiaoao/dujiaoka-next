@@ -87,6 +87,12 @@ class CouponsTable
                         1 => '启用',
                         0 => '禁用',
                     ]),
+
+                SelectFilter::make('goods_id')
+                    ->label('关联商品')
+                    ->relationship('goods', 'gd_name')
+                    ->searchable()
+                    ->preload(),
             ])
             ->recordActions([
                 EditAction::make(),

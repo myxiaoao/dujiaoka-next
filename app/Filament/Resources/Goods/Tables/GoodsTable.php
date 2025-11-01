@@ -47,7 +47,14 @@ class GoodsTable
                 TextColumn::make('gd_description')
                     ->label('商品描述')
                     ->limit(40)
-                    ->toggleable(),
+                    ->toggleable()
+                    ->searchable(),
+
+                TextColumn::make('gd_keywords')
+                    ->label('关键词')
+                    ->limit(30)
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->searchable(),
 
                 TextColumn::make('group.gp_name')
                     ->label('商品分类')
@@ -133,6 +140,19 @@ class GoodsTable
                     ->label('商品分类')
                     ->options(GoodsGroup::query()->pluck('gp_name', 'id'))
                     ->searchable(),
+
+                SelectFilter::make('coupon_id')
+                    ->label('关联优惠券')
+                    ->relationship('coupon', 'coupon')
+                    ->searchable()
+                    ->preload(),
+
+                SelectFilter::make('is_open')
+                    ->label('上架状态')
+                    ->options([
+                        1 => '已上架',
+                        0 => '已下架',
+                    ]),
             ])
             ->recordActions([
                 ViewAction::make(),

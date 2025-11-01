@@ -47,6 +47,7 @@ class AdminPanelProvider extends PanelProvider
                 // AccountWidget::class,
                 // FilamentInfoWidget::class,
             ])
+            ->profile()
             ->maxContentWidth('full')
             ->sidebarWidth('15rem')
             ->sidebarCollapsibleOnDesktop()

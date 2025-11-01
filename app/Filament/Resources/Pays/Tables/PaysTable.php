@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\Pays\Tables;
 
+use App\Models\Pay;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
@@ -14,6 +15,7 @@ use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
+use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TrashedFilter;
 use Filament\Tables\Table;
 
@@ -28,13 +30,45 @@ class PaysTable
                     ->sortable(),
 
                 TextColumn::make('pay_name')
-                    ->label('支付方式')
+                    ->label('支付名称')
                     ->searchable()
                     ->sortable(),
 
+                TextColumn::make('pay_check')
+                    ->label('支付标识')
+                    ->searchable()
+                    ->copyable()
+                    ->limit(20),
+
+                TextColumn::make('pay_method')
+                    ->label('支付类型')
+                    ->badge()
+                    ->color(fn (int $state): string => match ($state) {
+                        Pay::METHOD_JUMP => 'success',
+                        Pay::METHOD_SCAN => 'info',
+                    })
+                    ->formatStateUsing(fn (int $state): string => match ($state) {
+                        Pay::METHOD_JUMP => '跳转',
+                        Pay::METHOD_SCAN => '扫码',
+                        default => '未知',
+                    })
+                    ->toggleable(),
+
+                TextColumn::make('pay_client')
+                    ->label('适用端')
+                    ->badge()
+                    ->color('warning')
+                    ->formatStateUsing(fn (int $state): string => match ($state) {
+                        Pay::PAY_CLIENT_PC => 'PC',
+                        Pay::PAY_CLIENT_MOBILE => '移动端',
+                        default => '未知',
+                    })
+                    ->toggleable(),
+
                 TextColumn::make('pay_handleroute')
                     ->label('处理路由')
-                    ->limit(30),
+                    ->limit(30)
+                    ->toggleable(),
 
                 TextColumn::make('merchant_id')
                     ->label('商户ID')
@@ -63,6 +97,27 @@ class PaysTable
             ])
             ->filters([
                 TrashedFilter::make(),
+
+                SelectFilter::make('pay_method')
+                    ->label('支付类型')
+                    ->options([
+                        Pay::METHOD_JUMP => '跳转',
+                        Pay::METHOD_SCAN => '扫码',
+                    ]),
+
+                SelectFilter::make('pay_client')
+                    ->label('适用端')
+                    ->options([
+                        Pay::PAY_CLIENT_PC => 'PC',
+                        Pay::PAY_CLIENT_MOBILE => '移动端',
+                    ]),
+
+                SelectFilter::make('is_open')
+                    ->label('启用状态')
+                    ->options([
+                        1 => '已启用',
+                        0 => '已禁用',
+                    ]),
             ])
             ->recordActions([
                 EditAction::make(),
