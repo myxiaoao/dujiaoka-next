@@ -34,9 +34,9 @@ php artisan serve
 php artisan dujiaoka:upgrade
 
 # 详细文档
-# - UPGRADE_GUIDE.md
-# - UPGRADE_QUICKSTART.md
-# - MIGRATION_SUMMARY.md
+# - docs/UPGRADE_GUIDE.md
+# - docs/UPGRADE_QUICKSTART.md
+# - docs/MIGRATION_SUMMARY.md
 ```
 
 ## 📋 主要功能
@@ -52,9 +52,12 @@ php artisan dujiaoka:upgrade
 
 ## 📚 文档
 
-- [完整升级指南](UPGRADE_GUIDE.md)
-- [快速升级](UPGRADE_QUICKSTART.md)
-- [迁移总结](MIGRATION_SUMMARY.md)
+- [完整升级指南](docs/UPGRADE_GUIDE.md)
+- [快速升级](docs/UPGRADE_QUICKSTART.md)
+- [迁移总结](docs/MIGRATION_SUMMARY.md)
+- [部署指南](docs/DEPLOYMENT_GUIDE.md)
+- [测试清单](docs/TEST_CHECKLIST.md)
+- [更多文档](docs/)
 
 ## 🛠 技术栈
 
