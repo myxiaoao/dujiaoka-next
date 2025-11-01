@@ -32,10 +32,3 @@ Route::group(['middleware' => ['dujiaoka.boot']], function () {
     // 通过浏览器查询
     Route::post('search-order-by-browser', [OrderController::class, 'searchOrderByBrowser']);
 });
-
-Route::group(['middleware' => ['install.check']], function () {
-    // 安装
-    Route::get('install', [HomeController::class, 'install']);
-    // 执行安装
-    Route::post('do-install', [HomeController::class, 'doInstall']);
-});

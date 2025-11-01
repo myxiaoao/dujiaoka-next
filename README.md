@@ -1,4 +1,4 @@
-# 独角数卡 Laravel 12 版本
+# 独角数卡 Laravel 12+ 版本
 
 > 从 Laravel 6 + dcat-admin 升级到 Laravel 12 + Filament 4 的现代化版本
 
@@ -62,14 +62,10 @@ php artisan dujiaoka:upgrade
 ## 🛠 技术栈
 
 - PHP >= 8.2
-- Laravel 12
-- Filament 4
+- Laravel 12+
+- Filament 4+
 - MySQL 5.7+
 
 ## 📝 许可证
 
 继承原独角数卡项目许可证
-
----
-
-**版本**: Laravel 12.x | **管理面板**: Filament 4.x

@@ -18,7 +18,6 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'dujiaoka.boot' => \App\Http\Middleware\DujiaoBoot::class,
             'dujiaoka.system' => \App\Http\Middleware\DujiaoSystem::class,
-            'install.check' => \App\Http\Middleware\InstallCheck::class,
             'dujiaoka.pay_gate_way' => \App\Http\Middleware\PayGateWay::class,
         ]);
     })
