@@ -32,81 +32,16 @@ class OrdersTable
             ->columns([
                 TextColumn::make('id')
                     ->label('ID')
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('order_sn')
                     ->label('订单号')
                     ->searchable()
                     ->sortable()
                     ->copyable()
+                    ->weight('bold')
                     ->limit(20),
-
-                TextColumn::make('title')
-                    ->label('订单标题')
-                    ->limit(30)
-                    ->searchable(),
-
-                TextColumn::make('type')
-                    ->label('类型')
-                    ->badge()
-                    ->color(fn (int $state): string => match ($state) {
-                        Order::AUTOMATIC_DELIVERY => 'success',
-                        Order::MANUAL_PROCESSING => 'info',
-                    })
-                    ->formatStateUsing(fn (int $state): string => match ($state) {
-                        Order::AUTOMATIC_DELIVERY => '自动发货',
-                        Order::MANUAL_PROCESSING => '人工处理',
-                    }),
-
-                TextColumn::make('email')
-                    ->label('邮箱')
-                    ->searchable()
-                    ->copyable()
-                    ->limit(25),
-
-                TextColumn::make('goods.gd_name')
-                    ->label('商品')
-                    ->limit(20)
-                    ->sortable()
-                    ->toggleable(),
-
-                TextColumn::make('goods_price')
-                    ->label('商品单价')
-                    ->money('CNY')
-                    ->toggleable(isToggledHiddenByDefault: true),
-
-                TextColumn::make('buy_amount')
-                    ->label('数量')
-                    ->alignCenter(),
-
-                TextColumn::make('total_price')
-                    ->label('商品总价')
-                    ->money('CNY')
-                    ->toggleable(isToggledHiddenByDefault: true),
-
-                TextColumn::make('coupon.coupon')
-                    ->label('优惠券')
-                    ->toggleable(isToggledHiddenByDefault: true)
-                    ->placeholder('-'),
-
-                TextColumn::make('coupon_discount_price')
-                    ->label('优惠券折扣')
-                    ->money('CNY')
-                    ->toggleable(isToggledHiddenByDefault: true),
-
-                TextColumn::make('wholesale_discount_price')
-                    ->label('批发折扣')
-                    ->money('CNY')
-                    ->toggleable(isToggledHiddenByDefault: true),
-
-                TextColumn::make('actual_price')
-                    ->label('实付金额')
-                    ->money('CNY')
-                    ->sortable(),
-
-                TextColumn::make('pay.pay_name')
-                    ->label('支付方式')
-                    ->toggleable(),
 
                 TextColumn::make('status')
                     ->label('状态')
@@ -126,28 +61,104 @@ class OrdersTable
                         Order::STATUS_FAILURE => '失败',
                         Order::STATUS_ABNORMAL => '异常',
                         default => '未知',
-                    }),
+                    })
+                    ->sortable(),
+
+                TextColumn::make('goods.gd_name')
+                    ->label('商品')
+                    ->limit(25)
+                    ->sortable()
+                    ->searchable(),
+
+                TextColumn::make('type')
+                    ->label('类型')
+                    ->badge()
+                    ->color(fn (int $state): string => match ($state) {
+                        Order::AUTOMATIC_DELIVERY => 'success',
+                        Order::MANUAL_PROCESSING => 'warning',
+                    })
+                    ->formatStateUsing(fn (int $state): string => match ($state) {
+                        Order::AUTOMATIC_DELIVERY => '自动',
+                        Order::MANUAL_PROCESSING => '人工',
+                    })
+                    ->toggleable(),
+
+                TextColumn::make('buy_amount')
+                    ->label('数量')
+                    ->alignCenter()
+                    ->badge()
+                    ->color('info'),
+
+                TextColumn::make('actual_price')
+                    ->label('实付金额')
+                    ->money('CNY')
+                    ->sortable()
+                    ->weight('bold')
+                    ->color('success'),
+
+                TextColumn::make('pay.pay_name')
+                    ->label('支付方式')
+                    ->badge()
+                    ->color('gray'),
+
+                TextColumn::make('email')
+                    ->label('邮箱')
+                    ->searchable()
+                    ->copyable()
+                    ->limit(25)
+                    ->toggleable(),
+
+                TextColumn::make('search_pwd')
+                    ->label('查询密码')
+                    ->copyable()
+                    ->toggleable(),
+
+                TextColumn::make('created_at')
+                    ->label('下单时间')
+                    ->dateTime('Y-m-d H:i')
+                    ->sortable(),
+
+                TextColumn::make('title')
+                    ->label('订单标题')
+                    ->limit(30)
+                    ->searchable()
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                TextColumn::make('goods_price')
+                    ->label('单价')
+                    ->money('CNY')
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                TextColumn::make('total_price')
+                    ->label('总价')
+                    ->money('CNY')
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                TextColumn::make('coupon.coupon')
+                    ->label('优惠券')
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->placeholder('-'),
+
+                TextColumn::make('coupon_discount_price')
+                    ->label('券折扣')
+                    ->money('CNY')
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                TextColumn::make('wholesale_discount_price')
+                    ->label('批发折扣')
+                    ->money('CNY')
+                    ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('trade_no')
                     ->label('交易流水号')
                     ->searchable()
                     ->copyable()
-                    ->toggleable()
+                    ->toggleable(isToggledHiddenByDefault: true)
                     ->limit(20),
-
-                TextColumn::make('search_pwd')
-                    ->label('查询密码')
-                    ->copyable()
-                    ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('buy_ip')
                     ->label('购买IP')
                     ->toggleable(isToggledHiddenByDefault: true),
-
-                TextColumn::make('created_at')
-                    ->label('创建时间')
-                    ->dateTime('Y-m-d H:i')
-                    ->sortable(),
 
                 TextColumn::make('updated_at')
                     ->label('更新时间')

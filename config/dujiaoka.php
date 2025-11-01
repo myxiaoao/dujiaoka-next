@@ -5,7 +5,7 @@ declare(strict_types=1);
  * This file is part of dujiaoka next server projects.
  */
 return [
-    'dujiaoka_version' => '2.0.6',
+    'dujiaoka_version' => 'next-1.0.0',
     // 模板集合
     'templates' => [
         'unicorn' => '官方[unicorn-独角兽]',

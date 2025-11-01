@@ -33,6 +33,15 @@ class OrderForm
                             ->label('订单标题')
                             ->disabled(),
 
+                        Radio::make('type')
+                            ->label('订单类型')
+                            ->options([
+                                Order::AUTOMATIC_DELIVERY => '自动发货',
+                                Order::MANUAL_PROCESSING => '人工处理',
+                            ])
+                            ->disabled()
+                            ->inline(),
+
                         TextInput::make('email')
                             ->label('邮箱')
                             ->disabled(),

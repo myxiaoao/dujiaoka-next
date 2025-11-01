@@ -13,6 +13,7 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
+use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TrashedFilter;
@@ -26,38 +27,57 @@ class CouponsTable
             ->columns([
                 TextColumn::make('id')
                     ->label('ID')
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('coupon')
                     ->label('优惠券码')
                     ->searchable()
-                    ->copyable(),
+                    ->copyable()
+                    ->weight('bold')
+                    ->badge()
+                    ->color('primary'),
 
                 TextColumn::make('discount')
                     ->label('优惠金额')
                     ->money('CNY')
-                    ->sortable(),
+                    ->sortable()
+                    ->weight('bold')
+                    ->color('success'),
+
+                TextColumn::make('ret')
+                    ->label('剩余次数')
+                    ->sortable()
+                    ->badge()
+                    ->color(fn (int $state): string => match (true) {
+                        $state == 0 => 'info',
+                        $state > 10 => 'success',
+                        $state > 0 => 'warning',
+                        default => 'danger',
+                    })
+                    ->formatStateUsing(fn (int $state): string => $state == 0 ? '无限' : (string) $state),
 
                 TextColumn::make('is_use')
                     ->label('使用状态')
                     ->badge()
                     ->color(fn (int $state): string => match ($state) {
                         Coupon::STATUS_UNUSED => 'success',
-                        Coupon::STATUS_USE => 'danger',
+                        Coupon::STATUS_USE => 'gray',
                         default => 'gray',
                     })
                     ->formatStateUsing(fn (int $state): string => match ($state) {
-                        Coupon::STATUS_UNUSED => '未使用',
-                        Coupon::STATUS_USE => '已使用',
+                        Coupon::STATUS_UNUSED => '可用',
+                        Coupon::STATUS_USE => '已用',
                         default => '未知',
                     }),
 
-                TextColumn::make('ret')
-                    ->label('剩余次数')
-                    ->sortable()
-                    ->badge()
-                    ->color(fn (int $state): string => $state > 0 ? 'success' : 'danger')
-                    ->formatStateUsing(fn (int $state): string => $state == 0 ? '无限' : (string) $state),
+                IconColumn::make('is_open')
+                    ->label('启用')
+                    ->boolean()
+                    ->trueIcon('heroicon-o-check-circle')
+                    ->falseIcon('heroicon-o-x-circle')
+                    ->trueColor('success')
+                    ->falseColor('danger'),
 
                 TextColumn::make('created_at')
                     ->label('创建时间')

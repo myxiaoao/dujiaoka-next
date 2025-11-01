@@ -31,7 +31,8 @@ class GoodsTable
             ->columns([
                 TextColumn::make('id')
                     ->label('ID')
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(),
 
                 ImageColumn::make('picture')
                     ->label('图片')
@@ -42,45 +43,33 @@ class GoodsTable
                     ->label('商品名称')
                     ->searchable()
                     ->sortable()
-                    ->limit(30),
-
-                TextColumn::make('gd_description')
-                    ->label('商品描述')
-                    ->limit(40)
-                    ->toggleable()
-                    ->searchable(),
-
-                TextColumn::make('gd_keywords')
-                    ->label('关键词')
                     ->limit(30)
-                    ->toggleable(isToggledHiddenByDefault: true)
-                    ->searchable(),
+                    ->weight('bold'),
 
                 TextColumn::make('group.gp_name')
-                    ->label('商品分类')
+                    ->label('分类')
+                    ->badge()
+                    ->color('info')
                     ->sortable(),
 
                 TextColumn::make('type')
-                    ->label('发货类型')
+                    ->label('类型')
                     ->badge()
                     ->color(fn (int $state): string => match ($state) {
                         Goods::AUTOMATIC_DELIVERY => 'success',
-                        Goods::MANUAL_PROCESSING => 'info',
+                        Goods::MANUAL_PROCESSING => 'warning',
                     })
                     ->formatStateUsing(fn (int $state): string => match ($state) {
-                        Goods::AUTOMATIC_DELIVERY => '自动发货',
-                        Goods::MANUAL_PROCESSING => '人工处理',
+                        Goods::AUTOMATIC_DELIVERY => '自动',
+                        Goods::MANUAL_PROCESSING => '人工',
                     }),
 
-                TextColumn::make('retail_price')
-                    ->label('零售价')
-                    ->money('CNY')
-                    ->toggleable(),
-
                 TextColumn::make('actual_price')
-                    ->label('实际售价')
+                    ->label('售价')
                     ->money('CNY')
-                    ->sortable(),
+                    ->sortable()
+                    ->weight('bold')
+                    ->color('success'),
 
                 TextColumn::make('in_stock')
                     ->label('库存')
@@ -96,15 +85,23 @@ class GoodsTable
                         return $record->in_stock;
                     })
                     ->badge()
-                    ->color(fn (int $state): string => $state > 0 ? 'success' : 'danger'),
+                    ->color(fn (int $state): string => match (true) {
+                        $state > 100 => 'success',
+                        $state > 10 => 'warning',
+                        $state > 0 => 'danger',
+                        default => 'gray',
+                    })
+                    ->sortable(),
 
                 TextColumn::make('sales_volume')
                     ->label('销量')
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(),
 
                 TextColumn::make('ord')
                     ->label('排序')
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(),
 
                 IconColumn::make('is_open')
                     ->label('状态')
@@ -114,11 +111,28 @@ class GoodsTable
                     ->trueColor('success')
                     ->falseColor('danger'),
 
+                TextColumn::make('retail_price')
+                    ->label('原价')
+                    ->money('CNY')
+                    ->toggleable(isToggledHiddenByDefault: true),
+
+                TextColumn::make('gd_description')
+                    ->label('商品描述')
+                    ->limit(40)
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->searchable(),
+
+                TextColumn::make('gd_keywords')
+                    ->label('关键词')
+                    ->limit(30)
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->searchable(),
+
                 TextColumn::make('created_at')
                     ->label('创建时间')
                     ->dateTime('Y-m-d H:i')
                     ->sortable()
-                    ->toggleable(),
+                    ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('updated_at')
                     ->label('更新时间')

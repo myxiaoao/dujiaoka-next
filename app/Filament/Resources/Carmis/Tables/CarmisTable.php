@@ -28,40 +28,47 @@ class CarmisTable
             ->columns([
                 TextColumn::make('id')
                     ->label('ID')
-                    ->sortable(),
+                    ->sortable()
+                    ->toggleable(isToggledHiddenByDefault: true),
 
                 TextColumn::make('goods.gd_name')
                     ->label('关联商品')
                     ->searchable()
                     ->sortable()
-                    ->limit(30),
-
-                TextColumn::make('carmi')
-                    ->label('卡密')
                     ->limit(30)
-                    ->searchable()
-                    ->copyable()
-                    ->tooltip('点击复制'),
+                    ->weight('bold')
+                    ->badge()
+                    ->color('info'),
 
                 TextColumn::make('status')
                     ->label('状态')
                     ->badge()
                     ->color(fn (int $state): string => match ($state) {
                         Carmis::STATUS_UNSOLD => 'success',
-                        Carmis::STATUS_SOLD => 'danger',
+                        Carmis::STATUS_SOLD => 'gray',
                     })
                     ->formatStateUsing(fn (int $state): string => match ($state) {
-                        Carmis::STATUS_UNSOLD => '未售出',
-                        Carmis::STATUS_SOLD => '已售出',
-                    }),
+                        Carmis::STATUS_UNSOLD => '可用',
+                        Carmis::STATUS_SOLD => '已售',
+                    })
+                    ->sortable(),
+
+                TextColumn::make('carmi')
+                    ->label('卡密内容')
+                    ->limit(40)
+                    ->searchable()
+                    ->copyable()
+                    ->tooltip('点击复制')
+                    ->fontFamily('mono'),
 
                 IconColumn::make('is_loop')
-                    ->label('循环使用')
+                    ->label('循环')
                     ->boolean()
                     ->trueIcon('heroicon-o-arrow-path')
                     ->falseIcon('heroicon-o-x-mark')
                     ->trueColor('info')
-                    ->falseColor('gray'),
+                    ->falseColor('gray')
+                    ->tooltip(fn ($record) => $record->is_loop ? '循环使用' : '一次性'),
 
                 TextColumn::make('created_at')
                     ->label('创建时间')
