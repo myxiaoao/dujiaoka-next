@@ -33,26 +33,24 @@ class CouponsTable
                     ->searchable()
                     ->copyable(),
 
-                TextColumn::make('type')
-                    ->label('类型')
+                TextColumn::make('discount')
+                    ->label('优惠金额')
+                    ->money('CNY')
+                    ->sortable(),
+
+                TextColumn::make('is_use')
+                    ->label('使用状态')
                     ->badge()
                     ->color(fn (int $state): string => match ($state) {
-                        Coupon::TYPE_FIXED_AMOUNT => 'success',
-                        Coupon::TYPE_PERCENTAGE => 'info',
+                        Coupon::STATUS_UNUSED => 'success',
+                        Coupon::STATUS_USE => 'danger',
+                        default => 'gray',
                     })
                     ->formatStateUsing(fn (int $state): string => match ($state) {
-                        Coupon::TYPE_FIXED_AMOUNT => '固定金额',
-                        Coupon::TYPE_PERCENTAGE => '百分比',
+                        Coupon::STATUS_UNUSED => '未使用',
+                        Coupon::STATUS_USE => '已使用',
+                        default => '未知',
                     }),
-
-                TextColumn::make('discount')
-                    ->label('折扣值'),
-
-                TextColumn::make('used')
-                    ->label('已使用')
-                    ->sortable()
-                    ->badge()
-                    ->color('warning'),
 
                 TextColumn::make('ret')
                     ->label('剩余次数')
@@ -76,11 +74,18 @@ class CouponsTable
             ->filters([
                 TrashedFilter::make(),
 
-                SelectFilter::make('type')
-                    ->label('优惠券类型')
+                SelectFilter::make('is_use')
+                    ->label('使用状态')
                     ->options([
-                        Coupon::TYPE_FIXED_AMOUNT => '固定金额',
-                        Coupon::TYPE_PERCENTAGE => '百分比',
+                        Coupon::STATUS_UNUSED => '未使用',
+                        Coupon::STATUS_USE => '已使用',
+                    ]),
+
+                SelectFilter::make('is_open')
+                    ->label('启用状态')
+                    ->options([
+                        1 => '启用',
+                        0 => '禁用',
                     ]),
             ])
             ->recordActions([

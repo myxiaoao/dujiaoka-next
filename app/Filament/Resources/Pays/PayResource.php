@@ -25,7 +25,15 @@ class PayResource extends Resource
 {
     protected static ?string $model = Pay::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static ?string $navigationLabel = '支付方式';
+
+    protected static ?string $modelLabel = '支付方式';
+
+    protected static ?string $pluralModelLabel = '支付方式';
+
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedCreditCard;
+
+    protected static ?int $navigationSort = 6;
 
     public static function form(Schema $schema): Schema
     {

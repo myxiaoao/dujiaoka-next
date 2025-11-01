@@ -25,7 +25,15 @@ class GoodsResource extends Resource
 {
     protected static ?string $model = Goods::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static ?string $navigationLabel = '商品管理';
+
+    protected static ?string $modelLabel = '商品';
+
+    protected static ?string $pluralModelLabel = '商品';
+
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedShoppingBag;
+
+    protected static ?int $navigationSort = 2;
 
     public static function form(Schema $schema): Schema
     {

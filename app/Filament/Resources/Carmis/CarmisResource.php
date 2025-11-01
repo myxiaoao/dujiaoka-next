@@ -25,7 +25,15 @@ class CarmisResource extends Resource
 {
     protected static ?string $model = Carmis::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static ?string $navigationLabel = '卡密管理';
+
+    protected static ?string $modelLabel = '卡密';
+
+    protected static ?string $pluralModelLabel = '卡密';
+
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedTicket;
+
+    protected static ?int $navigationSort = 3;
 
     public static function form(Schema $schema): Schema
     {

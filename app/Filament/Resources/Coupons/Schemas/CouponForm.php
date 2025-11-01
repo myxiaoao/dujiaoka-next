@@ -7,10 +7,10 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\Coupons\Schemas;
 
-use App\Models\Coupon;
-use Filament\Forms\Components\Radio;
 use Filament\Forms\Components\Section;
+use Filament\Forms\Components\Select;
 use Filament\Forms\Components\TextInput;
+use Filament\Forms\Components\Toggle;
 use Filament\Schemas\Schema;
 
 class CouponForm
@@ -19,43 +19,46 @@ class CouponForm
     {
         return $schema
             ->components([
-                Section::make('优惠券信息')
+                Section::make('优惠券基本信息')
                     ->schema([
                         TextInput::make('coupon')
                             ->label('优惠券码')
                             ->required()
                             ->unique(ignoreRecord: true)
-                            ->maxLength(255),
-
-                        Radio::make('type')
-                            ->label('优惠券类型')
-                            ->options([
-                                Coupon::TYPE_FIXED_AMOUNT => '固定金额',
-                                Coupon::TYPE_PERCENTAGE => '百分比折扣',
-                            ])
-                            ->default(Coupon::TYPE_FIXED_AMOUNT)
-                            ->required()
-                            ->inline(),
+                            ->maxLength(150)
+                            ->helperText('优惠券的唯一标识码'),
 
                         TextInput::make('discount')
-                            ->label('折扣值')
+                            ->label('优惠金额')
                             ->numeric()
                             ->required()
-                            ->helperText('固定金额时为具体金额，百分比时为折扣百分比（如10表示10%）'),
-
-                        TextInput::make('used')
-                            ->label('已使用次数')
-                            ->numeric()
-                            ->default(0)
-                            ->disabled(),
+                            ->prefix('¥')
+                            ->step(0.01)
+                            ->helperText('减免的金额'),
 
                         TextInput::make('ret')
-                            ->label('剩余次数')
+                            ->label('剩余使用次数')
                             ->numeric()
                             ->default(0)
                             ->helperText('0表示无限制使用'),
+
+                        Toggle::make('is_open')
+                            ->label('是否启用')
+                            ->default(true)
+                            ->inline(false),
                     ])
                     ->columns(2),
+
+                Section::make('关联商品')
+                    ->schema([
+                        Select::make('goods')
+                            ->label('适用商品')
+                            ->relationship('goods', 'gd_name')
+                            ->multiple()
+                            ->preload()
+                            ->searchable()
+                            ->helperText('不选择则适用于所有商品'),
+                    ]),
             ]);
     }
 }

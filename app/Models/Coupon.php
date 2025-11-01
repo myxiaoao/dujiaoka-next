@@ -17,22 +17,11 @@ class Coupon extends BaseModel
 
     protected $fillable = [
         'coupon',
-        'type',
         'discount',
-        'pv',
+        'is_use',
         'ret',
         'is_open',
     ];
-
-    /**
-     * 一次性使用
-     */
-    const TYPE_ONE_TIME = 1;
-
-    /**
-     * 重复使用
-     */
-    const TYPE_REPEAT = 2;
 
     /**
      * 未使用

@@ -25,7 +25,15 @@ class EmailtplResource extends Resource
 {
     protected static ?string $model = Emailtpl::class;
 
-    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedRectangleStack;
+    protected static ?string $navigationLabel = '邮件模板';
+
+    protected static ?string $modelLabel = '邮件模板';
+
+    protected static ?string $pluralModelLabel = '邮件模板';
+
+    protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedEnvelope;
+
+    protected static ?int $navigationSort = 7;
 
     public static function form(Schema $schema): Schema
     {
