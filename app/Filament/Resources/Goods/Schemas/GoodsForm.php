@@ -24,8 +24,10 @@ class GoodsForm
     public static function configure(Schema $schema): Schema
     {
         return $schema
+            ->columns(1)
             ->components([
                 Section::make('基本信息')
+                    ->columnSpan('full')
                     ->schema([
                         TextInput::make('gd_name')
                             ->label('商品名称')
@@ -53,10 +55,10 @@ class GoodsForm
                             ->image()
                             ->directory('goods')
                             ->helperText('推荐尺寸：400x400 像素'),
-                    ])
-                    ->columns(2),
+                    ]),
 
                 Section::make('商品类型与定价')
+                    ->columnSpan('full')
                     ->schema([
                         Radio::make('type')
                             ->label('发货类型')
@@ -83,10 +85,10 @@ class GoodsForm
                             ->prefix('¥')
                             ->required()
                             ->helperText('实际销售价格'),
-                    ])
-                    ->columns(3),
+                    ]),
 
                 Section::make('库存与销售')
+                    ->columnSpan('full')
                     ->schema([
                         TextInput::make('in_stock')
                             ->label('库存数量')
@@ -111,10 +113,10 @@ class GoodsForm
                             ->default(1)
                             ->helperText('数值越大越靠前')
                             ->required(),
-                    ])
-                    ->columns(4),
+                    ]),
 
                 Section::make('商品详情')
+                    ->columnSpan('full')
                     ->schema([
                         RichEditor::make('buy_prompt')
                             ->label('购买提示')
@@ -125,8 +127,7 @@ class GoodsForm
                                 'link',
                                 'bulletList',
                                 'orderedList',
-                            ])
-                            ->columnSpanFull(),
+                            ]),
 
                         RichEditor::make('description')
                             ->label('商品详细介绍')
@@ -137,34 +138,33 @@ class GoodsForm
                                 'link',
                                 'bulletList',
                                 'orderedList',
-                            ])
-                            ->columnSpanFull(),
+                            ]),
                     ]),
 
                 Section::make('高级配置')
+                    ->columnSpan('full')
+                    ->description('可选配置，用于自定义表单字段、批发价格和API回调')
                     ->schema([
                         Textarea::make('other_ipu_cnf')
                             ->label('自定义输入字段')
                             ->rows(5)
-                            ->helperText('JSON格式配置，例如：{"qq":"QQ号码","phone":"手机号"}')
-                            ->columnSpanFull(),
+                            ->helperText('JSON格式配置，例如：{"qq":"QQ号码","phone":"手机号"}'),
 
                         Textarea::make('wholesale_price_cnf')
                             ->label('批发价格配置')
                             ->rows(5)
-                            ->helperText('JSON格式配置批发价，例如：{"10":9.8,"50":9.5}')
-                            ->columnSpanFull(),
+                            ->helperText('JSON格式配置批发价，例如：{"10":9.8,"50":9.5}'),
 
                         Textarea::make('api_hook')
                             ->label('API回调地址')
                             ->rows(3)
-                            ->helperText('订单完成后的回调地址')
-                            ->columnSpanFull(),
+                            ->helperText('订单完成后的回调地址'),
                     ])
                     ->collapsible()
                     ->collapsed(),
 
                 Section::make('状态')
+                    ->columnSpan('full')
                     ->schema([
                         Toggle::make('is_open')
                             ->label('是否上架')

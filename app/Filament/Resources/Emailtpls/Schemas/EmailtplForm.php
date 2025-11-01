@@ -17,8 +17,10 @@ class EmailtplForm
     public static function configure(Schema $schema): Schema
     {
         return $schema
+            ->columns(1)
             ->components([
                 Section::make('邮件模板信息')
+                    ->columnSpan('full')
                     ->schema([
                         TextInput::make('tpl_name')
                             ->label('模板名称')
@@ -41,10 +43,8 @@ class EmailtplForm
                             ->label('邮件内容')
                             ->required()
                             ->rows(10)
-                            ->helperText('支持变量替换，如 {order_sn}, {title}')
-                            ->columnSpanFull(),
-                    ])
-                    ->columns(2),
+                            ->helperText('支持变量替换，如 {order_sn}, {title}'),
+                    ]),
             ]);
     }
 }

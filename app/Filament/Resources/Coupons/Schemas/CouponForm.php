@@ -18,8 +18,10 @@ class CouponForm
     public static function configure(Schema $schema): Schema
     {
         return $schema
+            ->columns(1)
             ->components([
                 Section::make('优惠券基本信息')
+                    ->columnSpan('full')
                     ->schema([
                         TextInput::make('coupon')
                             ->label('优惠券码')
@@ -46,10 +48,10 @@ class CouponForm
                             ->label('是否启用')
                             ->default(true)
                             ->inline(false),
-                    ])
-                    ->columns(2),
+                    ]),
 
                 Section::make('关联商品')
+                    ->columnSpan('full')
                     ->schema([
                         Select::make('goods')
                             ->label('适用商品')

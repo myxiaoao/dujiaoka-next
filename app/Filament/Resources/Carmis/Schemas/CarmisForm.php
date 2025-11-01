@@ -21,8 +21,10 @@ class CarmisForm
     public static function configure(Schema $schema): Schema
     {
         return $schema
+            ->columns(1)
             ->components([
                 Section::make('卡密信息')
+                    ->columnSpan('full')
                     ->schema([
                         Select::make('goods_id')
                             ->label('关联商品')
@@ -50,10 +52,10 @@ class CarmisForm
                             ->default(false)
                             ->helperText('启用后，卡密售出后会自动标记为未售出，可重复销售')
                             ->inline(false),
-                    ])
-                    ->columns(2),
+                    ]),
 
                 Section::make('卡密内容')
+                    ->columnSpan('full')
                     ->schema([
                         Textarea::make('carmi')
                             ->label('卡密')

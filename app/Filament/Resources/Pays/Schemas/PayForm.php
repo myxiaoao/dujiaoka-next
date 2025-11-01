@@ -18,8 +18,10 @@ class PayForm
     public static function configure(Schema $schema): Schema
     {
         return $schema
+            ->columns(1)
             ->components([
                 Section::make('支付网关信息')
+                    ->columnSpan('full')
                     ->schema([
                         TextInput::make('pay_name')
                             ->label('支付方式名称')
@@ -48,8 +50,7 @@ class PayForm
                             ->label('是否启用')
                             ->default(true)
                             ->inline(false),
-                    ])
-                    ->columns(2),
+                    ]),
             ]);
     }
 }

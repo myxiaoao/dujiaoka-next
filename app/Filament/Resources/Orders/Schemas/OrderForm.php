@@ -20,8 +20,10 @@ class OrderForm
     public static function configure(Schema $schema): Schema
     {
         return $schema
+            ->columns(1)
             ->components([
-                Section::make('订单信息')
+                Section::make('订单基本信息')
+                    ->columnSpan('full')
                     ->schema([
                         TextInput::make('order_sn')
                             ->label('订单号')
@@ -38,10 +40,10 @@ class OrderForm
                         TextInput::make('buy_ip')
                             ->label('购买IP')
                             ->disabled(),
-                    ])
-                    ->columns(2),
+                    ]),
 
                 Section::make('商品信息')
+                    ->columnSpan('full')
                     ->schema([
                         Placeholder::make('goods_name')
                             ->label('商品名称')
@@ -60,10 +62,10 @@ class OrderForm
                             ->label('商品总价')
                             ->prefix('¥')
                             ->disabled(),
-                    ])
-                    ->columns(4),
+                    ]),
 
-                Section::make('优惠信息')
+                Section::make('价格与优惠')
+                    ->columnSpan('full')
                     ->schema([
                         Placeholder::make('coupon_code')
                             ->label('优惠券')
@@ -83,10 +85,10 @@ class OrderForm
                             ->label('实际支付金额')
                             ->prefix('¥')
                             ->disabled(),
-                    ])
-                    ->columns(4),
+                    ]),
 
                 Section::make('支付信息')
+                    ->columnSpan('full')
                     ->schema([
                         Placeholder::make('pay_name')
                             ->label('支付方式')
@@ -94,12 +96,11 @@ class OrderForm
 
                         TextInput::make('trade_no')
                             ->label('交易流水号')
-                            ->disabled()
-                            ->columnSpan(2),
-                    ])
-                    ->columns(3),
+                            ->disabled(),
+                    ]),
 
                 Section::make('订单状态')
+                    ->columnSpan('full')
                     ->schema([
                         Radio::make('status')
                             ->label('订单状态')
@@ -110,15 +111,16 @@ class OrderForm
                                 Order::STATUS_FAILURE => '失败',
                                 Order::STATUS_ABNORMAL => '异常',
                             ])
-                            ->required(),
+                            ->required()
+                            ->inline(),
 
                         TextInput::make('search_pwd')
                             ->label('查询密码')
                             ->helperText('用户查询订单的密码'),
-                    ])
-                    ->columns(2),
+                    ]),
 
                 Section::make('其他信息')
+                    ->columnSpan('full')
                     ->schema([
                         Textarea::make('info')
                             ->label('订单信息')

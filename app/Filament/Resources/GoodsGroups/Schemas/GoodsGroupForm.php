@@ -17,8 +17,10 @@ class GoodsGroupForm
     public static function configure(Schema $schema): Schema
     {
         return $schema
+            ->columns(1)
             ->components([
                 Section::make('分类信息')
+                    ->columnSpan('full')
                     ->schema([
                         TextInput::make('gp_name')
                             ->label('分类名称')
@@ -36,8 +38,7 @@ class GoodsGroupForm
                             ->label('是否启用')
                             ->default(true)
                             ->inline(false),
-                    ])
-                    ->columns(2),
+                    ]),
             ]);
     }
 }
