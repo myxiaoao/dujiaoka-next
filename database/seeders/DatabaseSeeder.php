@@ -20,6 +20,12 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        // Seed email templates and payment gateways
+        $this->call([
+            EmailTemplateSeeder::class,
+            PaySeeder::class,
+        ]);
+
         // User::factory(10)->create();
 
         User::factory()->create([

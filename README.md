@@ -15,8 +15,13 @@ cp .env.example .env
 php artisan key:generate
 
 # 3. 配置数据库（编辑 .env）
-# 4. 运行迁移
-php artisan migrate
+# 4. 运行迁移并初始化数据
+php artisan migrate --seed
+
+# 注：--seed 会自动初始化：
+# - 5个邮件模板
+# - 34个支付网关配置
+# 或者单独运行: php artisan db:seed
 
 # 5. 创建管理员
 php artisan make:filament-user
@@ -45,8 +50,8 @@ php artisan dujiaoka:upgrade
 - ✅ 订单管理（自动/人工发货）
 - ✅ 卡密管理（导入、循环使用）
 - ✅ 优惠券系统
-- ✅ 12种支付网关（支付宝、微信、PayPal等）
-- ✅ 邮件通知
+- ✅ 34种支付网关（支付宝、微信、PayPal、Stripe、加密货币等）
+- ✅ 邮件通知系统（5种邮件模板）
 - ✅ 现代化后台（Filament 4）
 - ✅ 数据统计 Dashboard
 
@@ -55,6 +60,7 @@ php artisan dujiaoka:upgrade
 - [完整升级指南](docs/UPGRADE_GUIDE.md)
 - [快速升级](docs/UPGRADE_QUICKSTART.md)
 - [迁移总结](docs/MIGRATION_SUMMARY.md)
+- [数据库初始化说明](docs/DATABASE_SEEDING.md) ⭐ 新增
 - [部署指南](docs/DEPLOYMENT_GUIDE.md)
 - [测试清单](docs/TEST_CHECKLIST.md)
 - [更多文档](docs/)

@@ -58,9 +58,23 @@ npm run build
 # Run migrations
 php artisan migrate
 
+# Run migrations with seeders (recommended for new installations)
+php artisan migrate --seed
+
+# Seed database separately
+php artisan db:seed
+
+# Seed specific seeder
+php artisan db:seed --class=EmailTemplateSeeder
+php artisan db:seed --class=PaySeeder
+
 # Create admin user for Filament panel
 php artisan make:filament-user
 ```
+
+**Available Seeders:**
+- `EmailTemplateSeeder` - Initializes 5 email templates (card delivery, order notifications)
+- `PaySeeder` - Initializes 34 payment gateway configurations (Alipay, WeChat, PayPal, Stripe, crypto)
 
 ### Upgrade from Legacy System
 ```bash
@@ -99,9 +113,10 @@ Services in `app/Service/` handle business logic:
 - **PayService** - Payment gateway integration
 
 ### Payment Gateway Architecture
-- Controllers: `app/Http/Controllers/Pay/` (12 payment gateways)
-- Supported: Alipay, WeChat, PayPal, Stripe, Coinbase, etc.
+- Controllers: `app/Http/Controllers/Pay/` (12 payment gateway controllers)
+- Supported: 34 payment gateways including Alipay, WeChat, PayPal, Stripe, Coinbase, TokenPay (11 crypto currencies), etc.
 - Each gateway extends base payment controller patterns
+- All payment gateways initialized via `PaySeeder` with placeholder configurations
 
 ### Job Queue System (Critical)
 Jobs in `app/Jobs/` handle async operations:

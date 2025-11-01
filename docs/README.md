@@ -14,6 +14,7 @@
 
 - **[部署指南](DEPLOYMENT_GUIDE.md)** - 生产环境部署说明
 - **[测试清单](TEST_CHECKLIST.md)** - 功能测试检查列表
+- **[数据库初始化说明](DATABASE_SEEDING.md)** - 邮件模板和支付网关初始化详解
 
 ## 📊 技术报告
 

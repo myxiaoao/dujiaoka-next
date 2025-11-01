@@ -123,8 +123,12 @@ GRANT ALL PRIVILEGES ON dujiaoka_new.* TO 'dujiaoka'@'localhost';
 FLUSH PRIVILEGES;
 EXIT;
 
-# 运行迁移
-php artisan migrate
+# 运行迁移并初始化数据（新安装推荐）
+php artisan migrate --seed
+
+# 或者分步执行：
+# php artisan migrate
+# php artisan db:seed
 
 # 创建管理员
 php artisan make:filament-user
