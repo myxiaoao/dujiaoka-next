@@ -10,10 +10,10 @@ namespace App\Filament\Resources\Carmis\Schemas;
 use App\Models\Carmis;
 use App\Models\Goods;
 use Filament\Forms\Components\Radio;
-use Filament\Forms\Components\Section;
 use Filament\Forms\Components\Select;
 use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\Toggle;
+use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
 
 class CarmisForm
