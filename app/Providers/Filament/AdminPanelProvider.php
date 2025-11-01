@@ -33,7 +33,7 @@ class AdminPanelProvider extends PanelProvider
             ->id('admin')
             ->path('admin')
             ->login()
-            ->brandName('独角数卡管理系统')
+            ->brandName('独角数卡 NEXT')
             ->colors([
                 'primary' => Color::Amber,
             ])

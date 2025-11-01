@@ -7,7 +7,7 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\Emailtpls\Schemas;
 
-use Filament\Forms\Components\Textarea;
+use Filament\Forms\Components\RichEditor;
 use Filament\Forms\Components\TextInput;
 use Filament\Schemas\Components\Section;
 use Filament\Schemas\Schema;
@@ -32,18 +32,34 @@ class EmailtplForm
                             ->required()
                             ->unique(ignoreRecord: true)
                             ->maxLength(255)
-                            ->helperText('唯一标识，如: order_paid'),
+                            ->helperText('唯一标识，如: order_paid')
+                            ->disabled(fn ($context) => $context === 'edit'),
 
                         TextInput::make('tpl_subject')
                             ->label('邮件主题')
                             ->required()
                             ->maxLength(255),
 
-                        Textarea::make('tpl_content')
+                        RichEditor::make('tpl_content')
                             ->label('邮件内容')
                             ->required()
-                            ->rows(10)
-                            ->helperText('支持变量替换，如 {order_sn}, {title}'),
+                            ->toolbarButtons([
+                                'bold',
+                                'italic',
+                                'underline',
+                                'strike',
+                                'link',
+                                'h2',
+                                'h3',
+                                'bulletList',
+                                'orderedList',
+                                'blockquote',
+                                'codeBlock',
+                                'undo',
+                                'redo',
+                            ])
+                            ->helperText('支持变量替换，如 {order_sn}, {title}')
+                            ->columnSpanFull(),
                     ]),
             ]);
     }
