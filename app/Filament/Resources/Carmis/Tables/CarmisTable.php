@@ -7,12 +7,16 @@ declare(strict_types=1);
 
 namespace App\Filament\Resources\Carmis\Tables;
 
+use App\Filament\Exports\CarmisExporter;
+use App\Filament\Imports\CarmisImporter;
 use App\Models\Carmis;
 use App\Models\Goods;
 use Filament\Actions\BulkActionGroup;
 use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
+use Filament\Actions\ExportAction;
 use Filament\Actions\ForceDeleteBulkAction;
+use Filament\Actions\ImportAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
 use Filament\Tables\Columns\IconColumn;
@@ -105,6 +109,21 @@ class CarmisTable
             ->recordActions([
                 ViewAction::make(),
                 EditAction::make(),
+            ])
+            ->headerActions([
+                ImportAction::make()
+                    ->importer(CarmisImporter::class)
+                    ->label('导入卡密 (CSV/Excel)')
+                    ->color('primary')
+                    ->icon('heroicon-o-arrow-up-tray')
+                    ->modalHeading('导入卡密')
+                    ->modalDescription('支持导入 CSV 或 Excel 文件，请确保文件包含必填字段：商品ID、卡密内容')
+                    ->modalSubmitActionLabel('开始导入'),
+                ExportAction::make()
+                    ->exporter(CarmisExporter::class)
+                    ->label('导出卡密')
+                    ->color('success')
+                    ->icon('heroicon-o-arrow-down-tray'),
             ])
             ->toolbarActions([
                 BulkActionGroup::make([
