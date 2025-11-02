@@ -24,6 +24,8 @@ use Illuminate\Support\Facades\Cache;
 
 class SystemSetting extends Page
 {
+    use \Filament\Schemas\Concerns\InteractsWithSchemas;
+
     protected string $view = 'filament.pages.system-setting';
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-cog-6-tooth';
@@ -144,7 +146,10 @@ class SystemSetting extends Page
                                         Toggle::make('is_open_server_jiang')
                                             ->label('开启Server酱推送')
                                             ->default(false)
-                                            ->reactive(),
+                                            ->live()
+                                            ->afterStateUpdated(function () {
+                                                // 强制刷新组件
+                                            }),
 
                                         TextInput::make('server_jiang_token')
                                             ->label('Server酱Token')
@@ -157,7 +162,10 @@ class SystemSetting extends Page
                                         Toggle::make('is_open_telegram_push')
                                             ->label('开启Telegram推送')
                                             ->default(false)
-                                            ->reactive(),
+                                            ->live()
+                                            ->afterStateUpdated(function () {
+                                                // 强制刷新组件
+                                            }),
 
                                         TextInput::make('telegram_bot_token')
                                             ->label('Telegram Bot Token')
@@ -175,20 +183,20 @@ class SystemSetting extends Page
                                         Toggle::make('is_open_bark_push')
                                             ->label('开启Bark推送')
                                             ->default(false)
-                                            ->reactive(),
+                                            ->live()
+                                            ->afterStateUpdated(function () {
+                                                // 强制刷新组件
+                                            }),
 
-                                        Toggle::make('is_open_bark_push_url')
-                                            ->label('自定义Bark服务器')
-                                            ->default(false)
+                                        TextInput::make('bark_token')
+                                            ->label('Bark Token')
+                                            ->maxLength(255)
                                             ->visible(fn ($get) => $get('is_open_bark_push')),
 
                                         TextInput::make('bark_server')
                                             ->label('Bark服务器地址')
-                                            ->maxLength(255)
-                                            ->visible(fn ($get) => $get('is_open_bark_push') && $get('is_open_bark_push_url')),
-
-                                        TextInput::make('bark_token')
-                                            ->label('Bark Token')
+                                            ->placeholder('例如: https://api.day.app')
+                                            ->helperText('留空则使用官方服务器')
                                             ->maxLength(255)
                                             ->visible(fn ($get) => $get('is_open_bark_push')),
                                     ]),
@@ -198,7 +206,10 @@ class SystemSetting extends Page
                                         Toggle::make('is_open_qywxbot_push')
                                             ->label('开启企业微信机器人推送')
                                             ->default(false)
-                                            ->reactive(),
+                                            ->live()
+                                            ->afterStateUpdated(function () {
+                                                // 强制刷新组件
+                                            }),
 
                                         TextInput::make('qywxbot_key')
                                             ->label('企业微信机器人Key')
