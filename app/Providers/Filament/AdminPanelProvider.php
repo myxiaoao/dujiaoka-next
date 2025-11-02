@@ -48,6 +48,7 @@ class AdminPanelProvider extends PanelProvider
                 // FilamentInfoWidget::class,
             ])
             ->profile()
+            ->databaseNotifications()
             ->maxContentWidth('full')
             ->sidebarWidth('15rem')
             ->sidebarCollapsibleOnDesktop()

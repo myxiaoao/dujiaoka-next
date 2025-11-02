@@ -21,7 +21,7 @@ class PayService
      *
      * @link      http://utf8.hk/
      */
-    public function pays(string $payClient = Pay::PAY_CLIENT_PC): ?array
+    public function pays(string|int $payClient = Pay::PAY_CLIENT_PC): ?array
     {
         $payGateway = Pay::query()
             ->whereIn('pay_client', [$payClient, Pay::PAY_CLIENT_ALL])
