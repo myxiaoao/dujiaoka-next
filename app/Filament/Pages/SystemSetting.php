@@ -30,9 +30,11 @@ class SystemSetting extends Page
 
     protected static ?string $navigationLabel = '系统设置';
 
+    protected static string|\UnitEnum|null $navigationGroup = '系统配置';
+
     protected static ?string $title = '系统设置';
 
-    protected static ?int $navigationSort = 100;
+    protected static ?int $navigationSort = 4;
 
     public ?array $data = [];
 

@@ -25,13 +25,15 @@ class CarmisResource extends Resource
 {
     protected static ?string $model = Carmis::class;
 
-    protected static ?string $navigationLabel = '卡密管理';
+    protected static ?string $navigationLabel = '卡密列表';
 
     protected static ?string $modelLabel = '卡密';
 
     protected static ?string $pluralModelLabel = '卡密';
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedTicket;
+
+    protected static string|\UnitEnum|null $navigationGroup = '商品管理';
 
     protected static ?int $navigationSort = 3;
 

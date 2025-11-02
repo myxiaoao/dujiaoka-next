@@ -33,6 +33,8 @@ class GoodsGroupResource extends Resource
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedFolderOpen;
 
+    protected static string|\UnitEnum|null $navigationGroup = '商品管理';
+
     protected static ?int $navigationSort = 1;
 
     public static function form(Schema $schema): Schema

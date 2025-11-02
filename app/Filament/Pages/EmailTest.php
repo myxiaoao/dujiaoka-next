@@ -22,13 +22,15 @@ class EmailTest extends Page
 {
     protected string $view = 'filament.pages.email-test';
 
-    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-envelope';
+    protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-paper-airplane';
 
     protected static ?string $navigationLabel = '邮件测试';
 
+    protected static string|\UnitEnum|null $navigationGroup = '系统配置';
+
     protected static ?string $title = '邮件测试';
 
-    protected static ?int $navigationSort = 99;
+    protected static ?int $navigationSort = 3;
 
     public ?array $data = [];
 

@@ -25,13 +25,15 @@ class GoodsResource extends Resource
 {
     protected static ?string $model = Goods::class;
 
-    protected static ?string $navigationLabel = '商品管理';
+    protected static ?string $navigationLabel = '商品列表';
 
     protected static ?string $modelLabel = '商品';
 
     protected static ?string $pluralModelLabel = '商品';
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::OutlinedShoppingBag;
+
+    protected static string|\UnitEnum|null $navigationGroup = '商品管理';
 
     protected static ?int $navigationSort = 2;
 

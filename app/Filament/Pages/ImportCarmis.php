@@ -29,6 +29,8 @@ class ImportCarmis extends Page
 
     protected static ?string $navigationLabel = '导入卡密';
 
+    protected static string|\UnitEnum|null $navigationGroup = '商品管理';
+
     protected static ?string $title = '批量导入卡密';
 
     protected static ?int $navigationSort = 4;
