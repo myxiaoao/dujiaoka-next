@@ -31,7 +31,7 @@ class WepayController extends PayController
             ];
             $order = [
                 'out_trade_no' => $this->order->order_sn,
-                'total_fee' => bcmul($this->order->actual_price, 100, 0),
+                'total_fee' => bcmul((string) $this->order->actual_price, '100', 0),
                 'body' => $this->order->order_sn,
             ];
             switch ($payway) {
@@ -83,7 +83,7 @@ class WepayController extends PayController
         try {
             // 验证签名
             $result = $pay->verify();
-            $total_fee = bcdiv($result->total_fee, 100, 2);
+            $total_fee = (float) bcdiv((string) $result->total_fee, '100', 2);
             $this->orderProcessService->completedOrder($result->out_trade_no, $total_fee, $result->transaction_id);
 
             return 'success';

@@ -26,9 +26,9 @@ class StripeController extends PayController
             default:
                 try {
                     \Stripe\Stripe::setApiKey($this->payGateway->merchant_id);
-                    $amount = bcmul($this->order->actual_price, 100, 2);
+                    $amount = bcmul((string) $this->order->actual_price, '100', 2);
                     $price = $this->order->actual_price;
-                    $usd = bcmul($this->getUsdCurrency($this->order->actual_price), 100, 2);
+                    $usd = bcmul((string) $this->getUsdCurrency($this->order->actual_price), '100', 2);
                     $orderid = $this->order->order_sn;
                     $pk = $this->payGateway->merchant_id;
                     $return_url = site_url().$this->payGateway->pay_handleroute.'/return_url/?orderid='.$this->order->order_sn;
@@ -499,7 +499,7 @@ class StripeController extends PayController
                 $payGateway = $this->payService->detail($cacheord->pay_id);
                 \Stripe\Stripe::setApiKey($payGateway->merchant_pem);
                 $result = \Stripe\Charge::create([
-                    'amount' => bcmul($this->getUsdCurrency($cacheord->actual_price), 100, 0),
+                    'amount' => bcmul((string) $this->getUsdCurrency($cacheord->actual_price), '100', 0),
                     'currency' => 'usd',
                     'source' => $data['stripeToken'],
                 ]);
@@ -519,7 +519,7 @@ class StripeController extends PayController
     /**
      * 根据RMB获取美元
      *
-     * @return float|int
+     * @return float
      *
      * @throws \Exception
      */
@@ -532,14 +532,14 @@ class StripeController extends PayController
         if (! isset($data)) {
             throw new \Exception('汇率接口异常');
         }
-        $dfFxrate = 0.13;
+        $dfFxrate = '0.13';
         foreach ($data as $item) {
             if ($item['ccyNbr'] == '美元') {
-                $dfFxrate = bcdiv(100, $item['rtcOfr'], 2);
+                $dfFxrate = bcdiv('100', (string) $item['rtcOfr'], 2);
                 break;
             }
         }
 
-        return bcmul($cny, $dfFxrate, 2);
+        return (float) bcmul((string) $cny, $dfFxrate, 2);
     }
 }

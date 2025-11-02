@@ -264,16 +264,18 @@ class OrderProcessService
         $wholesaleTotalPrice = 0; // 优惠总价
         if ($this->goods->wholesale_price_cnf) {
             $formatWholesalePrice = format_wholesale_price($this->goods->wholesale_price_cnf);
-            foreach ($formatWholesalePrice as $item) {
-                if ($this->buyAmount >= $item['number']) {
-                    $wholesalePrice = $item['price'];
+            if ($formatWholesalePrice !== null) {
+                foreach ($formatWholesalePrice as $item) {
+                    if ($this->buyAmount >= $item['number']) {
+                        $wholesalePrice = $item['price'];
+                    }
                 }
             }
         }
         if ($wholesalePrice > 0) {
             $totalPrice = $this->calculateTheTotalPrice(); // 实际原总价
-            $newTotalPrice = bcmul($wholesalePrice, $this->buyAmount, 2); // 批发价优惠后的总价
-            $wholesaleTotalPrice = bcsub($totalPrice, $newTotalPrice, 2); // 批发总优惠
+            $newTotalPrice = bcmul((string) $wholesalePrice, (string) $this->buyAmount, 2); // 批发价优惠后的总价
+            $wholesaleTotalPrice = bcsub((string) $totalPrice, $newTotalPrice, 2); // 批发总优惠
         }
 
         return (float) $wholesaleTotalPrice;
@@ -291,7 +293,7 @@ class OrderProcessService
     {
         $price = $this->goods->actual_price;
 
-        return (float) bcmul($price, $this->buyAmount, 2);
+        return (float) bcmul((string) $price, (string) $this->buyAmount, 2);
     }
 
     /**

@@ -189,12 +189,14 @@ class OrderService
         if ($goods->type == Goods::MANUAL_PROCESSING && ! empty($goods->other_ipu_cnf)) {
             // 如果有其他输入框 判断其他输入框内容  然后载入信息
             $formatIpt = format_charge_input($goods->other_ipu_cnf);
-            foreach ($formatIpt as $item) {
-                if ($item['rule'] && ! $request->filled($item['field'])) {
-                    $errMessage = $item['desc'].__('dujiaoka.prompt.can_not_be_empty');
-                    throw new RuleValidationException($errMessage);
+            if ($formatIpt !== null) {
+                foreach ($formatIpt as $item) {
+                    if ($item['rule'] && ! $request->filled($item['field'])) {
+                        $errMessage = $item['desc'].__('dujiaoka.prompt.can_not_be_empty');
+                        throw new RuleValidationException($errMessage);
+                    }
+                    $otherIpt .= $item['desc'].':'.$request->input($item['field']).PHP_EOL;
                 }
-                $otherIpt .= $item['desc'].':'.$request->input($item['field']).PHP_EOL;
             }
         }
 
@@ -227,7 +229,7 @@ class OrderService
      */
     public function expiredOrderSN(string $orderSN): bool
     {
-        return Order::query()->where('order_sn', $orderSN)->update(['status' => Order::STATUS_EXPIRED]);
+        return Order::query()->where('order_sn', $orderSN)->update(['status' => Order::STATUS_EXPIRED]) > 0;
     }
 
     /**

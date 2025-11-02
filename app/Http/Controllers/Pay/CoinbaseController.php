@@ -113,7 +113,7 @@ class CoinbaseController extends PayController
                 return 'error|Notify: Wrong currency:'.$return_currency;
             }
 
-            $bccomp = bccomp($order->actual_price, $return_pay_amount, 2); // 如果订单金额 大于 实际支付金额 返回1，抛出异常
+            $bccomp = bccomp((string) $order->actual_price, (string) $return_pay_amount, 2); // 如果订单金额 大于 实际支付金额 返回1，抛出异常
             if ($bccomp == 1) {
                 throw new \Exception(__('Coinbase付款金额不足'));
             }

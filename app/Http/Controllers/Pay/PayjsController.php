@@ -22,7 +22,7 @@ class PayjsController extends PayController
             // 构造订单基础信息
             $data = [
                 'body' => $this->order->order_sn,                                // 订单标题
-                'total_fee' => bcmul($this->order->actual_price, 100, 0),    // 订单金额
+                'total_fee' => bcmul((string) $this->order->actual_price, '100', 0),    // 订单金额
                 'out_trade_no' => $this->order->order_sn,                           // 订单号
                 'notify_url' => url($this->payGateway->pay_handleroute.'/notify_url'),
             ];
@@ -66,7 +66,7 @@ class PayjsController extends PayController
         }
         config(['payjs.mchid' => $payGateway->merchant_id, 'payjs.key' => $payGateway->merchant_pem]);
         $notify_info = Payjs::notify();
-        $totalFee = bcdiv($notify_info['total_fee'], 100, 2);
+        $totalFee = (float) bcdiv((string) $notify_info['total_fee'], '100', 2);
         $this->orderProcessService->completedOrder($notify_info['out_trade_no'], $totalFee, $notify_info['payjs_order_id']);
 
         return 'success';
