@@ -2,6 +2,8 @@
 
 > 从 Laravel 6 + dcat-admin 升级到 Laravel 12 + Filament 4 的现代化版本
 
+**Respect** [dujiaoka](https://github.com/assimon/dujiaoka) 🫡
+
 ## 🚀 快速开始
 
 ### 新系统安装

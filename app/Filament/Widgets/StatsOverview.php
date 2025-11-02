@@ -56,17 +56,17 @@ class StatsOverview extends StatsOverviewWidget
                 ->color('success')
                 ->chart([5, 10, 15, 12, 18, 20, $todayCompletedOrders]),
 
-            Stat::make('今日销售额', '¥'.number_format($todaySales, 2))
+            Stat::make('今日销售额', '¥'.number_format((float) ($todaySales ?? 0), 2))
                 ->description('今日完成订单总金额')
                 ->descriptionIcon('heroicon-o-currency-dollar')
                 ->color('success'),
 
-            Stat::make('总销售额', '¥'.number_format($totalSales, 2))
+            Stat::make('总销售额', '¥'.number_format((float) ($totalSales ?? 0), 2))
                 ->description('累计销售总额')
                 ->descriptionIcon('heroicon-o-banknotes')
                 ->color('info'),
 
-            Stat::make('总订单数', number_format($totalOrders))
+            Stat::make('总订单数', number_format((int) $totalOrders))
                 ->description('累计订单总数')
                 ->descriptionIcon('heroicon-o-clipboard-document-list')
                 ->color('warning'),
