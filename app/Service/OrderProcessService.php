@@ -143,7 +143,7 @@ class OrderProcessService
     /**
      * 设置支付方式
      */
-    public function setPayID(int $payID): void
+    public function setPayID(int|string $payID): void
     {
         $this->payID = $payID;
     }
@@ -276,7 +276,7 @@ class OrderProcessService
             $wholesaleTotalPrice = bcsub($totalPrice, $newTotalPrice, 2); // 批发总优惠
         }
 
-        return $wholesaleTotalPrice;
+        return (float) $wholesaleTotalPrice;
     }
 
     /**
@@ -291,7 +291,7 @@ class OrderProcessService
     {
         $price = $this->goods->actual_price;
 
-        return bcmul($price, $this->buyAmount, 2);
+        return (float) bcmul($price, $this->buyAmount, 2);
     }
 
     /**
@@ -308,13 +308,13 @@ class OrderProcessService
      */
     private function calculateTheActualPrice(float $totalPrice, float $couponPrice, float $wholesalePrice): float
     {
-        $actualPrice = bcsub($totalPrice, $couponPrice, 2);
-        $actualPrice = bcsub($actualPrice, $wholesalePrice, 2);
+        $actualPrice = bcsub((string) $totalPrice, (string) $couponPrice, 2);
+        $actualPrice = bcsub($actualPrice, (string) $wholesalePrice, 2);
         if ($actualPrice <= 0) {
             $actualPrice = 0;
         }
 
-        return $actualPrice;
+        return (float) $actualPrice;
     }
 
     /**
@@ -414,7 +414,7 @@ class OrderProcessService
             if ($order->status == Order::STATUS_COMPLETED) {
                 throw new \Exception(__('dujiaoka.prompt.order_status_completed'));
             }
-            $bccomp = bccomp($order->actual_price, $actualPrice, 2);
+            $bccomp = bccomp((string) $order->actual_price, (string) $actualPrice, 2);
             // 金额不一致
             if ($bccomp != 0) {
                 throw new \Exception(__('dujiaoka.prompt.order_inconsistent_amounts'));

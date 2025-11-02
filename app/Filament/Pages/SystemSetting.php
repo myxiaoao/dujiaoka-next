@@ -42,7 +42,15 @@ class SystemSetting extends Page
 
     public function mount(): void
     {
-        $this->data = Cache::get('system-setting', []);
+        $settings = Cache::get('system-setting');
+
+        // 如果缓存不存在或为空，则使用默认配置
+        if (empty($settings)) {
+            $settings = config('dujiaoka_settings');
+            Cache::forever('system-setting', $settings);
+        }
+
+        $this->data = $settings;
     }
 
     public function schema(Schema $schema): Schema

@@ -7,7 +7,6 @@ declare(strict_types=1);
 
 namespace Database\Seeders;
 
-use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -20,10 +19,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Seed email templates and payment gateways
+        // Seed email templates, payment gateways, and system settings
         $this->call([
             EmailTemplateSeeder::class,
             PaySeeder::class,
+            SystemSettingSeeder::class,
         ]);
     }
 }

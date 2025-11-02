@@ -57,6 +57,12 @@ if (! function_exists('dujiaoka_config_get')) {
     {
         $sysConfig = Cache::get('system-setting');
 
+        // 如果缓存不存在或为空，则自动初始化为默认配置
+        if (empty($sysConfig)) {
+            $sysConfig = config('dujiaoka_settings');
+            Cache::forever('system-setting', $sysConfig);
+        }
+
         return $sysConfig[$key] ?? $default;
     }
 }

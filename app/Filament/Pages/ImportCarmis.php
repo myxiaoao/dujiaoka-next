@@ -23,6 +23,8 @@ use Illuminate\Support\Facades\Storage;
 
 class ImportCarmis extends Page
 {
+    use \Filament\Schemas\Concerns\InteractsWithSchemas;
+
     protected string $view = 'filament.pages.import-carmis';
 
     protected static string|BackedEnum|null $navigationIcon = 'heroicon-o-arrow-down-tray';
@@ -37,9 +39,20 @@ class ImportCarmis extends Page
 
     public ?array $data = [];
 
+    public function mount(): void
+    {
+        $this->data = [
+            'goods_id' => null,
+            'carmis_list' => '',
+            'carmis_txt' => null,
+            'remove_duplication' => true,
+        ];
+    }
+
     public function schema(Schema $schema): Schema
     {
         return $schema
+            ->statePath('data')
             ->components([
                 Section::make('导入卡密')
                     ->schema([
@@ -95,6 +108,9 @@ class ImportCarmis extends Page
 
     public function importCarmis(): void
     {
+        // 验证表单
+        $this->schema->validate();
+
         $data = $this->schema->getState();
 
         // 验证至少有一个输入源

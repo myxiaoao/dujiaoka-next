@@ -14,6 +14,7 @@ use App\Service\GoodsService;
 use App\Service\OrderProcessService;
 use App\Service\OrderService;
 use App\Service\PayService;
+use Filament\Forms\Components\RichEditor;
 use Filament\Infolists\Components\TextEntry;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Enums\FiltersLayout;
@@ -83,6 +84,13 @@ class AppServiceProvider extends ServiceProvider
         // 全局设置 TextEntry 的默认占位符
         TextEntry::configureUsing(function (TextEntry $entry): void {
             $entry->placeholder('-');
+        });
+
+        // 全局设置 RichEditor 的默认高度
+        RichEditor::configureUsing(function (RichEditor $editor): void {
+            $editor->extraAttributes([
+                'style' => 'min-height: 400px;',
+            ]);
         });
     }
 }

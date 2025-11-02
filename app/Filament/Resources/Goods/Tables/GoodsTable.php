@@ -37,7 +37,8 @@ class GoodsTable
                 ImageColumn::make('picture')
                     ->label('图片')
                     ->square()
-                    ->size(60),
+                    ->size(60)
+                    ->defaultImageUrl(asset('images/placeholder.svg')),
 
                 TextColumn::make('gd_name')
                     ->label('商品名称')

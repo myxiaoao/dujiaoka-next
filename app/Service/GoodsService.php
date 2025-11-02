@@ -54,7 +54,7 @@ class GoodsService
     /**
      * 商品详情
      *
-     * @param  int  $id  商品id
+     * @param  int|string  $id  商品id
      * @return \Illuminate\Database\Eloquent\Builder|\Illuminate\Database\Eloquent\Model|object|null
      *
      * @author    assimon<ashang@utf8.hk>
@@ -62,7 +62,7 @@ class GoodsService
      *
      * @link      http://utf8.hk/
      */
-    public function detail(int $id)
+    public function detail(int|string $id)
     {
         $goods = Goods::query()
             ->with(['coupon'])
