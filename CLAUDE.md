@@ -182,7 +182,7 @@ declare(strict_types=1);
 ### Migration from Laravel 6
 - Upgrade command: `app/Console/Commands/UpgradeFromOldSystem.php`
 - Migrates data from old database + copies files
-- See `docs/UPGRADE_GUIDE.md`, `docs/MIGRATION_SUMMARY.md` for details
+- See `docs/UPGRADE_GUIDE.md`, `docs/development-logs/MIGRATION_SUMMARY.md` for details
 - Tables migrated: goods_group, goods, carmis, coupons, orders, pays, emailtpls, users
 
 ## Development Notes

@@ -11,6 +11,7 @@ use App\Exceptions\RuleValidationException;
 use App\Http\Controllers\BaseController;
 use App\Models\Order;
 use App\Service\OrderProcessService;
+use App\Service\OrderService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
@@ -29,25 +30,10 @@ use Illuminate\Support\Facades\DB;
  */
 class OrderController extends BaseController
 {
-    /**
-     * 订单服务层
-     *
-     * @var \App\Service\OrderService
-     */
-    private $orderService;
-
-    /**
-     * 订单处理层.
-     *
-     * @var OrderProcessService
-     */
-    private $orderProcessService;
-
-    public function __construct()
-    {
-        $this->orderService = app('Service\OrderService');
-        $this->orderProcessService = app('Service\OrderProcessService');
-    }
+    public function __construct(
+        private OrderService $orderService,
+        private OrderProcessService $orderProcessService,
+    ) {}
 
     /**
      * 创建订单

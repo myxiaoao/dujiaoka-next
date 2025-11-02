@@ -72,8 +72,8 @@
 
 ### 技术报告
 
-- 📊 生成 `docs/LARAVEL12_COMPATIBILITY_REPORT.md`
-- 📊 生成 `docs/FINAL_COMPATIBILITY_CHECK.md`
+- 📊 生成 `docs/development-logs/LARAVEL12_COMPATIBILITY_REPORT.md`
+- 📊 生成 `docs/development-logs/FINAL_COMPATIBILITY_CHECK.md`
 
 ---
 

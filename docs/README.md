@@ -1,37 +1,22 @@
 # 独角数卡文档中心
 
-本目录包含独角数卡 Laravel 12 版本的完整技术文档。
+本目录包含独角数卡 Laravel 12 版本的核心文档。
 
-## 📖 升级文档
+## 📖 核心文档
 
-从 Laravel 6 版本升级到 Laravel 12 版本：
-
-- **[完整升级指南](UPGRADE_GUIDE.md)** - 详细的升级步骤和注意事项
-- **[快速升级指南](UPGRADE_QUICKSTART.md)** - 简化的升级流程
-- **[迁移总结](MIGRATION_SUMMARY.md)** - 迁移内容总览和关键变更
-
-## 🚀 部署与测试
-
+- **[完整升级指南](UPGRADE_GUIDE.md)** - 从 Laravel 6 升级到 Laravel 12 的详细步骤
 - **[部署指南](DEPLOYMENT_GUIDE.md)** - 生产环境部署说明
-- **[测试清单](TEST_CHECKLIST.md)** - 功能测试检查列表
 - **[数据库初始化说明](DATABASE_SEEDING.md)** - 邮件模板和支付网关初始化详解
-- **[Filament 中文化配置](FILAMENT_LOCALIZATION.md)** - 后台菜单中文化和图标优化 ⭐ 新增
+- **[测试数据指南](TEST_DATA.md)** - 开发环境测试数据生成和清理
 
-## 📊 技术报告
+## 🔧 开发日志
 
-- **[Laravel 12 兼容性报告](LARAVEL12_COMPATIBILITY_REPORT.md)** - Laravel 12 兼容性检查
-- **[最终兼容性检查](FINAL_COMPATIBILITY_CHECK.md)** - 最终兼容性验证
-- **[迁移验证报告](MIGRATION_VERIFICATION_REPORT.md)** - 数据迁移验证结果
+项目从 Laravel 6 + dcat-admin 迁移到 Laravel 12 + Filament 4 的详细开发过程文档：
 
-## ✅ 项目管理
-
-- **[完成报告](COMPLETION_REPORT.md)** - 项目完成情况总结
-- **[最终检查清单](CHECKLIST_FINAL.md)** - 项目最终验收清单
-- **[文件总结](FILES_SUMMARY.md)** - 项目文件结构说明
-
-## 📜 历史文档
-
-- **[原始 README](README.old.md)** - Laravel 6 版本的原始说明
+- **[开发日志目录](development-logs/)** - 包含迁移过程、技术报告、功能清单等详细文档
+  - 迁移相关: `MIGRATION_SUMMARY.md`, `LARAVEL12_COMPATIBILITY_REPORT.md` 等
+  - 功能开发: `FILAMENT_LOCALIZATION.md`, `FILAMENT_OPTIMIZATION.md` 等
+  - 项目管理: `COMPLETION_REPORT.md`, `TEST_CHECKLIST.md` 等
 
 ## 🔗 相关链接
 

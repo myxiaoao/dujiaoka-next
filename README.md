@@ -59,8 +59,8 @@ php artisan dujiaoka:upgrade
 
 # 详细文档
 # - docs/UPGRADE_GUIDE.md
-# - docs/UPGRADE_QUICKSTART.md
-# - docs/MIGRATION_SUMMARY.md
+# - docs/development-logs/UPGRADE_QUICKSTART.md
+# - docs/development-logs/MIGRATION_SUMMARY.md
 ```
 
 ## 📋 主要功能
@@ -77,12 +77,10 @@ php artisan dujiaoka:upgrade
 ## 📚 文档
 
 - [完整升级指南](docs/UPGRADE_GUIDE.md)
-- [快速升级](docs/UPGRADE_QUICKSTART.md)
-- [迁移总结](docs/MIGRATION_SUMMARY.md)
 - [数据库初始化说明](docs/DATABASE_SEEDING.md) ⭐ 新增
 - [测试数据生成指南](docs/TEST_DATA.md) ⭐ 新增
 - [部署指南](docs/DEPLOYMENT_GUIDE.md)
-- [测试清单](docs/TEST_CHECKLIST.md)
+- [开发日志](docs/development-logs/) - 迁移过程文档
 - [更多文档](docs/)
 
 ## 🛠 技术栈

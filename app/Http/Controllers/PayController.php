@@ -10,6 +10,8 @@ namespace App\Http\Controllers;
 use App\Exceptions\RuleValidationException;
 use App\Models\Order;
 use App\Service\OrderProcessService;
+use App\Service\OrderService;
+use App\Service\PayService;
 
 class PayController extends BaseController
 {
@@ -27,33 +29,11 @@ class PayController extends BaseController
      */
     protected $order;
 
-    /**
-     * 订单服务层
-     *
-     * @var \App\Service\OrderService
-     */
-    protected $orderService;
-
-    /**
-     * 支付服务层
-     *
-     * @var \App\Service\PayService
-     */
-    protected $payService;
-
-    /**
-     * 订单处理层.
-     *
-     * @var OrderProcessService
-     */
-    protected $orderProcessService;
-
-    public function __construct()
-    {
-        $this->orderService = app('Service\OrderService');
-        $this->payService = app('Service\PayService');
-        $this->orderProcessService = app('Service\OrderProcessService');
-    }
+    public function __construct(
+        protected OrderService $orderService,
+        protected PayService $payService,
+        protected OrderProcessService $orderProcessService,
+    ) {}
 
     /**
      * 订单检测

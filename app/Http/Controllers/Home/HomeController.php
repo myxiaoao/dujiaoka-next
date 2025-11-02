@@ -10,31 +10,18 @@ namespace App\Http\Controllers\Home;
 use App\Exceptions\RuleValidationException;
 use App\Http\Controllers\BaseController;
 use App\Models\Pay;
+use App\Service\GoodsService;
+use App\Service\PayService;
 use Germey\Geetest\Geetest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class HomeController extends BaseController
 {
-    /**
-     * 商品服务层.
-     *
-     * @var \App\Service\PayService
-     */
-    private $goodsService;
-
-    /**
-     * 支付服务层
-     *
-     * @var \App\Service\PayService
-     */
-    private $payService;
-
-    public function __construct()
-    {
-        $this->goodsService = app('Service\GoodsService');
-        $this->payService = app('Service\PayService');
-    }
+    public function __construct(
+        private GoodsService $goodsService,
+        private PayService $payService,
+    ) {}
 
     /**
      * 首页.
