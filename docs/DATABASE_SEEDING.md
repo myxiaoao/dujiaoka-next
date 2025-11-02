@@ -4,9 +4,14 @@
 
 ## 概述
 
-系统提供了两个 Seeder 来初始化必要的基础数据：
+系统提供了多个 Seeder 来初始化基础数据和测试数据：
+
+### 基础数据 Seeders（生产环境必需）
 - **EmailTemplateSeeder** - 初始化 5 个邮件模板
 - **PaySeeder** - 初始化 34 个支付网关配置
+
+### 测试数据 Seeder（仅开发环境使用）
+- **TestDataSeeder** - 生成完整的测试数据（详见 [测试数据文档](TEST_DATA.md)）
 
 ## 使用方法
 
@@ -33,6 +38,24 @@ php artisan db:seed --class=EmailTemplateSeeder
 ```bash
 php artisan db:seed --class=PaySeeder
 ```
+
+### 开发环境生成测试数据
+
+**注意：仅在开发环境使用，不要在生产环境运行！**
+
+生成测试数据：
+```bash
+php artisan db:seed --class=TestDataSeeder
+```
+
+清空测试数据：
+```bash
+php artisan test-data:clear
+# 或强制清空（跳过确认）
+php artisan test-data:clear --force
+```
+
+详细说明见 [测试数据文档](TEST_DATA.md)。
 
 ## EmailTemplateSeeder
 
@@ -294,6 +317,7 @@ A: 可以。在 Filament 后台的 **支付方式** 管理中，将 `is_open` �
 ## 相关文档
 
 - [主 README](../README.md)
+- [测试数据生成指南](TEST_DATA.md) - 开发环境测试数据生成
 - [升级指南](UPGRADE_GUIDE.md)
 - [部署指南](DEPLOYMENT_GUIDE.md)
 - [CLAUDE 开发指南](../CLAUDE.md)

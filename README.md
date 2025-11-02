@@ -32,6 +32,23 @@ php artisan serve
 # 访问后台: http://localhost:8000/admin
 ```
 
+### 开发环境测试数据
+
+开发时可以生成测试数据用于调试和演示：
+
+```bash
+# 生成测试数据（商品、订单、卡密、优惠券等）
+php artisan db:seed --class=TestDataSeeder
+
+# 清空测试数据（上线前使用）
+php artisan test-data:clear
+
+# 强制清空（不需要确认）
+php artisan test-data:clear --force
+```
+
+详细说明见 [测试数据文档](docs/TEST_DATA.md)
+
 ### 从老系统升级
 
 ```bash
@@ -61,6 +78,7 @@ php artisan dujiaoka:upgrade
 - [快速升级](docs/UPGRADE_QUICKSTART.md)
 - [迁移总结](docs/MIGRATION_SUMMARY.md)
 - [数据库初始化说明](docs/DATABASE_SEEDING.md) ⭐ 新增
+- [测试数据生成指南](docs/TEST_DATA.md) ⭐ 新增
 - [部署指南](docs/DEPLOYMENT_GUIDE.md)
 - [测试清单](docs/TEST_CHECKLIST.md)
 - [更多文档](docs/)

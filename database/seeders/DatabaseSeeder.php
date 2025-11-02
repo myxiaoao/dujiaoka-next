@@ -25,12 +25,5 @@ class DatabaseSeeder extends Seeder
             EmailTemplateSeeder::class,
             PaySeeder::class,
         ]);
-
-        // User::factory(10)->create();
-
-        User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
-        ]);
     }
 }

@@ -2,7 +2,7 @@
     "$schema": "https://getcomposer.org/schema.json",
     "name": "cooper/dujiaoka-next",
     "type": "project",
-    "description": "The skeleton application for the Laravel framework.",
+    "description": "Open-source website automation sales solution - efficient, stable, and fast!",
     "keywords": ["laravel", "framework"],
     "license": "MIT",
     "require": {

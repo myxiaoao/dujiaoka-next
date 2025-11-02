@@ -8,11 +8,12 @@ declare(strict_types=1);
 namespace App\Models;
 
 use App\Events\GoodsDeleted;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Goods extends BaseModel
 {
-    use SoftDeletes;
+    use HasFactory, SoftDeletes;
 
     protected $table = 'goods';
 
