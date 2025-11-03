@@ -346,7 +346,7 @@ class StripeController extends PayController
                     $(\".cardpay_content\").html(\"\");
                     $(\".cardpay_content\").html(\"<p class='am-alert am-alert-success'>支付成功，正在跳转页面</p>\");
                     window.setTimeout(function () {
-                        location.href = \"/detail-order-sn/$orderid\"
+                        location.href = \"/order/$orderid\"
                     }, 800);
                 } else {
                     $(\".am-alert\").show();
@@ -384,7 +384,7 @@ class StripeController extends PayController
                     $(\".wcpay-qrcode\").html(\"\");
                     $(\".wcpay-qrcode\").html(\"<p class='am-alert am-alert-success'>支付成功，正在跳转页面</p>\");
                     window.setTimeout(function () {
-                        location.href = \"/detail-order-sn/$orderid\"
+                        location.href = \"/order/$orderid\"
                     }, 800);
                 } else {
                     setTimeout(\"paymentcheck()\", 1000);
@@ -437,7 +437,7 @@ class StripeController extends PayController
         $data = $request->all();
         $cacheord = $this->orderService->detailOrderSN($data['orderid']);
         if (! $cacheord) {
-            return redirect(url('detail-order-sn', ['orderSN' => $data['orderid']]));
+            return redirect(route('order-info', ['order' => $data['orderid']]));
         }
         $payGateway = $this->payService->detail($cacheord->pay_id);
         \Stripe\Stripe::setApiKey($payGateway->merchant_pem);
@@ -454,7 +454,7 @@ class StripeController extends PayController
             }
         }
 
-        return redirect(url('detail-order-sn', ['orderSN' => $data['orderid']]));
+        return redirect(route('order-info', ['order' => $data['orderid']]));
     }
 
     public function check(Request $request)

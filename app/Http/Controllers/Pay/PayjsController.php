@@ -29,21 +29,8 @@ class PayjsController extends PayController
             config(['payjs.mchid' => $this->payGateway->merchant_id, 'payjs.key' => $this->payGateway->merchant_pem]);
             switch ($payway) {
                 case 'payjswescan':
-                    try {
-                        $payres = Payjs::native($data);
-                        if ($payres['return_code'] != 1) {
-                            throw new RuleValidationException($payres['return_msg']);
-                        }
-                        $result['payname'] = $this->payGateway->pay_name;
-                        $result['actual_price'] = (float) $this->order->actual_price;
-                        $result['orderid'] = $this->order->order_sn;
-                        $result['qr_code'] = $payres['code_url'];
-
-                        return $this->render('static_pages/qrpay', $result, __('dujiaoka.scan_qrcode_to_pay'));
-                    } catch (\Exception $e) {
-                        throw new RuleValidationException(__('dujiaoka.prompt.abnormal_payment_channel').$e->getMessage());
-                    }
-                    break;
+                    // QR code payments are handled by QrPay Livewire component
+                    return redirect(route('qrpay', ['order' => $this->order->order_sn]));
             }
         } catch (RuleValidationException $exception) {
             return $this->err($exception->getMessage());

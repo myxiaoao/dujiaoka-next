@@ -109,7 +109,7 @@ class PayController extends BaseController
             if ($bccomp == 0) {
                 $this->orderProcessService->completedOrder($this->order->order_sn, '0.00');
 
-                return redirect(url('detail-order-sn', ['orderSN' => $this->order->order_sn]));
+                return redirect(route('order-info', ['order' => $this->order->order_sn]));
             }
 
             return redirect(url(urldecode($handle), ['payway' => $payway, 'orderSN' => $orderSN]));

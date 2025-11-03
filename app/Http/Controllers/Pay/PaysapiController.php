@@ -114,6 +114,6 @@ class PaysapiController extends PayController
         $oid = $request->input('order_id');
         sleep(1);
 
-        return redirect(url('detail-order-sn', ['orderSN' => $oid]));
+        return redirect(route('order-info', ['order' => $oid]));
     }
 }

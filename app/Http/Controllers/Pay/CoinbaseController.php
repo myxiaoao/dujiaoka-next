@@ -30,8 +30,8 @@ class CoinbaseController extends PayController
                             $price_amount = (float) $price_amount * (1.00 + $fees); // 价格 * （1 + 0.05）
                         }
 
-                        $redirect_url = url('detail-order-sn', ['orderSN' => $this->order->order_sn]);  // 同步地址
-                        $cancel_url = url('detail-order-sn', ['orderSN' => $this->order->order_sn]);  // 同步地址
+                        $redirect_url = route('order-info', ['order' => $this->order->order_sn]);  // 同步地址
+                        $cancel_url = route('order-info', ['order' => $this->order->order_sn]);  // 同步地址
                         $config = [
                             'name' => $this->order->title,
                             'description' => $this->order->title.'需付款'.$price_amount.'元',

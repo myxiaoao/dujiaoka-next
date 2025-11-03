@@ -78,7 +78,7 @@ class OrderController extends BaseController
             // 设置订单cookie
             $this->queueCookie($order->order_sn);
 
-            return redirect(url('/bill', ['orderSN' => $order->order_sn]));
+            return redirect(route('bill', ['order' => $order->id]));
         } catch (RuleValidationException $exception) {
             DB::rollBack();
 
@@ -130,93 +130,5 @@ class OrderController extends BaseController
         if ($order->status > Order::STATUS_WAIT_PAY) {
             return response()->json(['msg' => 'success', 'code' => 200]);
         }
-    }
-
-    /**
-     * 通过订单号展示订单详情
-     *
-     * @param  string  $orderSN  订单号.
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     *
-     * @author    assimon<ashang@utf8.hk>
-     * @copyright assimon<ashang@utf8.hk>
-     *
-     * @link      http://utf8.hk/
-     */
-    public function detailOrderSN(string $orderSN)
-    {
-        $order = $this->orderService->detailOrderSN($orderSN);
-        // 订单不存在或者已经过期
-        if (! $order) {
-            return $this->err(__('dujiaoka.prompt.order_does_not_exist'));
-        }
-
-        return $this->render('static_pages/orderinfo', ['orders' => [$order]], __('dujiaoka.page-title.order-detail'));
-    }
-
-    /**
-     * 订单号查询
-     *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     *
-     * @author    assimon<ashang@utf8.hk>
-     * @copyright assimon<ashang@utf8.hk>
-     *
-     * @link      http://utf8.hk/
-     */
-    public function searchOrderBySN(Request $request)
-    {
-        return $this->detailOrderSN($request->input('order_sn'));
-    }
-
-    /**
-     * 通过邮箱查询
-     *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     *
-     * @author    assimon<ashang@utf8.hk>
-     * @copyright assimon<ashang@utf8.hk>
-     *
-     * @link      http://utf8.hk/
-     */
-    public function searchOrderByEmail(Request $request)
-    {
-        if (
-            ! $request->has('email') ||
-            (
-                dujiaoka_config_get('is_open_search_pwd', \App\Models\BaseModel::STATUS_CLOSE) == \App\Models\BaseModel::STATUS_OPEN &&
-                ! $request->has('search_pwd')
-            )
-        ) {
-            return $this->err(__('dujiaoka.prompt.server_illegal_request'));
-        }
-        $orders = $this->orderService->withEmailAndPassword($request->input('email'), $request->input('search_pwd', ''));
-        if (! $orders) {
-            return $this->err(__('dujiaoka.prompt.no_related_order_found'));
-        }
-
-        return $this->render('static_pages/orderinfo', ['orders' => $orders], __('dujiaoka.page-title.order-detail'));
-    }
-
-    /**
-     * 通过浏览器缓存查询
-     *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     *
-     * @author    assimon<ashang@utf8.hk>
-     * @copyright assimon<ashang@utf8.hk>
-     *
-     * @link      http://utf8.hk/
-     */
-    public function searchOrderByBrowser(Request $request)
-    {
-        $cookies = Cookie::get('dujiaoka_orders');
-        if (empty($cookies)) {
-            return $this->err(__('dujiaoka.prompt.no_related_order_found_for_cache'));
-        }
-        $orderSNS = json_decode($cookies, true);
-        $orders = $this->orderService->byOrderSNS($orderSNS);
-
-        return $this->render('static_pages/orderinfo', ['orders' => $orders], __('dujiaoka.page-title.order-detail'));
     }
 }

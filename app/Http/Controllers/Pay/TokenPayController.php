@@ -100,6 +100,6 @@ class TokenPayController extends PayController
         // 异步通知还没到就跳转了，所以这里休眠2秒
         sleep(2);
 
-        return redirect(url('detail-order-sn', ['orderSN' => $oid]));
+        return redirect(route('order-info', ['order' => $oid]));
     }
 }

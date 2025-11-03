@@ -7,19 +7,19 @@ declare(strict_types=1);
  */
 return [
     // 基础设置
-    'title' => '独角数卡',
+    'title' => '🦄 独角数卡 NEXT',
     'img_logo' => null,
-    'text_logo' => '独角数卡',
-    'keywords' => '独角数卡,自动发卡,数字商品',
-    'description' => '独角数卡 - 开源式自动化售货系统',
+    'text_logo' => '🦄 独角数卡 NEXT',
+    'keywords' => '独角数卡 NEXT,自动发卡,数字商品',
+    'description' => '独角数卡 NEXT - 开源式自动化售货系统',
     'language' => 'zh_CN',
     'manage_email' => null,
     'order_expire_time' => 5,
     'is_open_anti_red' => false,
     'is_open_img_code' => false,
     'is_open_search_pwd' => false,
-    'notice' => '<p>欢迎使用独角数卡系统！</p>',
-    'footer' => 'Powered by Dujiaoka',
+    'notice' => '<p>欢迎使用独角数卡 NEXT 系统！</p>',
+    'footer' => 'Powered by Dujiaoka NEXT',
 
     // 订单推送设置
     'is_open_server_jiang' => false,

@@ -27,7 +27,7 @@ class MapayController extends PayController
                 'act' => 0, // 是否开启认证版的免挂机功能
                 'outTime' => 120, // 二维码超时设置
                 'page' => 1, // 付款页面展示方式
-                'return_url' => url('detail-order-sn', ['orderSN' => $this->order->order_sn]),
+                'return_url' => route('order-info', ['order' => $this->order->order_sn]),
                 'notify_url' => url($this->payGateway->pay_handleroute.'/notify_url'),
                 'pay_type' => 0, // 支付宝使用官方接口
                 'chart' => 'utf-8', // 字符编码方式

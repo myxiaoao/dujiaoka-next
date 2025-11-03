@@ -83,7 +83,7 @@ class BarkPush implements ShouldQueue
             'group' => dujiaoka_config_get('text_logo', '独角数卡'),
         ];
         if (dujiaoka_config_get('is_open_bark_push_url', 0) == BaseModel::STATUS_OPEN) {
-            $params['url'] = url('detail-order-sn/'.$this->order->order_sn);
+            $params['url'] = route('order-info', ['order' => $this->order->order_sn]);
         }
         $client->post($apiUrl, ['form_params' => $params, 'verify' => false]);
     }

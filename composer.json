@@ -17,6 +17,7 @@
         "paypal/paypal-server-sdk": "1.1.0",
         "simplesoftwareio/simple-qrcode": "^4.2",
         "stripe/stripe-php": "^15.0",
+        "xhat/payjs-laravel": "^1.6",
         "yansongda/pay": "^3.0"
     },
     "require-dev": {

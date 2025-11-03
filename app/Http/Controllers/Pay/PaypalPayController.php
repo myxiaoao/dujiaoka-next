@@ -116,7 +116,7 @@ class PaypalPayController extends PayController
 
         if ($success == 'no' || empty($token)) {
             // 取消支付
-            return redirect(url('detail-order-sn', ['orderSN' => $orderSN]));
+            return redirect(route('order-info', ['order' => $orderSN]));
         }
 
         $order = $this->orderService->detailOrderSN($orderSN);
@@ -177,7 +177,7 @@ class PaypalPayController extends PayController
             ]);
         }
 
-        return redirect(url('detail-order-sn', ['orderSN' => $orderSN]));
+        return redirect(route('order-info', ['order' => $orderSN]));
     }
 
     /**

@@ -23,7 +23,7 @@ class WepayController extends PayController
                 'mch_id' => $this->payGateway->merchant_key,
                 'key' => $this->payGateway->merchant_pem,
                 'notify_url' => url($this->payGateway->pay_handleroute.'/notify_url'),
-                'return_url' => url('detail-order-sn', ['orderSN' => $this->order->order_sn]),
+                'return_url' => route('order-info', ['order' => $this->order->order_sn]),
                 'http' => [ // optional
                     'timeout' => 10.0,
                     'connect_timeout' => 10.0,
@@ -36,19 +36,8 @@ class WepayController extends PayController
             ];
             switch ($payway) {
                 case 'wescan':
-                    try {
-                        $result = Pay::wechat($config)->scan($order)->toArray();
-                        $result['qr_code'] = $result['code_url'];
-                        $result['payname'] = $this->payGateway->pay_name;
-                        $result['actual_price'] = (float) $this->order->actual_price;
-                        $result['orderid'] = $this->order->order_sn;
-
-                        return $this->render('static_pages/qrpay', $result, __('dujiaoka.scan_qrcode_to_pay'));
-                    } catch (\Exception $e) {
-                        throw new RuleValidationException(__('dujiaoka.prompt.abnormal_payment_channel').$e->getMessage());
-                    }
-                    break;
-
+                    // QR code payments are handled by QrPay Livewire component
+                    return redirect(route('qrpay', ['order' => $this->order->order_sn]));
             }
         } catch (RuleValidationException $exception) {
             return $this->err($exception->getMessage());

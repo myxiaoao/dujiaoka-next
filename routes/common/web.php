@@ -47,14 +47,6 @@ Route::group(['middleware' => ['dujiaoka.boot']], function () {
     // 订单状态检查 (AJAX API)
     Route::get('check-order-status/{orderSN}', [OrderController::class, 'checkOrderStatus'])->name('check-order-status');
 
-    // 订单搜索 (POST API)
-    Route::post('search-order-by-sn', [OrderController::class, 'searchOrderBySN'])->name('search-order-by-sn');
-    Route::post('search-order-by-email', [OrderController::class, 'searchOrderByEmail'])->name('search-order-by-email');
-    Route::post('search-order-by-browser', [OrderController::class, 'searchOrderByBrowser'])->name('search-order-by-browser');
-
-    // 通过订单号访问详情（可能需要保留用于外部链接）
-    Route::get('detail-order-sn/{orderSN}', [OrderController::class, 'detailOrderSN'])->name('detail-order-sn');
-
     // 极验证验证（如果启用）
     Route::get('check-geetest', [\App\Http\Controllers\Home\HomeController::class, 'geetest'])->name('check-geetest');
 });

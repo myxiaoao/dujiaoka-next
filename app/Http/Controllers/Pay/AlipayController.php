@@ -27,7 +27,7 @@ class AlipayController extends PayController
                 'ali_public_key' => $this->payGateway->merchant_key,
                 'private_key' => $this->payGateway->merchant_pem,
                 'notify_url' => url($this->payGateway->pay_handleroute.'/notify_url'),
-                'return_url' => url('detail-order-sn', ['orderSN' => $this->order->order_sn]),
+                'return_url' => route('order-info', ['order' => $this->order->order_sn]),
                 'http' => [ // optional
                     'timeout' => 10.0,
                     'connect_timeout' => 10.0,
@@ -41,17 +41,8 @@ class AlipayController extends PayController
             switch ($payway) {
                 case 'zfbf2f':
                 case 'alipayscan':
-                    try {
-                        $result = Pay::alipay($config)->scan($order)->toArray();
-                        $result['payname'] = $this->order->order_sn;
-                        $result['actual_price'] = (float) $this->order->actual_price;
-                        $result['orderid'] = $this->order->order_sn;
-                        $result['jump_payuri'] = $result['qr_code'];
-
-                        return $this->render('static_pages/qrpay', $result, __('dujiaoka.scan_qrcode_to_pay'));
-                    } catch (\Exception $e) {
-                        return $this->err(__('dujiaoka.prompt.abnormal_payment_channel').$e->getMessage());
-                    }
+                    // QR code payments are handled by QrPay Livewire component
+                    return redirect(route('qrpay', ['order' => $this->order->order_sn]));
                 case 'aliweb':
                     try {
                         $result = Pay::alipay($config)->web($order);
