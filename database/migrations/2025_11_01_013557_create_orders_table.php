@@ -40,7 +40,7 @@ return new class extends Migration
             $table->softDeletes();
 
             $table->unique('order_sn', 'idx_order_sn');
-            $table->index('goods_id', 'idx_goods_id');
+            $table->index('goods_id', 'idx_orders_goods_id');
             $table->index('email', 'idex_email');
         });
     }

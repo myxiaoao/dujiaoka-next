@@ -165,8 +165,10 @@ if (! function_exists('site_url')) {
      */
     function site_url()
     {
-        $protocol = (! empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $_SERVER['SERVER_PORT'] == 443) ? 'https://' : 'http://';
-        $domainName = $_SERVER['HTTP_HOST'].'/';
+        $serverPort = $_SERVER['SERVER_PORT'] ?? 80;
+        $protocol = (! empty($_SERVER['HTTPS']) && $_SERVER['HTTPS'] !== 'off' || $serverPort == 443) ? 'https://' : 'http://';
+        $httpHost = $_SERVER['HTTP_HOST'] ?? 'localhost';
+        $domainName = $httpHost.'/';
 
         return $protocol.$domainName;
     }
@@ -221,7 +223,7 @@ if (! function_exists('signquery_string')) {
     }
 }
 
-if (! function_exists('picture_ulr')) {
+if (! function_exists('picture_url')) {
 
     /**
      * 生成前台图片链接 不存在使用默认图
@@ -230,7 +232,7 @@ if (! function_exists('picture_ulr')) {
      * @param  false  $getHost  是否只获取图片前缀域名
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\Routing\UrlGenerator|string
      */
-    function picture_ulr($file, $getHost = false)
+    function picture_url($file, $getHost = false)
     {
         if ($getHost) {
             return Storage::disk('admin')->url('');

@@ -35,9 +35,9 @@ class GoodsService
      *
      * @link      http://utf8.hk/
      */
-    public function withGroup(): ?array
+    public function withGroup()
     {
-        $goods = GoodsGroup::query()
+        $goodsGroups = GoodsGroup::query()
             ->with(['goods' => function ($query) {
                 $query->withCount(['carmis' => function ($query) {
                     $query->where('status', Carmis::STATUS_UNSOLD);
@@ -47,8 +47,7 @@ class GoodsService
             ->orderBy('ord', 'DESC')
             ->get();
 
-        // 将自动
-        return $goods ? $goods->toArray() : null;
+        return $goodsGroups;
     }
 
     /**
