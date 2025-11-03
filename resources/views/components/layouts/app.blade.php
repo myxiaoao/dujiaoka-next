@@ -62,10 +62,20 @@
     <script>
         // 在页面加载前立即执行，避免暗黑模式切换时的闪烁
         (function() {
-            const theme = localStorage.getItem('theme');
-            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
-            if (theme === 'dark' || (!theme && prefersDark)) {
+            let theme = localStorage.getItem('theme');
+
+            // 如果没有保存过主题设置，使用系统偏好
+            if (!theme) {
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                theme = prefersDark ? 'dark' : 'light';
+                localStorage.setItem('theme', theme);
+            }
+
+            // 根据主题设置添加或移除 dark class
+            if (theme === 'dark') {
                 document.documentElement.classList.add('dark');
+            } else {
+                document.documentElement.classList.remove('dark');
             }
         })();
     </script>
@@ -79,102 +89,75 @@
     {{-- Flux Appearance (仅免费组件) --}}
     @fluxAppearance
 </head>
-<body class="min-h-screen flex flex-col bg-neutral-50 dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 antialiased">
-    {{-- Header --}}
-    <header class="sticky top-0 z-50 border-b border-zinc-200 dark:border-zinc-700 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-sm">
-        <div class="max-w-7xl mx-auto px-4">
-            <div class="flex items-center justify-between h-16">
-                {{-- Logo --}}
-                <a href="/" class="text-xl font-bold text-zinc-900 dark:text-white">
-                    {{ dujiaoka_config_get('title', config('app.name')) }}
-                </a>
+<body class="min-h-screen flex flex-col bg-white dark:bg-zinc-800">
+    {{-- Flux Header with Navigation --}}
+    <flux:header class="bg-zinc-50 dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-700">
+        <div class="max-w-7xl w-full mx-auto px-4 flex items-center h-16">
+            {{-- Mobile Sidebar Toggle --}}
+            <flux:sidebar.toggle class="lg:hidden" icon="bars-2" inset="left" />
 
-                {{-- Navigation --}}
-                <nav class="hidden md:flex items-center gap-6">
-                    <a href="/" class="text-sm font-medium text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white transition">
-                        首页
-                    </a>
-                    <a href="{{ route('search-order') }}" class="text-sm font-medium text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white transition">
-                        订单查询
-                    </a>
+            {{-- Brand / Logo (Left) --}}
+            <a href="/" class="max-lg:hidden text-2xl font-bold text-zinc-900 dark:text-white hover:text-zinc-700 dark:hover:text-zinc-300 transition">
+                {{ dujiaoka_config_get('title', config('app.name')) }}
+            </a>
 
-                    {{-- 暗黑模式切换 --}}
-                    <button
-                        x-data="{ dark: localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches) }"
-                        x-init="$watch('dark', val => {
-                            localStorage.setItem('theme', val ? 'dark' : 'light');
-                            if (val) {
-                                document.documentElement.classList.add('dark');
-                            } else {
-                                document.documentElement.classList.remove('dark');
-                            }
-                        })"
-                        @click="dark = !dark"
-                        class="p-2 text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white transition rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800"
-                        title="切换暗黑模式">
-                        <svg x-show="!dark" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
-                        </svg>
-                        <svg x-show="dark" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" x-cloak>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
-                        </svg>
-                    </button>
-                </nav>
+            <flux:spacer />
 
-                {{-- Mobile Actions --}}
-                <div class="md:hidden flex items-center gap-2">
-                    {{-- 暗黑模式切换 (移动端) --}}
-                    <button
-                        x-data="{ dark: localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches) }"
-                        x-init="$watch('dark', val => {
-                            localStorage.setItem('theme', val ? 'dark' : 'light');
-                            if (val) {
-                                document.documentElement.classList.add('dark');
-                            } else {
-                                document.documentElement.classList.remove('dark');
-                            }
-                        })"
-                        @click="dark = !dark"
-                        class="p-2 text-zinc-700 dark:text-zinc-300"
-                        title="切换暗黑模式">
-                        <svg x-show="!dark" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
-                        </svg>
-                        <svg x-show="dark" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" x-cloak>
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
-                        </svg>
-                    </button>
+            {{-- Right Side: Navigation + Actions --}}
+            <flux:navbar class="-mb-px max-lg:hidden">
+                <flux:navbar.item icon="home" href="/" :current="request()->is('/')">首页</flux:navbar.item>
+                <flux:navbar.item icon="magnifying-glass" href="{{ route('search-order') }}" :current="request()->routeIs('search-order')">订单查询</flux:navbar.item>
+            </flux:navbar>
 
-                    {{-- Mobile Menu Button --}}
-                    <button
-                        x-data
-                        @click="$dispatch('toggle-mobile-menu')"
-                        class="p-2 text-zinc-700 dark:text-zinc-300">
-                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                        </svg>
-                    </button>
-                </div>
-            </div>
+            <flux:separator vertical variant="subtle" class="my-2 mx-4 max-lg:hidden" />
+
+            <flux:navbar>
+                {{-- Dark Mode Toggle --}}
+                <button
+                    x-data="{
+                        dark: false,
+                        toggle() {
+                            this.dark = !this.dark;
+                            localStorage.setItem('theme', this.dark ? 'dark' : 'light');
+                            document.documentElement.classList.toggle('dark', this.dark);
+                        }
+                    }"
+                    x-init="
+                        dark = localStorage.getItem('theme') === 'dark';
+                        document.documentElement.classList.toggle('dark', dark);
+                    "
+                    @click="toggle()"
+                    class="p-2 text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white transition rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                    title="切换暗黑模式"
+                    aria-label="切换暗黑模式">
+                    {{-- 亮色模式下显示月亮图标 --}}
+                    <svg x-show="!dark" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                    </svg>
+                    {{-- 暗黑模式下显示太阳图标 --}}
+                    <svg x-show="dark" x-cloak class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                    </svg>
+                </button>
+            </flux:navbar>
         </div>
+    </flux:header>
 
-        {{-- Mobile Menu --}}
-        <div
-            x-data="{ open: false }"
-            @toggle-mobile-menu.window="open = !open"
-            x-show="open"
-            x-transition
-            class="md:hidden border-t border-zinc-200 dark:border-zinc-700">
-            <nav class="max-w-7xl mx-auto px-4 py-4 space-y-2">
-                <a href="/" class="block py-2 text-sm font-medium text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white transition">
-                    首页
-                </a>
-                <a href="{{ route('search-order') }}" class="block py-2 text-sm font-medium text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white transition">
-                    订单查询
-                </a>
-            </nav>
-        </div>
-    </header>
+    {{-- Mobile Sidebar --}}
+    <flux:sidebar sticky collapsible="mobile" class="lg:hidden bg-zinc-50 dark:bg-zinc-900 border-r border-zinc-200 dark:border-zinc-700">
+        <flux:sidebar.header>
+            <flux:sidebar.brand
+                href="/"
+                :name="dujiaoka_config_get('title', config('app.name'))"
+            />
+            <flux:sidebar.collapse />
+        </flux:sidebar.header>
+
+        <flux:sidebar.nav>
+            <flux:sidebar.item icon="home" href="/" :current="request()->is('/')">首页</flux:sidebar.item>
+            <flux:sidebar.item icon="magnifying-glass" href="{{ route('search-order') }}" :current="request()->routeIs('search-order')">订单查询</flux:sidebar.item>
+        </flux:sidebar.nav>
+    </flux:sidebar>
 
     {{-- Main Content --}}
     <main class="flex-1 max-w-7xl w-full mx-auto px-4 py-8">
@@ -200,6 +183,23 @@
 
     {{-- Flux Scripts (仅免费组件) --}}
     @fluxScripts
+
+    {{-- 强制修正暗黑模式（在所有脚本加载后执行） --}}
+    <script>
+        // 在 DOM 完全加载并且所有脚本执行后，再次强制应用正确的主题
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(function() {
+                const savedTheme = localStorage.getItem('theme');
+                const isDark = savedTheme === 'dark';
+
+                if (isDark) {
+                    document.documentElement.classList.add('dark');
+                } else {
+                    document.documentElement.classList.remove('dark');
+                }
+            }, 0);
+        });
+    </script>
 
     {{-- 回到顶部按钮 --}}
     <div x-data="{ show: false }"

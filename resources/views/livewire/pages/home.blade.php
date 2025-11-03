@@ -25,16 +25,16 @@
         {{-- 左侧：分类 Tab 导航 --}}
         @if(!$search && $allGroups->count() > 1)
         <div class="flex-shrink-0">
-            <div class="inline-flex flex-wrap gap-2 p-2 bg-zinc-100 dark:bg-zinc-800 rounded-lg">
+            <div class="inline-flex flex-wrap gap-2 p-2 bg-zinc-100 dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-700">
                 {{-- 全部分类 --}}
                 <button
                     type="button"
                     wire:click="selectGroup(null)"
                     wire:loading.attr="disabled"
-                    class="px-4 py-2 text-sm font-medium rounded-md transition-colors disabled:opacity-50
+                    class="px-3 py-1 text-sm font-medium rounded-md transition-colors disabled:opacity-50
                         {{ $selectedGroup === null
                             ? 'bg-white dark:bg-zinc-700 text-zinc-900 dark:text-white shadow-sm'
-                            : 'text-zinc-700 dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-700' }}"
+                            : 'text-zinc-700 dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-800' }}"
                 >
                     全部
                 </button>
@@ -45,10 +45,10 @@
                     type="button"
                     wire:click="selectGroup({{ $group->id }})"
                     wire:loading.attr="disabled"
-                    class="px-4 py-2 text-sm font-medium rounded-md transition-colors disabled:opacity-50
+                    class="px-3 py-1 text-sm font-medium rounded-md transition-colors disabled:opacity-50
                         {{ $selectedGroup === $group->id
                             ? 'bg-white dark:bg-zinc-700 text-zinc-900 dark:text-white shadow-sm'
-                            : 'text-zinc-700 dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-700' }}"
+                            : 'text-zinc-700 dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-800' }}"
                 >
                     {{ $group->gp_name }}
                     <span class="ml-1 text-xs opacity-70">({{ $group->goods->count() }})</span>
