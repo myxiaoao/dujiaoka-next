@@ -27,3 +27,8 @@
         --color-accent-foreground: var(--color-zinc-800);
     }
 }
+
+/* Alpine.js x-cloak support */
+[x-cloak] {
+    display: none !important;
+}

@@ -58,6 +58,18 @@
     {{-- Favicon --}}
     <link rel="shortcut icon" href="/favicon.ico">
 
+    {{-- 暗黑模式初始化脚本 (避免闪烁) --}}
+    <script>
+        // 在页面加载前立即执行，避免暗黑模式切换时的闪烁
+        (function() {
+            const theme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (theme === 'dark' || (!theme && prefersDark)) {
+                document.documentElement.classList.add('dark');
+            }
+        })();
+    </script>
+
     {{-- Vite 资产 --}}
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
@@ -67,7 +79,7 @@
     {{-- Flux Appearance (仅免费组件) --}}
     @fluxAppearance
 </head>
-<body class="min-h-screen flex flex-col bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 antialiased">
+<body class="min-h-screen flex flex-col bg-neutral-50 dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 antialiased">
     {{-- Header --}}
     <header class="sticky top-0 z-50 border-b border-zinc-200 dark:border-zinc-700 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-sm">
         <div class="max-w-7xl mx-auto px-4">
@@ -85,17 +97,64 @@
                     <a href="{{ route('search-order') }}" class="text-sm font-medium text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white transition">
                         订单查询
                     </a>
+
+                    {{-- 暗黑模式切换 --}}
+                    <button
+                        x-data="{ dark: localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches) }"
+                        x-init="$watch('dark', val => {
+                            localStorage.setItem('theme', val ? 'dark' : 'light');
+                            if (val) {
+                                document.documentElement.classList.add('dark');
+                            } else {
+                                document.documentElement.classList.remove('dark');
+                            }
+                        })"
+                        @click="dark = !dark"
+                        class="p-2 text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white transition rounded-lg hover:bg-zinc-100 dark:hover:bg-zinc-800"
+                        title="切换暗黑模式">
+                        <svg x-show="!dark" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                        </svg>
+                        <svg x-show="dark" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" x-cloak>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                        </svg>
+                    </button>
                 </nav>
 
-                {{-- Mobile Menu Button --}}
-                <button
-                    x-data
-                    @click="$dispatch('toggle-mobile-menu')"
-                    class="md:hidden p-2 text-zinc-700 dark:text-zinc-300">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
-                    </svg>
-                </button>
+                {{-- Mobile Actions --}}
+                <div class="md:hidden flex items-center gap-2">
+                    {{-- 暗黑模式切换 (移动端) --}}
+                    <button
+                        x-data="{ dark: localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches) }"
+                        x-init="$watch('dark', val => {
+                            localStorage.setItem('theme', val ? 'dark' : 'light');
+                            if (val) {
+                                document.documentElement.classList.add('dark');
+                            } else {
+                                document.documentElement.classList.remove('dark');
+                            }
+                        })"
+                        @click="dark = !dark"
+                        class="p-2 text-zinc-700 dark:text-zinc-300"
+                        title="切换暗黑模式">
+                        <svg x-show="!dark" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path>
+                        </svg>
+                        <svg x-show="dark" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" x-cloak>
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                        </svg>
+                    </button>
+
+                    {{-- Mobile Menu Button --}}
+                    <button
+                        x-data
+                        @click="$dispatch('toggle-mobile-menu')"
+                        class="p-2 text-zinc-700 dark:text-zinc-300">
+                        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                        </svg>
+                    </button>
+                </div>
             </div>
         </div>
 

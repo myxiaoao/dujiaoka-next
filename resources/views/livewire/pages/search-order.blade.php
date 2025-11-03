@@ -2,8 +2,8 @@
 <div class="max-w-2xl mx-auto">
     {{-- 页面标题 --}}
     <div class="text-center mb-8">
-        <flux:heading size="2xl" class="mb-2">订单查询</flux:heading>
-        <flux:text>通过以下方式查询您的订单</flux:text>
+        <flux:heading size="4xl" class="mb-3">订单查询</flux:heading>
+        <flux:text class="text-base">通过以下方式查询您的订单</flux:text>
     </div>
 
     {{-- 查询方式选择 --}}

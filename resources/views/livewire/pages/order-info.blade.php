@@ -65,13 +65,52 @@
             </flux:badge>
         </div>
 
-        <div class="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-6">
+        {{-- 卡密内容显示 --}}
+        @if($order->info)
+        <div class="space-y-4" x-data="{ copied: false }">
+            <div>
+                <flux:text class="text-sm text-zinc-500 dark:text-zinc-400 mb-2">卡密内容</flux:text>
+                <textarea
+                    readonly
+                    rows="6"
+                    class="w-full px-4 py-3 font-mono text-sm bg-zinc-50 dark:bg-zinc-800 border border-zinc-200 dark:border-zinc-700 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 resize-none"
+                >{{ $order->info }}</textarea>
+            </div>
+
+            {{-- 复制按钮 --}}
+            <div class="flex items-center gap-3">
+                <flux:button
+                    type="button"
+                    variant="primary"
+                    icon="clipboard-document"
+                    @click="
+                        navigator.clipboard.writeText('{{ addslashes($order->info) }}').then(() => {
+                            copied = true;
+                            setTimeout(() => copied = false, 2000);
+                        }).catch(() => {
+                            alert('复制失败，请手动选择复制');
+                        });
+                    "
+                >
+                    复制卡密
+                </flux:button>
+
+                {{-- 复制成功提示 --}}
+                <div x-show="copied" x-transition class="flex items-center gap-2 text-green-600 dark:text-green-400">
+                    <flux:icon.check-circle variant="micro" class="size-5" />
+                    <flux:text class="text-sm font-medium">复制成功</flux:text>
+                </div>
+            </div>
+        </div>
+        @endif
+
+        {{-- 邮箱提示 --}}
+        <div class="mt-4 bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
             <div class="flex items-start gap-3">
                 <flux:icon.information-circle class="size-5 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
                 <div class="flex-1">
-                    <flux:heading size="sm" class="text-blue-900 dark:text-blue-100 mb-1">发货提示</flux:heading>
                     <flux:text class="text-sm text-blue-800 dark:text-blue-200">
-                        卡密已发送至您的邮箱 <span class="font-mono">{{ $order->email }}</span>，请查收。
+                        卡密已同时发送至您的邮箱 <span class="font-mono">{{ $order->email }}</span>，请妥善保管。
                     </flux:text>
                 </div>
             </div>

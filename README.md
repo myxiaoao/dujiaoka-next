@@ -1,36 +1,82 @@
-# 独角数卡 Laravel 12+ 版本
+# 独角数卡 Next
 
 > 从 Laravel 6 + dcat-admin 升级到 Laravel 12 + Filament 4 的现代化版本
 
-**Respect** [dujiaoka](https://github.com/assimon/dujiaoka) 🫡
+## ✨ 特性
+
+### 🎨 前端升级
+- **现代化 UI**: Tailwind CSS 4 + Flux UI 组件
+- **全栈组件**: Livewire 3 无刷新交互
+- **多语言支持**: 中文简体、繁体、English
+- **暗色模式**: 完整的 Dark Mode 支持
+- **用户体验**: 商品分类导航、卡密一键复制、实时搜索
+
+### 🔧 后端升级
+- **管理面板**: Filament 4 现代化后台
+- **PHP 8.2+**: 严格类型声明、构造函数属性提升
+- **Laravel 12**: 最新的 Laravel 框架特性
+- **代码规范**: Laravel Pint 自动格式化
+
+### 📦 核心功能
+- ✅ 商品管理（分类、商品、库存、批发价）
+- ✅ 订单管理（自动/人工发货、订单查询）
+- ✅ 卡密管理（导入/导出、循环使用）
+- ✅ 优惠券系统（商品关联、使用限制）
+- ✅ 34种支付网关（支付宝、微信、PayPal、Stripe、加密货币等）
+- ✅ 邮件通知系统（5种邮件模板）
+- ✅ 多渠道推送（Telegram、Server酱、Bark、企业微信）
+- ✅ 数据统计 Dashboard
+- ✅ 系统配置管理（缓存自动恢复）
 
 ## 🚀 快速开始
 
 ### 新系统安装
 
 ```bash
-# 1. 安装依赖
+# 1. 克隆项目
+git clone https://github.com/myxiaoao/dujiaoka-next.git
+cd dujiaoka-next
+
+# 2. 安装 PHP 依赖
 composer install
 
-# 2. 配置环境
+# 3. 安装前端依赖
+npm install
+
+# 4. 配置环境
 cp .env.example .env
 php artisan key:generate
 
-# 3. 配置数据库（编辑 .env）
-# 4. 运行迁移并初始化数据
+# 5. 配置数据库（编辑 .env 文件）
+# DB_CONNECTION=mysql
+# DB_HOST=127.0.0.1
+# DB_PORT=3306
+# DB_DATABASE=dujiaoka_next
+# DB_USERNAME=root
+# DB_PASSWORD=
+
+# 6. 运行迁移并初始化数据
 php artisan migrate --seed
 
-# 注：--seed 会自动初始化：
-# - 5个邮件模板
-# - 34个支付网关配置
-# 或者单独运行: php artisan db:seed
+# --seed 会自动初始化：
+# - EmailTemplateSeeder: 5个邮件模板
+# - PaySeeder: 34个支付网关配置
+# - SystemSettingSeeder: 系统默认配置
 
-# 5. 创建管理员
+# 7. 创建管理员账户
 php artisan make:filament-user
 
-# 6. 启动服务
-php artisan serve
+# 8. 编译前端资源
+npm run build
 
+# 9. 启动开发服务器
+composer dev
+# 或分别启动：
+# php artisan serve
+# php artisan queue:listen
+# npm run dev
+
+# 访问前台: http://localhost:8000
 # 访问后台: http://localhost:8000/admin
 ```
 
@@ -55,7 +101,17 @@ php artisan test-data:clear --force
 
 ```bash
 # 自动化升级（推荐）
-php artisan dujiaoka:upgrade
+php artisan dujiaoka:upgrade \
+  --host=localhost \
+  --database=old_dujiaoka \
+  --username=root \
+  --password=your_password \
+  --old-path=/path/to/old/dujiaoka
+
+# 升级命令会自动：
+# - 迁移所有数据表（商品、订单、卡密、优惠券等）
+# - 复制上传文件（图片、附件）
+# - 保留用户数据和支付配置
 
 # 详细文档
 # - docs/UPGRADE_GUIDE.md
@@ -63,33 +119,69 @@ php artisan dujiaoka:upgrade
 # - docs/development-logs/MIGRATION_SUMMARY.md
 ```
 
-## 📋 主要功能
-
-- ✅ 商品管理（分类、商品、库存、批发价）
-- ✅ 订单管理（自动/人工发货）
-- ✅ 卡密管理（导入、循环使用）
-- ✅ 优惠券系统
-- ✅ 34种支付网关（支付宝、微信、PayPal、Stripe、加密货币等）
-- ✅ 邮件通知系统（5种邮件模板）
-- ✅ 现代化后台（Filament 4）
-- ✅ 数据统计 Dashboard
-
 ## 📚 文档
 
-- [完整升级指南](docs/UPGRADE_GUIDE.md)
-- [数据库初始化说明](docs/DATABASE_SEEDING.md) ⭐ 新增
-- [测试数据生成指南](docs/TEST_DATA.md) ⭐ 新增
-- [部署指南](docs/DEPLOYMENT_GUIDE.md)
-- [开发日志](docs/development-logs/) - 迁移过程文档
-- [更多文档](docs/)
+### 📖 核心文档
+- **[完整升级指南](docs/UPGRADE_GUIDE.md)** - 从 Laravel 6 升级详细步骤
+- **[前端功能文档](docs/FRONTEND_FEATURES.md)** - 前端页面和功能说明
+- **[配置管理指南](docs/CONFIGURATION.md)** - 系统配置说明
+- **[数据库初始化说明](docs/DATABASE_SEEDING.md)** - Seeders 详解
+- **[测试数据生成指南](docs/TEST_DATA.md)** - 开发测试数据
+- **[部署指南](docs/DEPLOYMENT_GUIDE.md)** - 生产环境部署
+
+### 🔧 开发者文档
+- **[CLAUDE.md](CLAUDE.md)** - AI 辅助开发指南
+- **[开发日志](docs/development-logs/)** - 迁移过程详细文档
+- **[更多文档](docs/)** - 文档中心
 
 ## 🛠 技术栈
 
-- PHP >= 8.2
-- Laravel 12+
-- Filament 4+
-- MySQL 5.7+
+### 后端
+- **PHP** >= 8.2 (严格类型、构造函数属性提升)
+- **Laravel** 12.x (最新 LTS)
+- **Filament** 4.x (现代化管理面板)
+- **Livewire** 3.x (全栈组件)
+- **MySQL** >= 5.7 / MariaDB >= 10.3
 
-## 📝 许可证
+### 前端
+- **Tailwind CSS** 4.x (原子化 CSS)
+- **Flux UI** (Livewire 免费组件)
+- **Alpine.js** 3.x (轻量级 JS 框架，Livewire 内置)
+- **Vite** (前端构建工具)
 
-继承原独角数卡项目许可证
+### 工具
+- **Laravel Pint** (代码格式化)
+- **Pest** (测试框架)
+- **Larastan** (静态分析，可选)
+
+## 🎯 核心改进
+
+### 对比原系统 (dujiaoka)
+
+| 功能         | 原系统                  | Next 版本                     | 改进          |
+|------------|----------------------|-----------------------------|-------------|
+| **后端框架**   | Laravel 6            | Laravel 12                  | ✅ 3个大版本跃升   |
+| **管理面板**   | Dcat Admin           | Filament 4                  | ✅ 现代化 UI/UX |
+| **前端框架**   | Bootstrap 4 + jQuery | Tailwind CSS 4 + Livewire 3 | ✅ 无刷新交互     |
+| **PHP 版本** | 7.4+                 | 8.2+                        | ✅ 性能提升 30%+ |
+| **主题系统**   | 3个主题                 | 单一现代主题 + 暗色模式               | ✅ 统一体验      |
+| **多语言**    | zh_CN 为主             | zh_CN, zh_TW, en            | ✅ 3语言支持     |
+| **卡密显示**   | ❌ 仅邮箱                | ✅ 页面直接显示 + 复制               | ✅ 用户体验提升    |
+| **分类导航**   | Tab 切换               | Livewire 实时过滤               | ✅ 性能优化      |
+| **代码规范**   | 混合风格                 | PSR-12 + Laravel Pint       | ✅ 统一规范      |
+| **安装方式**   | Web 安装向导             | 命令行安装                       | ✅ 更安全       |
+
+## 🤝 贡献
+
+欢迎提交 Issue 和 Pull Request！
+
+## 📄 许可证
+
+继承原 [dujiaoka](https://github.com/assimon/dujiaoka) 项目许可证
+
+## 🙏 致谢
+
+- 原作者 [assimon](https://github.com/assimon) 开创的独角数卡项目
+- [Laravel](https://laravel.com) 框架
+- [Filament](https://filamentphp.com) 管理面板
+- [Livewire](https://livewire.laravel.com) 全栈框架
