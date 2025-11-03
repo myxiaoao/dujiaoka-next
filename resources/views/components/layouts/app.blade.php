@@ -182,9 +182,9 @@
     </main>
 
     {{-- Footer --}}
-    <footer class="border-t border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/50 mt-auto">
+    <footer class="border-t border-neutral-200 dark:border-zinc-700 bg-white dark:bg-zinc-800/50 mt-auto">
         <div class="max-w-7xl mx-auto px-4 py-6">
-            <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-zinc-600 dark:text-zinc-400">
+            <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-neutral-600 dark:text-zinc-400">
                 <div class="text-center md:text-left">
                     <p>&copy; {{ date('Y') }} {{ dujiaoka_config_get('title', config('app.name')) }}. All rights reserved.</p>
                 </div>
