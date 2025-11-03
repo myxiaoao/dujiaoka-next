@@ -17,14 +17,9 @@ class OrderInfo extends Component
 {
     public Order $order;
 
-    public function mount(string $order): void
+    public function mount(Order $order): void
     {
-        // Support both order ID and order_sn for flexibility
-        if (is_numeric($order)) {
-            $this->order = Order::with(['goods', 'pay'])->findOrFail($order);
-        } else {
-            $this->order = Order::with(['goods', 'pay'])->where('order_sn', $order)->firstOrFail();
-        }
+        $this->order = $order->load(['goods', 'pay']);
     }
 
     public function getStatusBadgeColor(): string
