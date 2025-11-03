@@ -187,6 +187,9 @@
             <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-neutral-600 dark:text-zinc-400">
                 <div class="text-center md:text-left">
                     <p>&copy; {{ date('Y') }} {{ dujiaoka_config_get('title', config('app.name')) }}. All rights reserved.</p>
+                    @if(dujiaoka_config_get('footer'))
+                    <p class="mt-1">{!! dujiaoka_config_get('footer') !!}</p>
+                    @endif
                 </div>
             </div>
         </div>

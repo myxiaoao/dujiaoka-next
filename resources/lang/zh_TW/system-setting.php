@@ -32,7 +32,6 @@ return [
         'is_open_telegram_push' => '是否開啟Telegram推送',
         'telegram_userid' => 'Telegram用戶id',
         'telegram_bot_token' => 'Telegram通訊token',
-        'template' => '站點模板',
         'language' => '站點語言',
         'order_expire_time' => '訂單逾期時間(分鐘)',
 

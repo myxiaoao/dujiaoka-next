@@ -1,6 +1,7 @@
 <?php
 
 declare(strict_types=1);
+
 /**
  * This file is part of dujiaoka next server projects.
  */
@@ -26,7 +27,6 @@ return [
         'is_open_anti_red' => '是否开启微信/QQ防红',
         'is_open_img_code' => '是否开启图形验证码',
         'is_open_search_pwd' => '是否开启查询密码',
-        'is_open_google_translate' => '是否开启google翻译',
 
         'is_open_server_jiang' => '是否开启server酱',
         'server_jiang_token' => 'server酱通讯token',
@@ -40,7 +40,6 @@ return [
         'is_open_qywxbot_push' => '是否开启企业微信Bot推送',
         'qywxbot_key' => '企业微信Bot通讯Key',
 
-        'template' => '站点模板',
         'language' => '站点语言',
         'order_expire_time' => '订单过期时间(分钟)',
 

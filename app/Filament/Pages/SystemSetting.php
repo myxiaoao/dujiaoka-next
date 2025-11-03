@@ -88,12 +88,6 @@ class SystemSetting extends Page
                                     ->rows(3)
                                     ->maxLength(500),
 
-                                Select::make('template')
-                                    ->label('网站模板')
-                                    ->required()
-                                    ->options(config('dujiaoka.templates', []))
-                                    ->default('default'),
-
                                 Select::make('language')
                                     ->label('网站语言')
                                     ->required()
@@ -123,10 +117,6 @@ class SystemSetting extends Page
 
                                 Toggle::make('is_open_search_pwd')
                                     ->label('开启订单查询密码')
-                                    ->default(false),
-
-                                Toggle::make('is_open_google_translate')
-                                    ->label('开启Google翻译')
                                     ->default(false),
 
                                 RichEditor::make('notice')
