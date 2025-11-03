@@ -78,15 +78,9 @@
             @endif
 
             {{-- 提交按钮 --}}
-            <div class="pt-4">
-                <flux:button
-                    type="submit"
-                    variant="primary"
-                    class="w-full">
-                    <flux:icon.magnifying-glass variant="micro" />
-                    查询订单
-                </flux:button>
-            </div>
+            <flux:button type="submit" variant="primary" class="w-full mt-6" icon="magnifying-glass">
+                查询订单
+            </flux:button>
         </form>
     </div>
 

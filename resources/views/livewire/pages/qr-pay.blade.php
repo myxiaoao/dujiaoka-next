@@ -3,14 +3,14 @@
     {{-- 页面标题 --}}
     <div class="text-center mb-8">
         <flux:heading size="2xl" class="mb-2">扫码支付</flux:heading>
-        <flux:text>请使用{{ $order->pay->pay_name }}扫描二维码完成支付</flux:text>
+        <flux:text>请使用{{ $orderData->pay->pay_name }}扫描二维码完成支付</flux:text>
     </div>
 
     {{-- 支付成功提示 --}}
     @if($paymentCompleted)
     <div class="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-6"
          x-data="{ redirect: false }"
-         x-init="setTimeout(() => { redirect = true; $wire.redirect('{{ route('order-info', ['order' => $order->id]) }}') }, 2000)">
+         x-init="setTimeout(() => { redirect = true; $wire.redirect('{{ route('order-info', ['order' => $orderData->id]) }}') }, 2000)">
         <div class="flex items-center gap-3 justify-center">
             <flux:icon.check-circle class="size-8 text-green-600 dark:text-green-400" />
             <div class="text-center">
@@ -31,7 +31,7 @@
             <div>
                 <flux:text class="text-sm text-zinc-500 dark:text-zinc-400 mb-2">支付金额</flux:text>
                 <flux:heading size="3xl" class="text-blue-600 dark:text-blue-400">
-                    ¥{{ number_format($order->actual_price, 2) }}
+                    ¥{{ number_format($orderData->actual_price, 2) }}
                 </flux:heading>
             </div>
 
@@ -66,22 +66,22 @@
         <div class="space-y-3">
             <div class="flex justify-between items-center">
                 <flux:text class="text-zinc-500 dark:text-zinc-400">订单号</flux:text>
-                <flux:text class="font-mono">{{ $order->order_sn }}</flux:text>
+                <flux:text class="font-mono">{{ $orderData->order_sn }}</flux:text>
             </div>
 
             <div class="flex justify-between items-center">
                 <flux:text class="text-zinc-500 dark:text-zinc-400">商品名称</flux:text>
-                <flux:text>{{ $order->goods->gd_name }}</flux:text>
+                <flux:text>{{ $orderData->goods->gd_name }}</flux:text>
             </div>
 
             <div class="flex justify-between items-center">
                 <flux:text class="text-zinc-500 dark:text-zinc-400">购买数量</flux:text>
-                <flux:text>{{ $order->buy_amount }} 件</flux:text>
+                <flux:text>{{ $orderData->buy_amount }} 件</flux:text>
             </div>
 
             <div class="flex justify-between items-center">
                 <flux:text class="text-zinc-500 dark:text-zinc-400">支付方式</flux:text>
-                <flux:text>{{ $order->pay->pay_name }}</flux:text>
+                <flux:text>{{ $orderData->pay->pay_name }}</flux:text>
             </div>
         </div>
     </div>
@@ -93,7 +93,7 @@
             <div class="flex-1">
                 <flux:heading size="sm" class="text-blue-900 dark:text-blue-100 mb-1">支付说明</flux:heading>
                 <ul class="text-sm text-blue-800 dark:text-blue-200 space-y-1">
-                    <li>• 请使用{{ $order->pay->pay_name }}扫描上方二维码</li>
+                    <li>• 请使用{{ $orderData->pay->pay_name }}扫描上方二维码</li>
                     <li>• 支付成功后将自动跳转到订单详情页</li>
                     <li>• 订单将在30分钟后自动过期</li>
                     <li>• 如遇问题，请联系客服</li>
@@ -105,12 +105,10 @@
 
     {{-- 操作按钮 --}}
     <div class="flex gap-3">
-        <flux:button href="{{ route('bill', ['order' => $order->order_sn]) }}" variant="ghost" class="flex-1">
-            <flux:icon.arrow-left variant="micro" />
+        <flux:button href="{{ route('bill', ['order' => $orderData->order_sn]) }}" variant="ghost" class="flex-1" icon="arrow-left">
             返回支付页
         </flux:button>
-        <flux:button href="{{ route('search-order') }}" variant="ghost" class="flex-1">
-            <flux:icon.magnifying-glass variant="micro" />
+        <flux:button href="{{ route('search-order') }}" variant="ghost" class="flex-1" icon="magnifying-glass">
             查询订单
         </flux:button>
     </div>

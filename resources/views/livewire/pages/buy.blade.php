@@ -1,11 +1,13 @@
 {{-- 购买页 - 使用 Flux 免费组件 + Tailwind 卡片，展示表单验证、SEO、支付方式选择 --}}
 <div class="max-w-7xl mx-auto">
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:grid-rows-1">
         {{-- 左侧：商品详情 --}}
-        <div class="lg:col-span-2 space-y-6">
-            {{-- 商品标题 --}}
-            <div>
-                <flux:heading size="2xl" class="mb-2">{{ $product->gd_name }}</flux:heading>
+        <div class="lg:col-span-2 flex flex-col gap-6">
+            {{-- 商品标题（仅移动端显示） --}}
+            <div class="lg:hidden">
+                <h1 class="text-3xl font-bold text-zinc-900 dark:text-white mb-3">
+                    {{ $product->gd_name }}
+                </h1>
 
                 <div class="flex flex-wrap gap-2">
                     @if($product->type == \App\Models\Goods::AUTOMATIC_DELIVERY)
@@ -22,41 +24,62 @@
                 </div>
             </div>
 
-            {{-- 批发价提示 --}}
-            @if(!empty($formattedProduct->wholesale_price_cnf) && is_array($formattedProduct->wholesale_price_cnf))
-            <div class="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4">
-                <flux:heading size="sm" class="mb-2">批发优惠</flux:heading>
-                <div class="space-y-1 text-sm text-amber-800 dark:text-amber-200">
-                    @foreach($formattedProduct->wholesale_price_cnf as $ws)
-                    <p>购买 {{ $ws['number'] }} 件及以上，{{ $ws['price'] }} 元/件</p>
-                    @endforeach
-                </div>
-            </div>
-            @endif
-
             {{-- 商品描述 --}}
-            <div class="bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-700 p-6">
+            <div class="bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-700 p-6 flex-1 flex flex-col">
                 <flux:heading size="lg" class="mb-4">商品详情</flux:heading>
-                <div class="prose prose-zinc dark:prose-invert max-w-none">
+
+                {{-- 批发价提示 --}}
+                @if(!empty($formattedProduct->wholesale_price_cnf) && is_array($formattedProduct->wholesale_price_cnf))
+                <div class="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4 mb-4">
+                    <flux:heading size="sm" class="mb-2">批发优惠</flux:heading>
+                    <div class="space-y-1 text-sm text-amber-800 dark:text-amber-200">
+                        @foreach($formattedProduct->wholesale_price_cnf as $ws)
+                        <p>购买 {{ $ws['number'] }} 件及以上，{{ $ws['price'] }} 元/件</p>
+                        @endforeach
+                    </div>
+                </div>
+                @endif
+
+                <div class="prose prose-zinc dark:prose-invert max-w-none flex-1">
                     {!! $formattedProduct->description !!}
                 </div>
             </div>
         </div>
 
         {{-- 右侧：购买表单 --}}
-        <div class="lg:col-span-1">
-            <div class="bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-700 p-6 sticky top-8">
+        <div class="lg:col-span-1 flex flex-col">
+            <div class="bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-700 p-6 flex-1">
                 <form wire:submit="submitOrder" class="space-y-4">
+                    {{-- 商品标题和标签（桌面端显示） --}}
+                    <div class="hidden lg:block pb-4 border-b border-zinc-200 dark:border-zinc-700 mb-4">
+                        <h2 class="text-2xl font-bold text-zinc-900 dark:text-white mb-3">
+                            {{ $product->gd_name }}
+                        </h2>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            @if($product->type == \App\Models\Goods::AUTOMATIC_DELIVERY)
+                            <flux:badge color="blue">自动发货</flux:badge>
+                            @else
+                            <flux:badge color="amber">人工发货</flux:badge>
+                            @endif
+
+                            <flux:badge color="green">库存: {{ $product->in_stock }}</flux:badge>
+
+                            @if($product->buy_limit_num > 0)
+                            <flux:badge color="zinc">限购: {{ $product->buy_limit_num }}</flux:badge>
+                            @endif
+                        </div>
+                    </div>
+
                     {{-- 价格显示 --}}
-                    <div class="text-center pb-4 border-b border-zinc-200 dark:border-zinc-700">
-                        <div class="flex items-baseline justify-center gap-2">
-                            <flux:heading size="3xl" class="text-blue-600 dark:text-blue-400">
+                    <div class="pb-4 border-b border-zinc-200 dark:border-zinc-700">
+                        <div class="flex items-baseline gap-3">
+                            <span class="text-4xl font-bold text-red-600 dark:text-red-400">
                                 ¥{{ number_format($product->actual_price, 2) }}
-                            </flux:heading>
+                            </span>
                             @if($product->retail_price > $product->actual_price)
-                            <flux:text class="text-lg line-through">
+                            <span class="text-lg text-zinc-400 dark:text-zinc-500 line-through">
                                 ¥{{ number_format($product->retail_price, 2) }}
-                            </flux:text>
+                            </span>
                             @endif
                         </div>
                     </div>
@@ -139,13 +162,14 @@
                     @if(!empty($paymentMethods))
                     <flux:field>
                         <flux:label>支付方式</flux:label>
-                        <flux:radio.group wire:model="selectedPaymentId" variant="segmented">
+                        <flux:radio.group wire:model="selectedPaymentId">
                             @foreach($paymentMethods as $method)
                             <flux:radio
                                 value="{{ $method['id'] }}"
                                 label="{{ $method['pay_name'] }}" />
                             @endforeach
                         </flux:radio.group>
+                        <flux:error name="selectedPaymentId" />
                     </flux:field>
                     @endif
 
@@ -154,9 +178,9 @@
                         <flux:button
                             type="submit"
                             variant="primary"
-                            class="w-full"
+                            class="w-full h-12 text-lg"
+                            icon="shopping-cart"
                             :disabled="$product->in_stock <= 0">
-                            <flux:icon.shopping-cart variant="micro" />
                             {{ $product->in_stock > 0 ? '立即下单' : '暂时缺货' }}
                         </flux:button>
                     </div>

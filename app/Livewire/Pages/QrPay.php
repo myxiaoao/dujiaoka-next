@@ -16,7 +16,7 @@ use Livewire\Component;
 #[Layout('components.layouts.app')]
 class QrPay extends Component
 {
-    public Order $order;
+    public Order $orderData;
 
     public string $qrcodeUrl = '';
 
@@ -25,47 +25,47 @@ class QrPay extends Component
     public function mount(string $order, PayService $payService): void
     {
         // 通过订单号查找订单
-        $this->order = Order::with(['goods', 'pay'])->where('order_sn', $order)->firstOrFail();
+        $this->orderData = Order::with(['goods', 'pay'])->where('order_sn', $order)->firstOrFail();
 
         // 检查订单状态
-        if ($this->order->status == Order::STATUS_EXPIRED) {
-            session()->flash('error', '订单已过期');
+        if ($this->orderData->status == Order::STATUS_EXPIRED) {
+            session()->flash('error_message', '订单已过期');
             $this->redirect(route('search-order'));
 
             return;
         }
 
-        if ($this->order->status == Order::STATUS_COMPLETED) {
+        if ($this->orderData->status == Order::STATUS_COMPLETED) {
             // 订单已支付，跳转到订单详情
-            $this->redirect(route('order-info', ['order' => $this->order->id]));
+            $this->redirect(route('order-info', ['order' => $this->orderData->id]));
 
             return;
         }
 
         // 生成支付二维码
         try {
-            $paymentData = $payService->pay($this->order);
+            $paymentData = $payService->pay($this->orderData);
             $this->qrcodeUrl = $paymentData['qrcode'] ?? '';
         } catch (\Exception $e) {
-            session()->flash('error', '生成支付二维码失败：'.$e->getMessage());
-            $this->redirect(route('bill', ['order' => $this->order->order_sn]));
+            session()->flash('error_message', '生成支付二维码失败：'.$e->getMessage());
+            $this->redirect(route('bill', ['order' => $this->orderData->order_sn]));
         }
     }
 
     public function checkPaymentStatus(): void
     {
         // 刷新订单状态
-        $this->order->refresh();
+        $this->orderData->refresh();
 
         // 检查订单是否已完成
-        if ($this->order->status == Order::STATUS_COMPLETED) {
+        if ($this->orderData->status == Order::STATUS_COMPLETED) {
             $this->paymentCompleted = true;
             // 延迟跳转，让用户看到成功提示
             $this->dispatch('payment-completed');
         }
 
         // 检查订单是否过期
-        if ($this->order->status == Order::STATUS_EXPIRED) {
+        if ($this->orderData->status == Order::STATUS_EXPIRED) {
             session()->flash('error', '订单已过期');
             $this->redirect(route('search-order'));
         }

@@ -67,10 +67,10 @@
     {{-- Flux Appearance (仅免费组件) --}}
     @fluxAppearance
 </head>
-<body class="min-h-screen bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 antialiased">
+<body class="min-h-screen flex flex-col bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 antialiased">
     {{-- Header --}}
     <header class="sticky top-0 z-50 border-b border-zinc-200 dark:border-zinc-700 bg-white/80 dark:bg-zinc-900/80 backdrop-blur-sm">
-        <div class="container mx-auto px-4">
+        <div class="max-w-7xl mx-auto px-4">
             <div class="flex items-center justify-between h-16">
                 {{-- Logo --}}
                 <a href="/" class="text-xl font-bold text-zinc-900 dark:text-white">
@@ -106,7 +106,7 @@
             x-show="open"
             x-transition
             class="md:hidden border-t border-zinc-200 dark:border-zinc-700">
-            <nav class="container mx-auto px-4 py-4 space-y-2">
+            <nav class="max-w-7xl mx-auto px-4 py-4 space-y-2">
                 <a href="/" class="block py-2 text-sm font-medium text-zinc-700 dark:text-zinc-300 hover:text-zinc-900 dark:hover:text-white transition">
                     首页
                 </a>
@@ -118,13 +118,13 @@
     </header>
 
     {{-- Main Content --}}
-    <main class="container mx-auto px-4 py-8">
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 py-8">
         {{ $slot }}
     </main>
 
     {{-- Footer --}}
-    <footer class="border-t border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/50 mt-16">
-        <div class="container mx-auto px-4 py-6">
+    <footer class="border-t border-zinc-200 dark:border-zinc-700 bg-zinc-50 dark:bg-zinc-800/50 mt-auto">
+        <div class="max-w-7xl mx-auto px-4 py-6">
             <div class="flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-zinc-600 dark:text-zinc-400">
                 <div class="text-center md:text-left">
                     <p>&copy; {{ date('Y') }} {{ dujiaoka_config_get('title', config('app.name')) }}. All rights reserved.</p>

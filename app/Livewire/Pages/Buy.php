@@ -81,37 +81,83 @@ class Buy extends Component
         OrderService $orderService,
         OrderProcessService $orderProcessService
     ) {
-        // 验证表单
+        // Livewire 表单验证
         $this->validate();
 
+        \DB::beginTransaction();
         try {
-            // 准备订单数据
-            $orderData = [
+            // 创建伪 Request 对象用于服务层验证
+            $request = new \Illuminate\Http\Request([
                 'gid' => $this->product->id,
                 'email' => $this->email,
                 'by_amount' => $this->quantity,
-                'search_pwd' => $this->searchPassword,
-                'coupon_code' => $this->couponCode,
+                'search_pwd' => $this->searchPassword ?? '',
+                'coupon_code' => $this->couponCode ?? '',
                 'payway' => $this->selectedPaymentId,
-                'img_verify_code' => $this->imgVerifyCode,
-            ];
+                'img_verify_code' => $this->imgVerifyCode ?? '',
+            ] + $this->customFields);
 
-            // 添加自定义字段
-            foreach ($this->customFields as $field => $value) {
-                $orderData[$field] = $value;
-            }
+            // 添加 IP 到 Request
+            $request->server->set('REMOTE_ADDR', request()->ip());
 
-            // 验证订单
-            $validatedData = $orderService->validation($orderData);
+            // 按照原控制器逻辑进行验证
+            $orderService->validatorCreateOrder($request);
+            $goods = $orderService->validatorGoods($request);
+            $orderService->validatorLoopCarmis($request);
+
+            // 设置商品
+            $orderProcessService->setGoods($goods);
+
+            // 优惠码验证
+            $coupon = $orderService->validatorCoupon($request);
+            $orderProcessService->setCoupon($coupon);
+
+            // 代充框验证
+            $otherIpt = $orderService->validatorChargeInput($goods, $request);
+            $orderProcessService->setOtherIpt($otherIpt);
+
+            // 设置订单数据
+            $orderProcessService->setBuyAmount($this->quantity);
+            $orderProcessService->setPayID($this->selectedPaymentId);
+            $orderProcessService->setEmail($this->email);
+            $orderProcessService->setBuyIP(request()->ip());
+            $orderProcessService->setSearchPwd($this->searchPassword ?? '');
 
             // 创建订单
-            $order = $orderProcessService->createOrder($validatedData);
+            $order = $orderProcessService->createOrder();
+
+            \DB::commit();
+
+            // 设置订单 Cookie
+            $this->queueOrderCookie($order->order_sn);
 
             // 重定向到支付页
-            return redirect()->route('bill', $order->id);
+            return $this->redirect(route('bill', ['order' => $order->order_sn]));
         } catch (RuleValidationException $e) {
+            \DB::rollBack();
             // 显示验证错误
             $this->addError('submit', $e->getMessage());
+        } catch (\Exception $e) {
+            \DB::rollBack();
+            // 显示其他错误
+            $this->addError('submit', $e->getMessage());
+        }
+    }
+
+    /**
+     * 设置订单 Cookie
+     */
+    private function queueOrderCookie(string $orderSN): void
+    {
+        $cookies = request()->cookie('dujiaoka_orders');
+        if (empty($cookies)) {
+            cookie()->queue('dujiaoka_orders', json_encode([$orderSN]), 525600); // 1 year
+        } else {
+            $cookies = json_decode($cookies, true);
+            if (! in_array($orderSN, $cookies)) {
+                array_push($cookies, $orderSN);
+            }
+            cookie()->queue('dujiaoka_orders', json_encode($cookies), 525600);
         }
     }
 

@@ -89,8 +89,7 @@
                 <flux:text class="text-sm text-amber-800 dark:text-amber-200 mb-3">
                     订单已创建，请尽快完成支付。订单将在30分钟后自动过期。
                 </flux:text>
-                <flux:button href="/bill/{{ $order->order_sn }}" variant="primary" size="sm">
-                    <flux:icon.credit-card variant="micro" />
+                <flux:button href="/bill/{{ $order->order_sn }}" variant="primary" size="sm" icon="credit-card">
                     去支付
                 </flux:button>
             </div>
@@ -121,12 +120,10 @@
 
     {{-- 操作按钮 --}}
     <div class="flex gap-4">
-        <flux:button href="/" variant="ghost">
-            <flux:icon.home variant="micro" />
+        <flux:button href="/" variant="ghost" icon="home">
             返回首页
         </flux:button>
-        <flux:button href="{{ route('search-order') }}" variant="ghost">
-            <flux:icon.magnifying-glass variant="micro" />
+        <flux:button href="{{ route('search-order') }}" variant="ghost" icon="magnifying-glass">
             查询其他订单
         </flux:button>
     </div>

@@ -13,23 +13,23 @@
         <div class="space-y-3">
             <div class="flex justify-between items-center">
                 <flux:text class="text-zinc-500 dark:text-zinc-400">订单号</flux:text>
-                <flux:text class="font-mono">{{ $order->order_sn }}</flux:text>
+                <flux:text class="font-mono">{{ $orderData->order_sn }}</flux:text>
             </div>
 
             <div class="flex justify-between items-center">
                 <flux:text class="text-zinc-500 dark:text-zinc-400">商品名称</flux:text>
-                <flux:text>{{ $order->goods->gd_name }}</flux:text>
+                <flux:text>{{ $orderData->goods->gd_name }}</flux:text>
             </div>
 
             <div class="flex justify-between items-center">
                 <flux:text class="text-zinc-500 dark:text-zinc-400">购买数量</flux:text>
-                <flux:text>{{ $order->buy_amount }} 件</flux:text>
+                <flux:text>{{ $orderData->buy_amount }} 件</flux:text>
             </div>
 
             <div class="flex justify-between items-center pt-3 border-t border-zinc-200 dark:border-zinc-700">
                 <flux:heading size="lg">应付金额</flux:heading>
                 <flux:heading size="2xl" class="text-blue-600 dark:text-blue-400">
-                    ¥{{ number_format($order->actual_price, 2) }}
+                    ¥{{ number_format($orderData->actual_price, 2) }}
                 </flux:heading>
             </div>
         </div>
@@ -40,7 +40,7 @@
     <div class="bg-white dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-700 p-6">
         <flux:field>
             <flux:label>选择支付方式</flux:label>
-            <flux:radio.group wire:model="selectedPaymentId" variant="segmented">
+            <flux:radio.group wire:model="selectedPaymentId">
                 @foreach($paymentMethods as $method)
                 <flux:radio
                     value="{{ $method['id'] }}"
@@ -70,19 +70,16 @@
         <flux:button
             wire:click="proceedToPayment"
             variant="primary"
-            class="w-full"
-            size="lg">
-            <flux:icon.credit-card variant="micro" />
+            class="w-full h-12 text-lg"
+            icon="credit-card">
             确认支付
         </flux:button>
 
         <div class="flex gap-3">
-            <flux:button href="/" variant="ghost" class="flex-1">
-                <flux:icon.home variant="micro" />
+            <flux:button href="/" variant="ghost" class="flex-1" icon="home">
                 返回首页
             </flux:button>
-            <flux:button href="{{ route('search-order') }}" variant="ghost" class="flex-1">
-                <flux:icon.magnifying-glass variant="micro" />
+            <flux:button href="{{ route('search-order') }}" variant="ghost" class="flex-1" icon="magnifying-glass">
                 查询订单
             </flux:button>
         </div>

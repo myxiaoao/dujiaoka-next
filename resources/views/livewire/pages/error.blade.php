@@ -53,18 +53,15 @@
 
     {{-- 操作按钮 --}}
     <div class="flex flex-col gap-3">
-        <flux:button href="/" variant="primary" class="w-full" size="lg">
-            <flux:icon.home variant="micro" />
+        <flux:button href="/" variant="primary" class="w-full h-12 text-lg" icon="home">
             返回首页
         </flux:button>
 
         <div class="flex gap-3">
-            <flux:button href="{{ route('search-order') }}" variant="ghost" class="flex-1">
-                <flux:icon.magnifying-glass variant="micro" />
+            <flux:button href="{{ route('search-order') }}" variant="ghost" class="flex-1" icon="magnifying-glass">
                 查询订单
             </flux:button>
-            <flux:button onclick="window.location.reload()" variant="ghost" class="flex-1">
-                <flux:icon.arrow-path variant="micro" />
+            <flux:button onclick="window.location.reload()" variant="ghost" class="flex-1" icon="arrow-path">
                 刷新页面
             </flux:button>
         </div>

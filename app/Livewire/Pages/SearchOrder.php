@@ -78,7 +78,7 @@ class SearchOrder extends Component
             return;
         }
 
-        return redirect()->route('order-info', ['order' => $order->id]);
+        return $this->redirect(route('order-info', ['order' => $order->id]));
     }
 
     private function searchByEmail(OrderService $orderService)
@@ -93,11 +93,11 @@ class SearchOrder extends Component
 
         // 如果只有一个订单，直接跳转
         if ($orders->count() === 1) {
-            return redirect()->route('order-info', ['order' => $orders->first()->id]);
+            return $this->redirect(route('order-info', ['order' => $orders->first()->id]));
         }
 
         // 多个订单，跳转到第一个订单
-        return redirect()->route('order-info', ['order' => $orders->first()->id]);
+        return $this->redirect(route('order-info', ['order' => $orders->first()->id]));
     }
 
     private function searchByBrowser(OrderService $orderService)
@@ -120,7 +120,7 @@ class SearchOrder extends Component
         }
 
         // 跳转到最近的订单
-        return redirect()->route('order-info', ['order' => $orders->first()->id]);
+        return $this->redirect(route('order-info', ['order' => $orders->first()->id]));
     }
 
     public function render(SeoService $seoService)
