@@ -81,8 +81,8 @@ class Bill extends Component
             return $this->redirect(route('qrpay', ['order' => $this->orderData->order_sn]));
         }
 
-        // 否则跳转到支付网关
-        return $this->redirect("{$pay->pay_handleroute}/{$this->orderData->order_sn}");
+        // 否则跳转到支付网关（需要包含 payway 和 orderSN）
+        return $this->redirect("{$pay->pay_handleroute}/{$pay->pay_check}/{$this->orderData->order_sn}");
     }
 
     public function render(SeoService $seoService)
