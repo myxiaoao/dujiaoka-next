@@ -7,7 +7,6 @@
 ### 🎨 前端升级
 - **现代化 UI**: Tailwind CSS 4 + Flux UI 组件
 - **全栈组件**: Livewire 3 无刷新交互
-- **多语言支持**: 中文简体、繁体、English
 - **暗色模式**: 完整的 Dark Mode 支持
 - **用户体验**: 商品分类导航、卡密一键复制、实时搜索
 
@@ -165,7 +164,6 @@ php artisan dujiaoka:upgrade \
 | **前端框架**   | Bootstrap 4 + jQuery | Tailwind CSS 4 + Livewire 3 | ✅ 无刷新交互     |
 | **PHP 版本** | 7.4+                 | 8.2+                        | ✅ 性能提升 30%+ |
 | **主题系统**   | 3个主题                 | 单一现代主题 + 暗色模式               | ✅ 统一体验      |
-| **多语言**    | zh_CN 为主             | zh_CN, zh_TW, en            | ✅ 3语言支持     |
 | **卡密显示**   | ❌ 仅邮箱                | ✅ 页面直接显示 + 复制               | ✅ 用户体验提升    |
 | **分类导航**   | Tab 切换               | Livewire 实时过滤               | ✅ 性能优化      |
 | **代码规范**   | 混合风格                 | PSR-12 + Laravel Pint       | ✅ 统一规范      |

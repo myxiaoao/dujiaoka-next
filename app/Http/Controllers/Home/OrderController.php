@@ -105,29 +105,6 @@ class OrderController extends BaseController
     }
 
     /**
-     * 结账
-     *
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     *
-     * @author    assimon<ashang@utf8.hk>
-     * @copyright assimon<ashang@utf8.hk>
-     *
-     * @link      http://utf8.hk/
-     */
-    public function bill(string $orderSN)
-    {
-        $order = $this->orderService->detailOrderSN($orderSN);
-        if (empty($order)) {
-            return $this->err(__('dujiaoka.prompt.order_does_not_exist'));
-        }
-        if ($order->status == Order::STATUS_EXPIRED) {
-            return $this->err(__('dujiaoka.prompt.order_is_expired'));
-        }
-
-        return $this->render('static_pages/bill', $order, __('dujiaoka.page-title.bill'));
-    }
-
-    /**
      * 订单状态监测
      *
      * @param  string  $orderSN  订单号
@@ -241,20 +218,5 @@ class OrderController extends BaseController
         $orders = $this->orderService->byOrderSNS($orderSNS);
 
         return $this->render('static_pages/orderinfo', ['orders' => $orders], __('dujiaoka.page-title.order-detail'));
-    }
-
-    /**
-     * 订单查询页
-     *
-     * @return mixed
-     *
-     * @author    assimon<ashang@utf8.hk>
-     * @copyright assimon<ashang@utf8.hk>
-     *
-     * @link      http://utf8.hk/
-     */
-    public function orderSearch(Request $request)
-    {
-        return $this->render('static_pages/searchOrder', [], __('dujiaoka.page-title.order-search'));
     }
 }
