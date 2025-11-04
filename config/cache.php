@@ -17,9 +17,13 @@ return [
     | framework. This connection is utilized if another isn't explicitly
     | specified when running a cache operation inside the application.
     |
+    | IMPORTANT: This application REQUIRES Redis for cache storage because
+    | system configurations are stored using Cache::forever(). Database cache
+    | may expire or get cleared, causing configuration loss.
+    |
     */
 
-    'default' => env('CACHE_STORE', 'database'),
+    'default' => env('CACHE_STORE', 'redis'),
 
     /*
     |--------------------------------------------------------------------------

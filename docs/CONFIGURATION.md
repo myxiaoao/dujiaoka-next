@@ -30,7 +30,6 @@
 return [
     // 基础设置
     'title' => '独角数卡',
-    'template' => 'unicorn',
     'language' => 'zh_CN',
     'order_expire_time' => 5,
 
@@ -139,7 +138,6 @@ function dujiaoka_config_get(string $key, $default = null)
 | 文字 Logo | `text_logo` | string | "独角数卡" | 纯文本 Logo |
 | SEO 关键词 | `keywords` | string | "独角数卡,自动发卡,数字商品" | SEO 优化 |
 | SEO 描述 | `description` | string | "独角数卡 - 开源式自动化售货系统" | SEO 优化 |
-| 前端模板 | `template` | string | "unicorn" | 前端主题（保留） |
 | 网站语言 | `language` | string | "zh_CN" | zh_CN, zh_TW, en |
 | 管理员邮箱 | `manage_email` | string | null | 接收通知邮件 |
 | 订单过期时间 | `order_expire_time` | int | 5 | 分钟数 |

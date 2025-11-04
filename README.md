@@ -46,13 +46,20 @@ npm install
 cp .env.example .env
 php artisan key:generate
 
-# 5. 配置数据库（编辑 .env 文件）
+# 5. 配置数据库和缓存（编辑 .env 文件）
+# 数据库配置
 # DB_CONNECTION=mysql
 # DB_HOST=127.0.0.1
 # DB_PORT=3306
 # DB_DATABASE=dujiaoka_next
 # DB_USERNAME=root
 # DB_PASSWORD=
+
+# Redis 缓存配置（必需！系统配置存储在 Redis 中）
+# CACHE_STORE=redis
+# REDIS_HOST=127.0.0.1
+# REDIS_PORT=6379
+# REDIS_PASSWORD=null
 
 # 6. 运行迁移并初始化数据
 php artisan migrate --seed
@@ -142,6 +149,7 @@ php artisan dujiaoka:upgrade \
 - **Filament** 4.x (现代化管理面板)
 - **Livewire** 3.x (全栈组件)
 - **MySQL** >= 5.7 / MariaDB >= 10.3
+- **Redis** (必需，系统配置存储)
 
 ### 前端
 - **Tailwind CSS** 4.x (原子化 CSS)

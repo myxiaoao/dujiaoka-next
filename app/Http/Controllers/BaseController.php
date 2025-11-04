@@ -7,45 +7,16 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+/**
+ * Base Controller
+ *
+ * Legacy controller class maintained for backward compatibility.
+ * The application has been migrated to Livewire components.
+ * This class is kept as a parent class for some controllers but no longer
+ * contains template-specific methods.
+ */
 class BaseController extends Controller
 {
-    /**
-     * 渲染模板
-     *
-     * @param  string  $tpl  模板名称
-     * @param  array  $data  数据
-     * @param  array  $pageTitle  页面标题
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     *
-     * @author    assimon<ashang@utf8.hk>
-     * @copyright assimon<ashang@utf8.hk>
-     *
-     * @link      http://utf8.hk/
-     */
-    protected function render(string $tpl, $data = [], string $pageTitle = '')
-    {
-        $tplPath = 'unicorn/'.$tpl;
-
-        return view($tplPath, $data)->with('page_title', $pageTitle);
-    }
-
-    /**
-     * 错误提示
-     *
-     * @param  string  $content  提示内容
-     * @param  string  $jumpUri  跳转url
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\View\View
-     *
-     * @author    assimon<ashang@utf8.hk>
-     * @copyright assimon<ashang@utf8.hk>
-     *
-     * @link      http://utf8.hk/
-     */
-    protected function err(string $content, $jumpUri = '')
-    {
-        $tplPath = 'unicorn/errors/error';
-
-        return view($tplPath, ['title' => __('dujiaoka.error_title'), 'content' => $content, 'url' => $jumpUri])
-            ->with('page_title', __('dujiaoka.error_title'));
-    }
+    // This class is intentionally empty.
+    // It exists only for backward compatibility with controllers that extend it.
 }

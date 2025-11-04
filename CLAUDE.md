@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **独角数卡 (Dujiaoka)** - A digital goods sales platform (card/key management system) migrated from Laravel 6 + dcat-admin to Laravel 12 + Filament 4. This is a modernized version supporting product sales, inventory management, order processing, and multiple payment gateways.
 
-**Tech Stack**: PHP 8.2+, Laravel 12, Filament 4, MySQL 5.7+
+**Tech Stack**: PHP 8.2+, Laravel 12, Filament 4, MySQL 5.7+, Redis (Required)
 
 ## Common Commands
 
@@ -52,6 +52,20 @@ npm run dev
 # Production build
 npm run build
 ```
+
+### Redis (Required)
+```bash
+# Check Redis connection
+redis-cli ping
+
+# Monitor Redis (useful for debugging cache issues)
+redis-cli monitor
+
+# Flush all cache (use with caution - will clear system config!)
+php artisan cache:clear
+```
+
+**IMPORTANT**: Redis is REQUIRED for this application. System configurations are stored in Redis using `Cache::forever()`. If Redis is not available or cache is cleared, system settings will be lost and need to be reconfigured in Filament admin panel.
 
 ### Database
 ```bash
@@ -140,7 +154,7 @@ Jobs in `app/Jobs/` handle async operations:
 
 ### Helper Functions
 `app/Helpers/functions.php` (autoloaded) provides:
-- `dujiaoka_config_get($key)` - System configuration access (cached)
+- `dujiaoka_config_get($key)` - System configuration access (cached in Redis using Cache::forever() - Redis is required!)
 - `format_wholesale_price($str)` - Parse wholesale price format
 - `format_charge_input($str)` - Parse custom form fields
 - `replace_mail_tpl($tpl, $data)` - Email template rendering
@@ -159,7 +173,7 @@ Custom middleware in `app/Http/Middleware/`:
 - `routes/common/pay.php` - Payment gateway routes
 
 ### Configuration
-- `config/dujiaoka.php` - Custom application config (version, templates, language)
+- `config/dujiaoka.php` - Custom application config (version, language)
 - Standard Laravel configs in `config/`
 
 ### Code Style Requirements
