@@ -1,10 +1,18 @@
 {
   "resources/css/app.css": {
-    "file": "assets/app-A05iuWpn.css",
+    "file": "assets/app-BW_7omli.css",
     "src": "resources/css/app.css",
     "isEntry": true,
     "names": [
       "app.css"
+    ]
+  },
+  "resources/css/filament/admin/theme.css": {
+    "file": "assets/theme-BuCdh5lc.css",
+    "src": "resources/css/filament/admin/theme.css",
+    "isEntry": true,
+    "names": [
+      "theme.css"
     ]
   },
   "resources/js/app.js": {

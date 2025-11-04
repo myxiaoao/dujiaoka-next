@@ -1,0 +1,49 @@
+@import '../../../../vendor/filament/filament/resources/css/theme.css';
+
+@source '../../../../app/Filament/**/*';
+@source '../../../../resources/views/filament/**/*';
+
+@source '../../../../vendor/jeffgreco13/filament-breezy/resources/**/*';
+
+:root {
+    text-autospace: normal;
+}
+
+.fi-body {
+    @apply bg-stone-100 dark:bg-stone-950;
+}
+
+.fi-sidebar {
+    @apply bg-white dark:bg-gray-900 border-r border-gray-950/5 dark:border-white/10 font-normal;
+
+    & .fi-sidebar-nav-groups {
+        @apply gap-y-2;
+    }
+
+    & .fi-sidebar-nav {
+        @apply px-5 pt-5;
+    }
+}
+
+.fi-sidebar-nav::-webkit-scrollbar {
+    display: none;
+}
+
+.fi-sidebar-nav {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.fi-page-header-main-ctn {
+    @apply gap-y-6 py-6;
+}
+
+.fi-ta-cell {
+    &.fi-ta-summary-row-heading-cell {
+        @apply md:ps-6 sm:ps-3 py-1;
+    }
+}
+
+.fi-ta-text-summary {
+    @apply py-1;
+}

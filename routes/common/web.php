@@ -4,6 +4,8 @@ declare(strict_types=1);
 /**
  * This file is part of dujiaoka next server projects.
  */
+
+use App\Http\Controllers\Home\HomeController;
 use App\Http\Controllers\Home\OrderController;
 use App\Livewire\Pages\Bill;
 use App\Livewire\Pages\Buy;
@@ -48,5 +50,5 @@ Route::group(['middleware' => ['dujiaoka.boot']], function (): void {
     Route::get('check-order-status/{orderSN}', [OrderController::class, 'checkOrderStatus'])->name('check-order-status');
 
     // 极验证验证（如果启用）
-    Route::get('check-geetest', [\App\Http\Controllers\Home\HomeController::class, 'geetest'])->name('check-geetest');
+    Route::get('check-geetest', [HomeController::class, 'geetest'])->name('check-geetest');
 });
