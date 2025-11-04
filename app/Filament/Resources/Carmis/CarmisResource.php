@@ -70,4 +70,14 @@ class CarmisResource extends Resource
                 SoftDeletingScope::class,
             ]);
     }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return (string) static::getModel()::where('status', Carmis::STATUS_UNSOLD)->count();
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'success';
+    }
 }

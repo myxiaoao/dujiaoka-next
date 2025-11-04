@@ -18,6 +18,7 @@ use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TrashedFilter;
+use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
 
 class CouponsTable
@@ -125,6 +126,31 @@ class CouponsTable
                     ForceDeleteBulkAction::make(),
                     RestoreBulkAction::make(),
                 ]),
+            ])
+            ->groups([
+                Group::make('is_use')
+                    ->label('使用状态')
+                    ->collapsible()
+                    ->getTitleFromRecordUsing(fn (Coupon $record): string => match ($record->is_use) {
+                        Coupon::STATUS_UNUSED => '可用',
+                        Coupon::STATUS_USE => '已用',
+                        default => '未知',
+                    }),
+
+                Group::make('is_open')
+                    ->label('启用状态')
+                    ->collapsible()
+                    ->getTitleFromRecordUsing(fn (Coupon $record): string => $record->is_open ? '启用' : '禁用'),
+
+                Group::make('discount')
+                    ->label('优惠金额')
+                    ->collapsible()
+                    ->getTitleFromRecordUsing(fn (Coupon $record): string => '¥'.number_format((float) $record->discount, 2)),
+
+                Group::make('created_at')
+                    ->label('创建日期')
+                    ->date()
+                    ->collapsible(),
             ])
             ->defaultSort('id', 'desc');
     }

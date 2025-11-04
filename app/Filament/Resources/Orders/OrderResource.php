@@ -37,6 +37,10 @@ class OrderResource extends Resource
 
     protected static ?int $navigationSort = 1;
 
+    protected static ?string $recordTitleAttribute = 'order_sn';
+
+    protected static int $globalSearchResultsLimit = 20;
+
     public static function form(Schema $schema): Schema
     {
         return OrderForm::configure($schema);
@@ -51,6 +55,13 @@ class OrderResource extends Resource
     {
         return [
             //
+        ];
+    }
+
+    public static function getWidgets(): array
+    {
+        return [
+            Widgets\OrderStatsOverview::class,
         ];
     }
 
@@ -69,5 +80,50 @@ class OrderResource extends Resource
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ]);
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return (string) static::getModel()::where('status', Order::STATUS_COMPLETED)->count();
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'success';
+    }
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return [
+            'order_sn',
+            'email',
+            'search_pwd',
+            'trade_no',
+            'title',
+            'goods.gd_name',
+        ];
+    }
+
+    public static function getGlobalSearchResultTitle(\Illuminate\Database\Eloquent\Model $record): string
+    {
+        return $record->order_sn;
+    }
+
+    public static function getGlobalSearchResultDetails(\Illuminate\Database\Eloquent\Model $record): array
+    {
+        return [
+            '商品' => $record->goods?->gd_name ?? '-',
+            '金额' => '¥'.number_format((float) $record->actual_price, 2),
+            '状态' => match ($record->status) {
+                Order::STATUS_WAIT_PAY => '待支付',
+                Order::STATUS_PENDING => '待处理',
+                Order::STATUS_PROCESSING => '处理中',
+                Order::STATUS_COMPLETED => '已完成',
+                Order::STATUS_FAILURE => '失败',
+                Order::STATUS_ABNORMAL => '异常',
+                Order::STATUS_EXPIRED => '已过期',
+                default => '未知',
+            },
+        ];
     }
 }

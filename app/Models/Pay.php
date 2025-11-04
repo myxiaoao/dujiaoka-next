@@ -18,6 +18,7 @@ class Pay extends BaseModel
     protected $fillable = [
         'pay_name',
         'pay_check',
+        'pay_handleroute',
         'pay_method',
         'pay_client',
         'merchant_id',

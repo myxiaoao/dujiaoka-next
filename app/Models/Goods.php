@@ -34,6 +34,9 @@ class Goods extends BaseModel
         'other_ipu_cnf',
         'group_id',
         'is_open_wholesale',
+        'buy_prompt',
+        'description',
+        'api_hook',
     ];
 
     protected $dispatchesEvents = [

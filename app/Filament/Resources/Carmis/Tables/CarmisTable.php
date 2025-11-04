@@ -23,6 +23,7 @@ use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TrashedFilter;
+use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
 
 class CarmisTable
@@ -131,6 +132,30 @@ class CarmisTable
                     ForceDeleteBulkAction::make(),
                     RestoreBulkAction::make(),
                 ]),
+            ])
+            ->groups([
+                Group::make('goods.gd_name')
+                    ->label('关联商品')
+                    ->collapsible(),
+
+                Group::make('status')
+                    ->label('卡密状态')
+                    ->collapsible()
+                    ->getTitleFromRecordUsing(fn (Carmis $record): string => match ($record->status) {
+                        Carmis::STATUS_UNSOLD => '可用',
+                        Carmis::STATUS_SOLD => '已售',
+                        default => '未知',
+                    }),
+
+                Group::make('is_loop')
+                    ->label('循环状态')
+                    ->collapsible()
+                    ->getTitleFromRecordUsing(fn (Carmis $record): string => $record->is_loop ? '循环使用' : '一次性'),
+
+                Group::make('created_at')
+                    ->label('创建日期')
+                    ->date()
+                    ->collapsible(),
             ])
             ->defaultSort('id', 'desc');
     }

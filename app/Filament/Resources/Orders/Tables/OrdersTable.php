@@ -17,10 +17,12 @@ use Filament\Actions\EditAction;
 use Filament\Actions\ForceDeleteBulkAction;
 use Filament\Actions\RestoreBulkAction;
 use Filament\Actions\ViewAction;
+use Filament\Tables\Columns\Summarizers\Sum;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TrashedFilter;
+use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 
@@ -87,14 +89,23 @@ class OrdersTable
                     ->label('数量')
                     ->alignCenter()
                     ->badge()
-                    ->color('info'),
+                    ->color('info')
+                    ->summarize([
+                        Sum::make()
+                            ->label('总计'),
+                    ]),
 
                 TextColumn::make('actual_price')
                     ->label('实付金额')
                     ->money('CNY')
                     ->sortable()
                     ->weight('bold')
-                    ->color('success'),
+                    ->color('success')
+                    ->summarize([
+                        Sum::make()
+                            ->money('CNY')
+                            ->label('合计'),
+                    ]),
 
                 TextColumn::make('pay.pay_name')
                     ->label('支付方式')
@@ -127,12 +138,22 @@ class OrdersTable
                 TextColumn::make('goods_price')
                     ->label('单价')
                     ->money('CNY')
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->summarize([
+                        Sum::make()
+                            ->money('CNY')
+                            ->label('合计'),
+                    ]),
 
                 TextColumn::make('total_price')
                     ->label('总价')
                     ->money('CNY')
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->summarize([
+                        Sum::make()
+                            ->money('CNY')
+                            ->label('合计'),
+                    ]),
 
                 TextColumn::make('coupon.coupon')
                     ->label('优惠券')
@@ -142,12 +163,22 @@ class OrdersTable
                 TextColumn::make('coupon_discount_price')
                     ->label('券折扣')
                     ->money('CNY')
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->summarize([
+                        Sum::make()
+                            ->money('CNY')
+                            ->label('合计'),
+                    ]),
 
                 TextColumn::make('wholesale_discount_price')
                     ->label('批发折扣')
                     ->money('CNY')
-                    ->toggleable(isToggledHiddenByDefault: true),
+                    ->toggleable(isToggledHiddenByDefault: true)
+                    ->summarize([
+                        Sum::make()
+                            ->money('CNY')
+                            ->label('合计'),
+                    ]),
 
                 TextColumn::make('trade_no')
                     ->label('交易流水号')
@@ -167,8 +198,6 @@ class OrdersTable
                     ->toggleable(isToggledHiddenByDefault: true),
             ])
             ->filters([
-                TrashedFilter::make(),
-
                 SelectFilter::make('status')
                     ->label('订单状态')
                     ->options([
@@ -219,6 +248,8 @@ class OrdersTable
                                 fn (Builder $query, $date): Builder => $query->whereDate('created_at', '<=', $date),
                             );
                     }),
+
+                TrashedFilter::make(),
             ])
             ->recordActions([
                 ViewAction::make(),
@@ -230,6 +261,43 @@ class OrdersTable
                     ForceDeleteBulkAction::make(),
                     RestoreBulkAction::make(),
                 ]),
+            ])
+            ->groups([
+                Group::make('status')
+                    ->label('订单状态')
+                    ->collapsible()
+                    ->getTitleFromRecordUsing(fn (Order $record): string => match ($record->status) {
+                        Order::STATUS_WAIT_PAY => '待支付',
+                        Order::STATUS_PENDING => '待处理',
+                        Order::STATUS_PROCESSING => '处理中',
+                        Order::STATUS_COMPLETED => '已完成',
+                        Order::STATUS_FAILURE => '失败',
+                        Order::STATUS_ABNORMAL => '异常',
+                        Order::STATUS_EXPIRED => '已过期',
+                        default => '未知',
+                    }),
+
+                Group::make('goods.gd_name')
+                    ->label('商品')
+                    ->collapsible(),
+
+                Group::make('pay.pay_name')
+                    ->label('支付方式')
+                    ->collapsible(),
+
+                Group::make('type')
+                    ->label('订单类型')
+                    ->collapsible()
+                    ->getTitleFromRecordUsing(fn (Order $record): string => match ($record->type) {
+                        Order::AUTOMATIC_DELIVERY => '自动发货',
+                        Order::MANUAL_PROCESSING => '人工处理',
+                        default => '未知',
+                    }),
+
+                Group::make('created_at')
+                    ->label('下单日期')
+                    ->date()
+                    ->collapsible(),
             ])
             ->defaultSort('id', 'desc');
     }

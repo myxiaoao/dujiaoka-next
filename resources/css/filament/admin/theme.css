@@ -3,8 +3,6 @@
 @source '../../../../app/Filament/**/*';
 @source '../../../../resources/views/filament/**/*';
 
-@source '../../../../vendor/jeffgreco13/filament-breezy/resources/**/*';
-
 :root {
     text-autospace: normal;
 }
@@ -36,14 +34,4 @@
 
 .fi-page-header-main-ctn {
     @apply gap-y-6 py-6;
-}
-
-.fi-ta-cell {
-    &.fi-ta-summary-row-heading-cell {
-        @apply md:ps-6 sm:ps-3 py-1;
-    }
-}
-
-.fi-ta-text-summary {
-    @apply py-1;
 }

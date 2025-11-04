@@ -21,6 +21,7 @@ use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Filters\SelectFilter;
 use Filament\Tables\Filters\TrashedFilter;
+use Filament\Tables\Grouping\Group;
 use Filament\Tables\Table;
 
 class GoodsTable
@@ -179,6 +180,30 @@ class GoodsTable
                     ForceDeleteBulkAction::make(),
                     RestoreBulkAction::make(),
                 ]),
+            ])
+            ->groups([
+                Group::make('group.gp_name')
+                    ->label('商品分类')
+                    ->collapsible(),
+
+                Group::make('type')
+                    ->label('发货类型')
+                    ->collapsible()
+                    ->getTitleFromRecordUsing(fn (Goods $record): string => match ($record->type) {
+                        Goods::AUTOMATIC_DELIVERY => '自动发货',
+                        Goods::MANUAL_PROCESSING => '人工处理',
+                        default => '未知',
+                    }),
+
+                Group::make('is_open')
+                    ->label('上架状态')
+                    ->collapsible()
+                    ->getTitleFromRecordUsing(fn (Goods $record): string => $record->is_open ? '已上架' : '已下架'),
+
+                Group::make('created_at')
+                    ->label('创建日期')
+                    ->date()
+                    ->collapsible(),
             ])
             ->defaultSort('ord', 'desc');
     }

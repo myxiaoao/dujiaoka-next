@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace App\Providers\Filament;
 
+use Filament\Enums\GlobalSearchPosition;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
 use Filament\Http\Middleware\DisableBladeIconComponents;
@@ -49,6 +50,8 @@ class AdminPanelProvider extends PanelProvider
             ->maxContentWidth('full')
             ->sidebarWidth('15rem')
             ->sidebarCollapsibleOnDesktop()
+            ->globalSearch(position: GlobalSearchPosition::Sidebar)
+            ->globalSearchKeyBindings(['command+k', 'ctrl+k'])
             ->middleware([
                 EncryptCookies::class,
                 AddQueuedCookiesToResponse::class,

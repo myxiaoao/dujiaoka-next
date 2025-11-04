@@ -37,6 +37,10 @@ class GoodsResource extends Resource
 
     protected static ?int $navigationSort = 2;
 
+    protected static ?string $recordTitleAttribute = 'gd_name';
+
+    protected static int $globalSearchResultsLimit = 20;
+
     public static function form(Schema $schema): Schema
     {
         return GoodsForm::configure($schema);
@@ -69,5 +73,39 @@ class GoodsResource extends Resource
             ->withoutGlobalScopes([
                 SoftDeletingScope::class,
             ]);
+    }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return (string) static::getModel()::where('is_open', 1)->count();
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'success';
+    }
+
+    public static function getGloballySearchableAttributes(): array
+    {
+        return [
+            'gd_name',
+            'gd_description',
+            'gd_keywords',
+            'group.gp_name',
+        ];
+    }
+
+    public static function getGlobalSearchResultTitle(\Illuminate\Database\Eloquent\Model $record): string
+    {
+        return $record->gd_name;
+    }
+
+    public static function getGlobalSearchResultDetails(\Illuminate\Database\Eloquent\Model $record): array
+    {
+        return [
+            '分类' => $record->group?->gp_name ?? '未分类',
+            '售价' => '¥'.number_format((float) $record->actual_price, 2),
+            '状态' => $record->is_open ? '已上架' : '已下架',
+        ];
     }
 }

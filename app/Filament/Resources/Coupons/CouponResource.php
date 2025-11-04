@@ -70,4 +70,16 @@ class CouponResource extends Resource
                 SoftDeletingScope::class,
             ]);
     }
+
+    public static function getNavigationBadge(): ?string
+    {
+        return (string) static::getModel()::where('is_use', Coupon::STATUS_UNUSED)
+            ->where('is_open', 1)
+            ->count();
+    }
+
+    public static function getNavigationBadgeColor(): ?string
+    {
+        return 'success';
+    }
 }
