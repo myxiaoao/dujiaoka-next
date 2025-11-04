@@ -29,7 +29,7 @@ class PaySeeder extends Seeder
                 'merchant_key' => '支付宝公钥',
                 'merchant_pem' => '商户私钥',
                 'pay_handleroute' => '/pay/alipay',
-                'is_open' => 1,
+                'is_open' => 0,
             ],
             [
                 'id' => 2,
@@ -55,7 +55,7 @@ class PaySeeder extends Seeder
                 'merchant_key' => '',
                 'merchant_pem' => '密钥',
                 'pay_handleroute' => '/pay/mapay',
-                'is_open' => 1,
+                'is_open' => 0,
             ],
             [
                 'id' => 4,
@@ -67,7 +67,7 @@ class PaySeeder extends Seeder
                 'merchant_key' => '',
                 'merchant_pem' => '密钥',
                 'pay_handleroute' => '/pay/mapay',
-                'is_open' => 1,
+                'is_open' => 0,
             ],
             [
                 'id' => 5,
@@ -79,7 +79,7 @@ class PaySeeder extends Seeder
                 'merchant_key' => '',
                 'merchant_pem' => '密钥',
                 'pay_handleroute' => '/pay/mapay',
-                'is_open' => 1,
+                'is_open' => 0,
             ],
 
             // Paysapi
@@ -93,7 +93,7 @@ class PaySeeder extends Seeder
                 'merchant_key' => '',
                 'merchant_pem' => '密钥',
                 'pay_handleroute' => '/pay/paysapi',
-                'is_open' => 1,
+                'is_open' => 0,
             ],
             [
                 'id' => 7,
@@ -105,7 +105,7 @@ class PaySeeder extends Seeder
                 'merchant_key' => '',
                 'merchant_pem' => '密钥',
                 'pay_handleroute' => '/pay/paysapi',
-                'is_open' => 1,
+                'is_open' => 0,
             ],
 
             // 微信
@@ -133,7 +133,7 @@ class PaySeeder extends Seeder
                 'merchant_key' => '',
                 'merchant_pem' => '密钥',
                 'pay_handleroute' => '/pay/payjs',
-                'is_open' => 1,
+                'is_open' => 0,
             ],
 
             // 易支付
@@ -147,7 +147,7 @@ class PaySeeder extends Seeder
                 'merchant_key' => '',
                 'merchant_pem' => '密钥',
                 'pay_handleroute' => '/pay/yipay',
-                'is_open' => 2,
+                'is_open' => 0,
             ],
             [
                 'id' => 15,
@@ -159,7 +159,7 @@ class PaySeeder extends Seeder
                 'merchant_key' => null,
                 'merchant_pem' => '密钥',
                 'pay_handleroute' => '/pay/yipay',
-                'is_open' => 1,
+                'is_open' => 0,
             ],
             [
                 'id' => 16,
@@ -171,7 +171,7 @@ class PaySeeder extends Seeder
                 'merchant_key' => null,
                 'merchant_pem' => '密钥',
                 'pay_handleroute' => '/pay/yipay',
-                'is_open' => 1,
+                'is_open' => 0,
             ],
 
             // PayPal
@@ -199,7 +199,7 @@ class PaySeeder extends Seeder
                 'merchant_key' => null,
                 'merchant_pem' => 'V 免签地址 例如 https://vpay.qq.com/    结尾必须有/',
                 'pay_handleroute' => 'pay/vpay',
-                'is_open' => 1,
+                'is_open' => 0,
             ],
             [
                 'id' => 20,
@@ -211,7 +211,7 @@ class PaySeeder extends Seeder
                 'merchant_key' => null,
                 'merchant_pem' => 'V 免签地址 例如 https://vpay.qq.com/    结尾必须有/',
                 'pay_handleroute' => 'pay/vpay',
-                'is_open' => 1,
+                'is_open' => 0,
             ],
 
             // Stripe
@@ -225,7 +225,7 @@ class PaySeeder extends Seeder
                 'merchant_key' => null,
                 'merchant_pem' => 'sk开头的密钥',
                 'pay_handleroute' => 'pay/stripe',
-                'is_open' => 1,
+                'is_open' => 0,
             ],
 
             // Coinbase
@@ -267,7 +267,7 @@ class PaySeeder extends Seeder
                 'merchant_key' => '你的API密钥',
                 'merchant_pem' => 'https://token-pay.xxx.com',
                 'pay_handleroute' => 'pay/tokenpay',
-                'is_open' => 1,
+                'is_open' => 0,
             ],
             [
                 'id' => 25,
@@ -279,7 +279,7 @@ class PaySeeder extends Seeder
                 'merchant_key' => '你的API密钥',
                 'merchant_pem' => 'https://token-pay.xxx.com',
                 'pay_handleroute' => 'pay/tokenpay',
-                'is_open' => 1,
+                'is_open' => 0,
             ],
             [
                 'id' => 26,
@@ -291,7 +291,7 @@ class PaySeeder extends Seeder
                 'merchant_key' => '你的API密钥',
                 'merchant_pem' => 'https://token-pay.xxx.com',
                 'pay_handleroute' => 'pay/tokenpay',
-                'is_open' => 1,
+                'is_open' => 0,
             ],
             [
                 'id' => 27,
@@ -303,7 +303,7 @@ class PaySeeder extends Seeder
                 'merchant_key' => '你的API密钥',
                 'merchant_pem' => 'https://token-pay.xxx.com',
                 'pay_handleroute' => 'pay/tokenpay',
-                'is_open' => 1,
+                'is_open' => 0,
             ],
             [
                 'id' => 28,
@@ -315,7 +315,7 @@ class PaySeeder extends Seeder
                 'merchant_key' => '你的API密钥',
                 'merchant_pem' => 'https://token-pay.xxx.com',
                 'pay_handleroute' => 'pay/tokenpay',
-                'is_open' => 1,
+                'is_open' => 0,
             ],
             [
                 'id' => 29,
@@ -327,7 +327,7 @@ class PaySeeder extends Seeder
                 'merchant_key' => '你的API密钥',
                 'merchant_pem' => 'https://token-pay.xxx.com',
                 'pay_handleroute' => 'pay/tokenpay',
-                'is_open' => 1,
+                'is_open' => 0,
             ],
             [
                 'id' => 30,
@@ -339,7 +339,7 @@ class PaySeeder extends Seeder
                 'merchant_key' => '你的API密钥',
                 'merchant_pem' => 'https://token-pay.xxx.com',
                 'pay_handleroute' => 'pay/tokenpay',
-                'is_open' => 1,
+                'is_open' => 0,
             ],
             [
                 'id' => 31,
@@ -351,7 +351,7 @@ class PaySeeder extends Seeder
                 'merchant_key' => '你的API密钥',
                 'merchant_pem' => 'https://token-pay.xxx.com',
                 'pay_handleroute' => 'pay/tokenpay',
-                'is_open' => 1,
+                'is_open' => 0,
             ],
             [
                 'id' => 32,
@@ -363,7 +363,7 @@ class PaySeeder extends Seeder
                 'merchant_key' => '你的API密钥',
                 'merchant_pem' => 'https://token-pay.xxx.com',
                 'pay_handleroute' => 'pay/tokenpay',
-                'is_open' => 1,
+                'is_open' => 0,
             ],
             [
                 'id' => 33,
@@ -375,7 +375,7 @@ class PaySeeder extends Seeder
                 'merchant_key' => '你的API密钥',
                 'merchant_pem' => 'https://token-pay.xxx.com',
                 'pay_handleroute' => 'pay/tokenpay',
-                'is_open' => 1,
+                'is_open' => 0,
             ],
             [
                 'id' => 34,
@@ -387,7 +387,7 @@ class PaySeeder extends Seeder
                 'merchant_key' => '你的API密钥',
                 'merchant_pem' => 'https://token-pay.xxx.com',
                 'pay_handleroute' => 'pay/tokenpay',
-                'is_open' => 1,
+                'is_open' => 0,
             ],
         ];
 

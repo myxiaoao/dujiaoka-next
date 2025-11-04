@@ -31,7 +31,7 @@ class AdminPanelProvider extends PanelProvider
         return $panel
             ->default()
             ->id('admin')
-            ->path('admin')
+            ->path(config('dujiaoka.admin_path', 'admin'))
             ->login()
             ->brandName('🦄 独角数卡 NEXT')
             ->colors([
