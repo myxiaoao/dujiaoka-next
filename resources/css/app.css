@@ -32,3 +32,24 @@
 [x-cloak] {
     display: none !important;
 }
+
+/* Remove underline from navbar items */
+.no-underline a,
+.no-underline button,
+[data-flux-component="navbar"] a,
+[data-flux-navbar] a {
+    border-bottom: none !important;
+    text-decoration: none !important;
+    box-shadow: none !important;
+}
+
+.no-underline a::after,
+.no-underline button::after,
+.no-underline a::before,
+.no-underline button::before,
+[data-flux-component="navbar"] a::after,
+[data-flux-navbar] a::after {
+    display: none !important;
+    border-bottom: none !important;
+    content: none !important;
+}

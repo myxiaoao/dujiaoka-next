@@ -7,6 +7,7 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "charrafimed/global-search-modal": "^4.2",
         "filament/filament": "^4.0",
         "jenssegers/agent": "^2.6",
         "laravel/framework": "^12.0",

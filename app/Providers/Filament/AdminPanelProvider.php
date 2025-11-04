@@ -7,6 +7,7 @@ declare(strict_types=1);
 
 namespace App\Providers\Filament;
 
+use CharrafiMed\GlobalSearchModal\GlobalSearchModalPlugin;
 use Filament\Enums\GlobalSearchPosition;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\AuthenticateSession;
@@ -65,6 +66,10 @@ class AdminPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
-            ]);
+            ])
+            ->plugins([
+                GlobalSearchModalPlugin::make(),
+            ])
+            ->spa();
     }
 }

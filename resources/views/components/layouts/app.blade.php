@@ -104,7 +104,7 @@
             <flux:spacer />
 
             {{-- Right Side: Navigation + Actions --}}
-            <flux:navbar class="-mb-px max-lg:hidden">
+            <flux:navbar class="max-lg:hidden no-underline">
                 <flux:navbar.item icon="home" href="/" :current="request()->is('/')">首页</flux:navbar.item>
                 <flux:navbar.item icon="magnifying-glass" href="{{ route('search-order') }}" :current="request()->routeIs('search-order')">订单查询</flux:navbar.item>
             </flux:navbar>

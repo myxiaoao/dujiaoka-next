@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "73f0ca7483f2ada2c35dba4f0cba7a18",
+    "content-hash": "1f9730f1299eece4a18ce7d22a72495d",
     "packages": [
         {
             "name": "anourvalar/eloquent-serialize",
@@ -620,6 +620,53 @@
                 }
             ],
             "time": "2024-02-09T16:56:22+00:00"
+        },
+        {
+            "name": "charrafimed/global-search-modal",
+            "version": "v4.2.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/CharrafiMed/global-search-modal.git",
+                "reference": "c06b34377aba54644cc6498be9b4a367fbe5bf1f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/CharrafiMed/global-search-modal/zipball/c06b34377aba54644cc6498be9b4a367fbe5bf1f",
+                "reference": "c06b34377aba54644cc6498be9b4a367fbe5bf1f",
+                "shasum": ""
+            },
+            "require": {
+                "filament/support": "^4.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "CharrafiMed\\GlobalSearchModal\\GlobalSearchModalServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "CharrafiMed\\GlobalSearchModal\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "CharrafiMed",
+                    "email": "charrafimohamed27@gmail.com"
+                }
+            ],
+            "description": "advanced global search modal",
+            "support": {
+                "issues": "https://github.com/CharrafiMed/global-search-modal/issues",
+                "source": "https://github.com/CharrafiMed/global-search-modal/tree/v4.2.2"
+            },
+            "time": "2025-09-01T13:19:03+00:00"
         },
         {
             "name": "chillerlan/php-qrcode",
