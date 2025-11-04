@@ -4,7 +4,6 @@ declare(strict_types=1);
 /**
  * This file is part of dujiaoka next server projects.
  */
-
 use App\Http\Controllers\Home\HomeController;
 use App\Http\Controllers\Home\OrderController;
 use App\Livewire\Pages\Bill;

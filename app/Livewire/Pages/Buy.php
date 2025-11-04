@@ -44,10 +44,26 @@ class Buy extends Component
         PayService $payService
     ): void {
         // 加载商品
-        $this->product = $goodsService->detail($id);
+        $goods = $goodsService->detail($id);
 
-        // 验证商品状态
-        $goodsService->validatorGoodsStatus($this->product);
+        // 商品不存在，重定向到首页
+        if (empty($goods)) {
+            session()->flash('error', '该商品不存在或已下架');
+            $this->redirect('/', navigate: true);
+
+            return;
+        }
+
+        // 商品未上架，重定向到首页
+        if ($goods->is_open != Goods::STATUS_OPEN) {
+            session()->flash('error', '该商品暂未上架，敬请期待！');
+            $this->redirect('/', navigate: true);
+
+            return;
+        }
+
+        // 设置商品属性
+        $this->product = $goods;
 
         // 加载支付方式
         $this->paymentMethods = $payService->pays();

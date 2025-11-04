@@ -161,6 +161,87 @@
 
     {{-- Main Content --}}
     <main class="flex-1 max-w-7xl w-full mx-auto px-4 py-8">
+        {{-- Flash Messages --}}
+        @if(session('success') || session('error') || session('warning') || session('info'))
+        <div class="mb-6">
+            @if(session('success'))
+            <div
+                x-data="{ show: true }"
+                x-show="show"
+                x-init="setTimeout(() => show = false, 5000)"
+                x-transition
+                class="bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 rounded-lg p-4">
+                <div class="flex items-start gap-3">
+                    <flux:icon.check-circle class="size-5 text-green-600 dark:text-green-400 flex-shrink-0 mt-0.5" />
+                    <div class="flex-1">
+                        <p class="text-green-800 dark:text-green-200">{{ session('success') }}</p>
+                    </div>
+                    <button @click="show = false" class="text-green-600 dark:text-green-400 hover:text-green-800 dark:hover:text-green-200">
+                        <flux:icon.x-mark class="size-5" />
+                    </button>
+                </div>
+            </div>
+            @endif
+
+            @if(session('error'))
+            <div
+                x-data="{ show: true }"
+                x-show="show"
+                x-init="setTimeout(() => show = false, 8000)"
+                x-transition
+                class="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4">
+                <div class="flex items-start gap-3">
+                    <flux:icon.exclamation-circle class="size-5 text-red-600 dark:text-red-400 flex-shrink-0 mt-0.5" />
+                    <div class="flex-1">
+                        <p class="text-red-800 dark:text-red-200">{{ session('error') }}</p>
+                    </div>
+                    <button @click="show = false" class="text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-200">
+                        <flux:icon.x-mark class="size-5" />
+                    </button>
+                </div>
+            </div>
+            @endif
+
+            @if(session('warning'))
+            <div
+                x-data="{ show: true }"
+                x-show="show"
+                x-init="setTimeout(() => show = false, 6000)"
+                x-transition
+                class="bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-800 rounded-lg p-4">
+                <div class="flex items-start gap-3">
+                    <flux:icon.exclamation-triangle class="size-5 text-amber-600 dark:text-amber-400 flex-shrink-0 mt-0.5" />
+                    <div class="flex-1">
+                        <p class="text-amber-800 dark:text-amber-200">{{ session('warning') }}</p>
+                    </div>
+                    <button @click="show = false" class="text-amber-600 dark:text-amber-400 hover:text-amber-800 dark:hover:text-amber-200">
+                        <flux:icon.x-mark class="size-5" />
+                    </button>
+                </div>
+            </div>
+            @endif
+
+            @if(session('info'))
+            <div
+                x-data="{ show: true }"
+                x-show="show"
+                x-init="setTimeout(() => show = false, 5000)"
+                x-transition
+                class="bg-blue-50 dark:bg-blue-900/20 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+                <div class="flex items-start gap-3">
+                    <flux:icon.information-circle class="size-5 text-blue-600 dark:text-blue-400 flex-shrink-0 mt-0.5" />
+                    <div class="flex-1">
+                        <p class="text-blue-800 dark:text-blue-200">{{ session('info') }}</p>
+                    </div>
+                    <button @click="show = false" class="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-200">
+                        <flux:icon.x-mark class="size-5" />
+                    </button>
+                </div>
+            </div>
+            @endif
+        </div>
+        @endif
+
         {{ $slot }}
     </main>
 
