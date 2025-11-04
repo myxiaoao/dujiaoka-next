@@ -281,8 +281,7 @@ mysql -u root -p dujiaoka_new < storage/app/backups/backup_YYYY-MM-DD_HHMMSS.sql
 
 ## 支持与帮助
 
-- GitHub Issues: https://github.com/your-repo/issues
-- 文档: https://docs.dujiaoka.com
+- GitHub Issues: https://github.com/myxiaoao/dujiaoka-next/issues
 
 ---
 

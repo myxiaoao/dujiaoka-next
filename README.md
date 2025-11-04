@@ -1,4 +1,4 @@
-# 独角数卡 Next
+# 🦄 独角数卡 NEXT
 
 > 从 Laravel 6 + dcat-admin 升级到 Laravel 12 + Filament 4 的现代化版本
 
@@ -130,6 +130,7 @@ php artisan dujiaoka:upgrade \
 
 ### 🔧 开发者文档
 - **[CLAUDE.md](CLAUDE.md)** - AI 辅助开发指南
+- **[Flux UI 迁移指南](docs/FLUX_MIGRATION_GUIDE.md)** - Livewire 3 + Flux UI 前端迁移
 - **[开发日志](docs/development-logs/)** - 迁移过程详细文档
 - **[更多文档](docs/)** - 文档中心
 

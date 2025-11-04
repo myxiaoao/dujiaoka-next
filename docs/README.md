@@ -13,6 +13,7 @@
 ### 开发指南
 - **[数据库初始化说明](DATABASE_SEEDING.md)** - 邮件模板、支付网关、系统配置初始化
 - **[测试数据指南](TEST_DATA.md)** - 开发环境测试数据生成和清理
+- **[Flux UI 迁移指南](FLUX_MIGRATION_GUIDE.md)** - Livewire 3 + Flux UI 前端迁移详细指南
 
 ## 🎨 前端技术栈
 
@@ -104,6 +105,7 @@ php artisan dujiaoka:upgrade \
 
 #### 🎯 前端相关
 - [前端功能文档](FRONTEND_FEATURES.md) - 页面、组件、用户体验
+- [Flux UI 迁移指南](FLUX_MIGRATION_GUIDE.md) - Livewire 3 + Flux UI 前端迁移详细指南
 - [配置管理指南](CONFIGURATION.md) - 系统配置（包含前端语言、模板等）
 
 #### 🔧 后端相关
