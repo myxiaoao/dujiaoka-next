@@ -14,7 +14,7 @@ use App\Livewire\Pages\QrPay;
 use App\Livewire\Pages\SearchOrder;
 use Illuminate\Support\Facades\Route;
 
-Route::group(['middleware' => ['dujiaoka.boot']], function () {
+Route::group(['middleware' => ['dujiaoka.boot']], function (): void {
     // ====== Livewire 页面路由 ======
     // 注意：Livewire 3 直接使用 Route::get() 并将组件类作为目标
 

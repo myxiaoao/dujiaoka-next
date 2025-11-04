@@ -309,7 +309,7 @@ class UpgradeFromOldSystem extends Command
                 $newConnection->table($table)->truncate();
 
                 // 分批复制数据
-                $oldConnection->table($table)->orderBy('id')->chunk(500, function ($records) use ($table, $newConnection) {
+                $oldConnection->table($table)->orderBy('id')->chunk(500, function ($records) use ($table, $newConnection): void {
                     $data = json_decode(json_encode($records), true);
                     $newConnection->table($table)->insert($data);
                 });

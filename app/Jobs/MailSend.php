@@ -80,7 +80,7 @@ class MailSend implements ShouldQueue
         ]);
         // 重新注册驱动
         (new MailServiceProvider(app()))->register();
-        Mail::send(['html' => 'email.mail'], ['body' => $body], function ($message) use ($to, $title) {
+        Mail::send(['html' => 'email.mail'], ['body' => $body], function ($message) use ($to, $title): void {
             $message->to($to)->subject($title);
         });
     }

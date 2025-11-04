@@ -34,7 +34,7 @@ class CarmisImporter extends Importer
                 ->numeric()
                 ->rules(['integer'])
                 ->example('1')
-                ->fillRecordUsing(function (Carmis $record, $state) {
+                ->fillRecordUsing(function (Carmis $record, $state): void {
                     $record->status = $state ?? Carmis::STATUS_UNSOLD;
                 }),
             ImportColumn::make('is_loop')
@@ -42,7 +42,7 @@ class CarmisImporter extends Importer
                 ->boolean()
                 ->rules(['boolean'])
                 ->example('0')
-                ->fillRecordUsing(function (Carmis $record, $state) {
+                ->fillRecordUsing(function (Carmis $record, $state): void {
                     $record->is_loop = $state ?? false;
                 }),
         ];

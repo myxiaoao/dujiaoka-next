@@ -262,7 +262,7 @@ class OrderService
     {
         return Order::query()
             ->where('email', $email)
-            ->when(! empty($searchPwd), function ($query) use ($searchPwd) {
+            ->when(! empty($searchPwd), function ($query) use ($searchPwd): void {
                 $query->where('search_pwd', $searchPwd);
             })
             ->orderBy('created_at', 'DESC')

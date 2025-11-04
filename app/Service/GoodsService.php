@@ -38,8 +38,8 @@ class GoodsService
     public function withGroup()
     {
         $goodsGroups = GoodsGroup::query()
-            ->with(['goods' => function ($query) {
-                $query->withCount(['carmis' => function ($query) {
+            ->with(['goods' => function ($query): void {
+                $query->withCount(['carmis' => function ($query): void {
                     $query->where('status', Carmis::STATUS_UNSOLD);
                 }])->where('is_open', Goods::STATUS_OPEN)->orderBy('ord', 'DESC');
             }])
@@ -65,7 +65,7 @@ class GoodsService
     {
         $goods = Goods::query()
             ->with(['coupon'])
-            ->withCount(['carmis' => function ($query) {
+            ->withCount(['carmis' => function ($query): void {
                 $query->where('status', Carmis::STATUS_UNSOLD);
             }])->where('id', $id)->first();
 

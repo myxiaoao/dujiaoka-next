@@ -14,7 +14,7 @@ return Application::configure(basePath: dirname(__DIR__))
         web: __DIR__.'/../routes/web.php',
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
-        then: function () {
+        then: function (): void {
             // 自定义路由绑定：支持通过 ID 或 order_sn 查找订单
             Route::bind('order', function (string $value) {
                 // 如果是纯数字，尝试通过 ID 查找

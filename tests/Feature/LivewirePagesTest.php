@@ -10,28 +10,28 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 uses(RefreshDatabase::class);
 
-test('home page renders successfully', function () {
+test('home page renders successfully', function (): void {
     $response = $this->get('/');
 
     $response->assertSuccessful();
     $response->assertSeeLivewire('pages.home');
 });
 
-test('search order page renders successfully', function () {
+test('search order page renders successfully', function (): void {
     $response = $this->get('/search-order');
 
     $response->assertSuccessful();
     $response->assertSeeLivewire('pages.search-order');
 });
 
-test('error page renders successfully', function () {
+test('error page renders successfully', function (): void {
     $response = $this->get('/error');
 
     $response->assertSuccessful();
     $response->assertSeeLivewire('pages.error');
 });
 
-test('buy page renders with valid product', function () {
+test('buy page renders with valid product', function (): void {
     $group = GoodsGroup::factory()->create();
     $goods = Goods::factory()->create([
         'group_id' => $group->id,

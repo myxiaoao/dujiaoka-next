@@ -113,7 +113,7 @@ class EmailTest extends Page
         (new MailServiceProvider(app()))->register();
 
         try {
-            Mail::send(['html' => 'email.mail'], ['body' => $data['body']], function ($message) use ($data) {
+            Mail::send(['html' => 'email.mail'], ['body' => $data['body']], function ($message) use ($data): void {
                 $message->to($data['to'])->subject($data['title']);
             });
 

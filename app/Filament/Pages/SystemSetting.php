@@ -145,7 +145,7 @@ class SystemSetting extends Page
                                             ->label('开启Server酱推送')
                                             ->default(false)
                                             ->live()
-                                            ->afterStateUpdated(function () {
+                                            ->afterStateUpdated(function (): void {
                                                 // 强制刷新组件
                                             }),
 
@@ -161,7 +161,7 @@ class SystemSetting extends Page
                                             ->label('开启Telegram推送')
                                             ->default(false)
                                             ->live()
-                                            ->afterStateUpdated(function () {
+                                            ->afterStateUpdated(function (): void {
                                                 // 强制刷新组件
                                             }),
 
@@ -182,7 +182,7 @@ class SystemSetting extends Page
                                             ->label('开启Bark推送')
                                             ->default(false)
                                             ->live()
-                                            ->afterStateUpdated(function () {
+                                            ->afterStateUpdated(function (): void {
                                                 // 强制刷新组件
                                             }),
 
@@ -205,7 +205,7 @@ class SystemSetting extends Page
                                             ->label('开启企业微信机器人推送')
                                             ->default(false)
                                             ->live()
-                                            ->afterStateUpdated(function () {
+                                            ->afterStateUpdated(function (): void {
                                                 // 强制刷新组件
                                             }),
 
