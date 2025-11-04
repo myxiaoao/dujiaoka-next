@@ -49,19 +49,23 @@ class OrdersTable
                     ->label('状态')
                     ->badge()
                     ->color(fn (int $state): string => match ($state) {
+                        Order::STATUS_WAIT_PAY => 'warning',
                         Order::STATUS_PENDING => 'warning',
                         Order::STATUS_PROCESSING => 'info',
                         Order::STATUS_COMPLETED => 'success',
                         Order::STATUS_FAILURE => 'danger',
                         Order::STATUS_ABNORMAL => 'danger',
+                        Order::STATUS_EXPIRED => 'gray',
                         default => 'gray',
                     })
                     ->formatStateUsing(fn (int $state): string => match ($state) {
-                        Order::STATUS_PENDING => '待支付',
+                        Order::STATUS_WAIT_PAY => '待支付',
+                        Order::STATUS_PENDING => '待处理',
                         Order::STATUS_PROCESSING => '处理中',
                         Order::STATUS_COMPLETED => '已完成',
                         Order::STATUS_FAILURE => '失败',
                         Order::STATUS_ABNORMAL => '异常',
+                        Order::STATUS_EXPIRED => '已过期',
                         default => '未知',
                     })
                     ->sortable(),
@@ -201,11 +205,13 @@ class OrdersTable
                 SelectFilter::make('status')
                     ->label('订单状态')
                     ->options([
-                        Order::STATUS_PENDING => '待支付',
+                        Order::STATUS_WAIT_PAY => '待支付',
+                        Order::STATUS_PENDING => '待处理',
                         Order::STATUS_PROCESSING => '处理中',
                         Order::STATUS_COMPLETED => '已完成',
                         Order::STATUS_FAILURE => '失败',
                         Order::STATUS_ABNORMAL => '异常',
+                        Order::STATUS_EXPIRED => '已过期',
                     ]),
 
                 SelectFilter::make('type')
