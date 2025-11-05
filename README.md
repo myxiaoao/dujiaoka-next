@@ -178,6 +178,26 @@ php artisan dujiaoka:upgrade \
 | **代码规范**   | 混合风格                 | PSR-12 + Laravel Pint       | ✅ 统一规范      |
 | **安装方式**   | Web 安装向导             | 命令行安装                       | ✅ 更安全       |
 
+### 截图
+
+#### **前台**
+**首页**
+![首页](art/web-index.png)
+
+**订单查询**
+![订单查询](art/web-search-order.png)
+
+#### **后台**
+**仪表板**
+![仪表板](art/admin-dashboard.png)
+
+**订单列表**
+![订单列表](art/admin-orders.png)
+
+**系统设置**
+![系统设置](art/admin-system-setting.png)
+
+#### **[更多截图](art/)** 
 
 
 ## 🤝 贡献
