@@ -90,8 +90,8 @@
     @fluxAppearance
 </head>
 <body class="min-h-screen flex flex-col bg-white dark:bg-zinc-800">
-    {{-- Flux Header with Navigation --}}
-    <flux:header class="bg-zinc-50 dark:bg-zinc-900 border-b border-zinc-200 dark:border-zinc-700">
+    {{-- Flux Header with Navigation (Sticky with backdrop blur) --}}
+    <flux:header class="sticky top-0 z-50 border-b border-zinc-200 dark:border-zinc-700 bg-white/60 dark:bg-zinc-900/60 backdrop-blur-sm">
         <div class="max-w-7xl w-full mx-auto px-4 flex items-center h-16">
             {{-- Mobile Sidebar Toggle --}}
             <flux:sidebar.toggle class="lg:hidden" icon="bars-2" inset="left" />
@@ -160,7 +160,7 @@
     </flux:sidebar>
 
     {{-- Main Content --}}
-    <main class="flex-1 max-w-7xl w-full mx-auto px-4 py-8">
+    <main class="flex-1 max-w-7xl w-full mx-auto px-4 pt-6 pb-8">
         {{-- Flash Messages --}}
         @if(session('success') || session('error') || session('warning') || session('info'))
         <div class="mb-6">

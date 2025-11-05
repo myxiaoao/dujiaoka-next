@@ -2,7 +2,7 @@
 <div class="max-w-4xl mx-auto space-y-6">
     {{-- 页面标题 --}}
     <div class="flex items-center justify-between">
-        <flux:heading size="2xl">订单详情</flux:heading>
+        <h1 class="text-3xl md:text-4xl font-bold text-zinc-900 dark:text-white">订单详情</h1>
         <flux:badge :color="$this->getStatusBadgeColor()" size="lg">
             {{ $this->getStatusText() }}
         </flux:badge>

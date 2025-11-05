@@ -55,14 +55,13 @@
         @if($product->in_stock > 0)
         <flux:button
             href="{{ route('buy', $product->id) }}"
-            variant="primary"
             class="w-full mt-auto">
             立即购买
         </flux:button>
         @else
         <button
             disabled
-            class="w-full mt-auto h-10 px-4 rounded-lg bg-zinc-300 dark:bg-zinc-700 text-zinc-500 dark:text-zinc-400 cursor-not-allowed font-medium">
+            class="w-full mt-auto h-10 px-4 rounded-lg bg-neutral-100 dark:bg-neutral-700 text-neutral-500 dark:text-neutral-400 cursor-not-allowed font-medium">
             暂时缺货
         </button>
         @endif

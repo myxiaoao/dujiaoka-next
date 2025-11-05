@@ -1,17 +1,17 @@
 {{-- 首页 - 使用 Flux 免费组件 + Tailwind 卡片 --}}
-<div class="space-y-6">
+<div>
     {{-- 公告栏 (如果有) - 最上面，全宽度 --}}
     @php
         $notice = dujiaoka_config_get('notice');
     @endphp
     @if($notice)
-    <div class="-mx-6 px-6">
+    <div class="-mx-6 px-6 mb-6">
         <div class="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-800 rounded-lg p-4">
             <div class="flex items-start gap-3">
-                <flux:icon.information-circle class="size-5 text-yellow-600 dark:text-yellow-400 flex-shrink-0 mt-0.5" />
+                <flux:icon.information-circle class="size-6 text-yellow-600 dark:text-yellow-400 flex-shrink-0 mt-0.5" />
                 <div class="flex-1">
-                    <flux:heading size="sm" class="text-yellow-900 dark:text-yellow-100 mb-1">公告</flux:heading>
-                    <div class="text-sm text-yellow-800 dark:text-yellow-200 prose prose-sm max-w-none">
+                    <h3 class="text-lg font-semibold text-yellow-900 dark:text-yellow-100 mb-1">公告</h3>
+                    <div class="text-base text-yellow-800 dark:text-yellow-200 prose prose-base max-w-none">
                         {!! $notice !!}
                     </div>
                 </div>
@@ -21,11 +21,11 @@
     @endif
 
     {{-- 分类导航和搜索框 - 一行显示 --}}
-    <div class="flex flex-col lg:flex-row items-stretch lg:items-center gap-4 pb-4 border-b border-zinc-200 dark:border-zinc-700">
+    <div class="flex flex-col lg:flex-row items-stretch lg:items-center gap-4 pb-4 border-b border-zinc-200 dark:border-zinc-700 mb-6">
         {{-- 左侧：分类 Tab 导航 --}}
         @if(!$search && $allGroups->count() > 1)
         <div class="flex-shrink-0">
-            <div class="inline-flex flex-wrap gap-2 p-2 bg-zinc-100 dark:bg-zinc-900 rounded-lg border border-zinc-200 dark:border-zinc-700">
+            <div class="inline-flex flex-wrap gap-2 p-2 bg-neutral-50 dark:bg-neutral-900 rounded-lg border border-neutral-200 dark:border-neutral-700">
                 {{-- 全部分类 --}}
                 <button
                     type="button"
@@ -33,8 +33,8 @@
                     wire:loading.attr="disabled"
                     class="px-3 py-1 text-sm font-medium rounded-md transition-colors disabled:opacity-50
                         {{ $selectedGroup === null
-                            ? 'bg-white dark:bg-zinc-700 text-zinc-900 dark:text-white shadow-sm'
-                            : 'text-zinc-700 dark:text-zinc-300 hover:bg-zinc-200 dark:hover:bg-zinc-800' }}"
+                            ? 'bg-white dark:bg-neutral-700 text-neutral-900 dark:text-white shadow-sm'
+                            : 'text-neutral-700 dark:text-neutral-300 hover:bg-neutral-200 dark:hover:bg-neutral-800' }}"
                 >
                     全部
                 </button>
@@ -61,7 +61,7 @@
         {{-- 右侧：搜索框 --}}
         <div class="flex-1 lg:max-w-xs ml-auto">
             <div class="relative">
-                <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+                <div class="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
                     <svg class="w-4 h-4 text-zinc-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path>
                     </svg>
@@ -69,7 +69,7 @@
                 <input
                     wire:model.live.debounce.300ms="search"
                     type="search"
-                    class="w-full pl-10 pr-4 py-2 text-sm border border-zinc-200 dark:border-zinc-700 rounded-lg bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent"
+                    class="w-full pl-10 pr-4 py-3 text-sm border border-zinc-200 dark:border-zinc-700 rounded-lg bg-white dark:bg-zinc-900 text-zinc-900 dark:text-zinc-100 placeholder-zinc-400 dark:placeholder-zinc-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:focus:ring-blue-400 focus:border-transparent"
                     placeholder="搜索商品..." />
             </div>
         </div>
@@ -88,7 +88,7 @@
 
     {{-- 商品分组列表 --}}
     @forelse($goodsGroups as $group)
-    <section wire:key="group-{{ $group->id }}-{{ $selectedGroup ?? 'all' }}">
+    <section wire:key="group-{{ $group->id }}-{{ $selectedGroup ?? 'all' }}" class="mb-6">
         {{-- 分类标题 --}}
         <div class="flex items-center gap-3 mb-6">
             <h2 class="text-2xl font-bold text-zinc-900 dark:text-white">{{ $group->gp_name }}</h2>

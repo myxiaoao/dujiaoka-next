@@ -1,6 +1,6 @@
 # 🦄 独角数卡 NEXT
 
-> 从 Laravel 6 + dcat-admin 升级到 Laravel 12 + Filament 4 的现代化版本
+> 从 Laravel 6 + dcat-admin 升级到 Laravel 12 + Filament 4 的现代化（船新）版本
 
 ## ✨ 特性
 
@@ -168,7 +168,7 @@ php artisan dujiaoka:upgrade \
 
 | 功能         | 原系统                  | Next 版本                     | 改进          |
 |------------|----------------------|-----------------------------|-------------|
-| **后端框架**   | Laravel 6            | Laravel 12                  | ✅ 3个大版本跃升   |
+| **后端框架**   | Laravel 6            | Laravel 12+                 | ✅ 6个大版本跃升   |
 | **管理面板**   | Dcat Admin           | Filament 4                  | ✅ 现代化 UI/UX |
 | **前端框架**   | Bootstrap 4 + jQuery | Tailwind CSS 4 + Livewire 3 | ✅ 无刷新交互     |
 | **PHP 版本** | 7.4+                 | 8.2+                        | ✅ 性能提升 30%+ |
@@ -177,6 +177,8 @@ php artisan dujiaoka:upgrade \
 | **分类导航**   | Tab 切换               | Livewire 实时过滤               | ✅ 性能优化      |
 | **代码规范**   | 混合风格                 | PSR-12 + Laravel Pint       | ✅ 统一规范      |
 | **安装方式**   | Web 安装向导             | 命令行安装                       | ✅ 更安全       |
+
+
 
 ## 🤝 贡献
 
