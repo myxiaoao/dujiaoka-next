@@ -6,7 +6,7 @@
     "keywords": ["laravel", "framework"],
     "license": "MIT",
     "require": {
-        "php": "^8.2",
+        "php": "^8.3",
         "charrafimed/global-search-modal": "^4.2",
         "filament/filament": "^4.0",
         "jenssegers/agent": "^2.6",

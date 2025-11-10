@@ -12,7 +12,7 @@
 
 ### 🔧 后端升级
 - **管理面板**: Filament 4 现代化后台
-- **PHP 8.2+**: 严格类型声明、构造函数属性提升
+- **PHP 8.3+**: 严格类型声明、构造函数属性提升
 - **Laravel 12**: 最新的 Laravel 框架特性
 - **代码规范**: Laravel Pint 自动格式化
 
@@ -144,7 +144,7 @@ php artisan dujiaoka:upgrade \
 ## 🛠 技术栈
 
 ### 后端
-- **PHP** >= 8.2 (严格类型、构造函数属性提升)
+- **PHP** >= 8.3 (严格类型、构造函数属性提升)
 - **Laravel** 12.x (最新 LTS)
 - **Filament** 4.x (现代化管理面板)
 - **Livewire** 3.x (全栈组件)
@@ -171,7 +171,7 @@ php artisan dujiaoka:upgrade \
 | **后端框架**   | Laravel 6            | Laravel 12+                 | ✅ 6个大版本跃升   |
 | **管理面板**   | Dcat Admin           | Filament 4                  | ✅ 现代化 UI/UX |
 | **前端框架**   | Bootstrap 4 + jQuery | Tailwind CSS 4 + Livewire 3 | ✅ 无刷新交互     |
-| **PHP 版本** | 7.4+                 | 8.2+                        | ✅ 性能提升 30%+ |
+| **PHP 版本** | 7.4+                 | 8.3+                        | ✅ 性能提升 30%+ |
 | **主题系统**   | 3个主题                 | 单一现代主题 + 暗色模式               | ✅ 统一体验      |
 | **卡密显示**   | ❌ 仅邮箱                | ✅ 页面直接显示 + 复制               | ✅ 用户体验提升    |
 | **分类导航**   | Tab 切换               | Livewire 实时过滤               | ✅ 性能优化      |

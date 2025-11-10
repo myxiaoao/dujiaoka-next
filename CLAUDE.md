@@ -6,7 +6,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **独角数卡 (Dujiaoka)** - A digital goods sales platform (card/key management system) migrated from Laravel 6 + dcat-admin to Laravel 12 + Filament 4. This is a modernized version supporting product sales, inventory management, order processing, and multiple payment gateways.
 
-**Tech Stack**: PHP 8.2+, Laravel 12, Filament 4, MySQL 5.7+, Redis (Required)
+**Tech Stack**: PHP 8.3+, Laravel 12, Filament 4, MySQL 5.7+, Redis (Required)
 
 ## Common Commands
 
