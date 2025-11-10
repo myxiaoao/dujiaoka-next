@@ -31,7 +31,6 @@ class SystemSettingSeeder extends Seeder
         Cache::forever('system-setting', $defaultSettings);
 
         $this->command->info('System settings initialized successfully!');
-        $this->command->info('Default template: '.$defaultSettings['template']);
         $this->command->info('Default language: '.$defaultSettings['language']);
         $this->command->info('Order expire time: '.$defaultSettings['order_expire_time'].' minutes');
     }

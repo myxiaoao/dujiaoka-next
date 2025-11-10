@@ -97,7 +97,7 @@ php artisan make:filament-user
 **Available Seeders:**
 - `EmailTemplateSeeder` - Initializes 5 email templates (card delivery, order notifications)
 - `PaySeeder` - Initializes 34 payment gateway configurations (Alipay, WeChat, PayPal, Stripe, crypto)
-- `SystemSettingSeeder` - Initializes system configuration in cache (template, language, order settings, notifications, email, geetest)
+- `SystemSettingSeeder` - Initializes system configuration in cache (language, order settings, notifications, email, geetest)
 - `TestDataSeeder` - Generates comprehensive test data for development (8 categories, 30 products, 400-1000 cards, 20 coupons, 100 orders with relationships)
 
 ### Upgrade from Legacy System
