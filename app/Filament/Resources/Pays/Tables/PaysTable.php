@@ -143,6 +143,6 @@ class PaysTable
                     RestoreBulkAction::make(),
                 ]),
             ])
-            ->defaultSort('id', 'desc');
+            ->defaultSort('is_open', 'desc');
     }
 }
